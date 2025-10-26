@@ -16,7 +16,7 @@ export function useDeviceDetection() {
       // 低性能デバイスの検出（簡易版）
       const isLowEnd = isMobileDevice || 
         (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2) ||
-        (navigator.deviceMemory && navigator.deviceMemory <= 2);
+        ((navigator as any).deviceMemory && (navigator as any).deviceMemory <= 2);
 
       setIsMobile(isMobileDevice);
       setIsLowEndDevice(isLowEnd);

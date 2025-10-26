@@ -1,7 +1,7 @@
 import { MotionConfig } from 'framer-motion';
 
 // モバイル用のFramer Motion設定
-export const mobileMotionConfig: Partial<MotionConfig> = {
+export const mobileMotionConfig: Partial<typeof MotionConfig> = {
   // モバイルではアニメーションを軽量化
   reducedMotion: 'user',
   // パフォーマンスを優先
@@ -14,7 +14,7 @@ export const mobileMotionConfig: Partial<MotionConfig> = {
 };
 
 // デスクトップ用の設定
-export const desktopMotionConfig: Partial<MotionConfig> = {
+export const desktopMotionConfig: Partial<typeof MotionConfig> = {
   reducedMotion: 'user',
   features: {
     layout: true,
