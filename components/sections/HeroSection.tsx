@@ -4,11 +4,13 @@ import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { Code2, Rocket } from 'lucide-react';
 import { siteConfig } from '@/config/site.config';
+import { useDeviceDetection } from '@/hooks/useDeviceDetection';
 
 export default function HeroSection() {
   const [typedText, setTypedText] = useState('');
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
+  const { isMobile, isLowEndDevice } = useDeviceDetection();
 
   const roles = siteConfig.hero.roles;
 
@@ -40,24 +42,25 @@ export default function HeroSection() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [typedText, isDeleting, currentRoleIndex]);
 
+  // モバイルではアニメーションを軽量化
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.3,
+        staggerChildren: isLowEndDevice ? 0.05 : 0.15,
+        delayChildren: isLowEndDevice ? 0.1 : 0.3,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: isLowEndDevice ? 10 : 30 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.8,
+        duration: isLowEndDevice ? 0.4 : 0.8,
         ease: [0.4, 0, 0.2, 1] as const,
       },
     },
@@ -131,8 +134,8 @@ export default function HeroSection() {
               {/* Decorative Cards */}
               <motion.div
                 className="absolute top-0 right-0 w-72 h-64 modern-card"
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                animate={!isLowEndDevice ? { y: [0, -10, 0] } : {}}
+                transition={!isLowEndDevice ? { duration: 5, repeat: Infinity, ease: 'easeInOut' } : {}}
               >
                 <div className="h-full flex flex-col justify-between">
                   <div>
@@ -149,8 +152,8 @@ export default function HeroSection() {
 
               <motion.div
                 className="absolute bottom-0 left-0 w-72 h-64 modern-card"
-                animate={{ y: [0, 10, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+                animate={!isLowEndDevice ? { y: [0, 10, 0] } : {}}
+                transition={!isLowEndDevice ? { duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 0.5 } : {}}
               >
                 <div className="h-full flex flex-col justify-between">
                   <div>
@@ -178,8 +181,8 @@ export default function HeroSection() {
               viewBox="0 0 16 16"
               fill="none"
               className="text-current"
-              animate={{ y: [0, 5, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+              animate={!isLowEndDevice ? { y: [0, 5, 0] } : {}}
+              transition={!isLowEndDevice ? { duration: 1.5, repeat: Infinity, ease: 'easeInOut' } : {}}
             >
               <path
                 d="M8 3V13M8 13L12 9M8 13L4 9"
