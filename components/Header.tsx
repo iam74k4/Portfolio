@@ -2,11 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, X } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -72,31 +74,54 @@ export default function Header() {
               <ThemeToggle />
             </div>
 
-            {/* Mobile Menu - Simple */}
-            <div className="md:hidden">
+            {/* Mobile Menu Button */}
+            <div className="md:hidden flex items-center gap-3">
               <ThemeToggle />
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="p-2 text-foreground hover:text-accent transition-colors"
+                aria-label="メニューを開く"
+                aria-expanded={isMobileMenuOpen}
+              >
+                {isMobileMenuOpen ? (
+                  <X size={24} strokeWidth={1.5} />
+                ) : (
+                  <Menu size={24} strokeWidth={1.5} />
+                )}
+              </button>
             </div>
           </div>
         </nav>
 
         {/* Mobile Navigation Menu */}
-        <div className="md:hidden border-t border-border bg-background/95 backdrop-blur-xl">
-          <nav
-            className="max-w-[980px] mx-auto px-6 py-4 space-y-2"
-            aria-label="モバイルナビゲーション"
-          >
-            {navItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="block text-[17px] text-foreground hover:text-accent transition-colors py-2 font-medium"
-                aria-label={`${item.name}セクションへ移動`}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+              className="md:hidden border-t border-border bg-background/95 backdrop-blur-xl overflow-hidden"
+            >
+              <nav
+                className="max-w-[980px] mx-auto px-6 py-4 space-y-2"
+                aria-label="モバイルナビゲーション"
               >
-                {item.name}
-              </a>
-            ))}
-          </nav>
-        </div>
+                {navItems.map((item) => (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block text-[17px] text-foreground hover:text-accent transition-colors py-2 font-medium"
+                    aria-label={`${item.name}セクションへ移動`}
+                  >
+                    {item.name}
+                  </a>
+                ))}
+              </nav>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.header>
     </>
   );
