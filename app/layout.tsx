@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -7,6 +8,13 @@ import BackgroundElements from '@/components/BackgroundElements';
 import ScrollProgress from '@/components/ScrollProgress';
 import SplashScreen from '@/components/SplashScreen';
 import { siteConfig } from '@/config/site.config';
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800'],
+  display: 'swap',
+  variable: '--font-inter',
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -77,12 +85,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja" suppressHydrationWarning>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      </head>
-      <body className="antialiased">
+    <html lang="ja" suppressHydrationWarning className={inter.variable}>
+      <body className="antialiased font-sans">
         <Providers>
           <SplashScreen />
           <ScrollProgress />
