@@ -86,7 +86,7 @@ export const siteConfig: SiteConfig = {
       'JavaScript',
       'UI/UX',
     ],
-    ogImage: '/og-image.png', // public/og-image.png (1200x630px)
+    ogImage: '/og-image.svg', // public/og-image.svg (1200x630px)
     googleVerification: 'your-google-verification-code', // Google Search Console登録後に設定
   },
 
