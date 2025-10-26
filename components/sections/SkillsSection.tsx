@@ -4,6 +4,7 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { LucideIcon } from 'lucide-react';
 import { skillsConfig } from '@/config/site.config';
+import { useDeviceDetection } from '@/hooks/useDeviceDetection';
 
 // アイコンのマッピング（必要に応じて追加可能）
 import {
@@ -40,7 +41,8 @@ const iconMap: Record<string, LucideIcon> = {
 
 export default function SkillsSection() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const { isLowEndDevice } = useDeviceDetection();
+  const isInView = useInView(ref, { once: true, amount: isLowEndDevice ? 0.5 : 0.2 });
 
   // 設定からスキルを読み込み、アイコンを追加
   const skills = skillsConfig.map((category) => ({
@@ -56,18 +58,18 @@ export default function SkillsSection() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15,
+        staggerChildren: isLowEndDevice ? 0.05 : 0.15,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: isLowEndDevice ? 10 : 30 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.8,
+        duration: isLowEndDevice ? 0.4 : 0.8,
         ease: [0.4, 0, 0.2, 1] as const,
       },
     },
@@ -105,11 +107,11 @@ export default function SkillsSection() {
                   return (
                     <motion.div
                       key={skill.name}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                      initial={{ opacity: 0, x: isLowEndDevice ? -10 : -20 }}
+                      animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: isLowEndDevice ? -10 : -20 }}
                       transition={{
-                        duration: 0.6,
-                        delay: 0.4 + categoryIndex * 0.1 + skillIndex * 0.05,
+                        duration: isLowEndDevice ? 0.3 : 0.6,
+                        delay: isLowEndDevice ? 0.1 + categoryIndex * 0.05 + skillIndex * 0.02 : 0.4 + categoryIndex * 0.1 + skillIndex * 0.05,
                       }}
                       className="group/skill"
                     >
@@ -134,8 +136,8 @@ export default function SkillsSection() {
                               initial={{ width: 0 }}
                               animate={isInView ? { width: `${skill.level}%` } : { width: 0 }}
                               transition={{
-                                duration: 1,
-                                delay: 0.6 + categoryIndex * 0.1 + skillIndex * 0.05,
+                                duration: isLowEndDevice ? 0.5 : 1,
+                                delay: isLowEndDevice ? 0.2 + categoryIndex * 0.05 + skillIndex * 0.02 : 0.6 + categoryIndex * 0.1 + skillIndex * 0.05,
                                 ease: [0.4, 0, 0.2, 1],
                               }}
                             />

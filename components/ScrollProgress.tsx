@@ -1,13 +1,15 @@
 'use client';
 
 import { motion, useScroll, useSpring } from 'framer-motion';
+import { useDeviceDetection } from '@/hooks/useDeviceDetection';
 
 export default function ScrollProgress() {
+  const { isLowEndDevice } = useDeviceDetection();
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
+    stiffness: isLowEndDevice ? 50 : 100,
+    damping: isLowEndDevice ? 20 : 30,
+    restDelta: isLowEndDevice ? 0.01 : 0.001,
   });
 
   return (
