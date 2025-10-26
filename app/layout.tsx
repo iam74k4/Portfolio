@@ -86,6 +86,7 @@ export default function RootLayout({
         {/* 初回読み込み用のデフォルトメタタグ - ThemeColorMetaで動的に更新される */}
         <meta name="theme-color" content="#3b82f6" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-status-bar-color" content="#3b82f6" />
         <meta name="msapplication-navbutton-color" content="#3b82f6" />
         <meta name="msapplication-TileColor" content="#3b82f6" />
       </head>
