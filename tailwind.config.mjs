@@ -22,10 +22,10 @@ const config = {
       },
       fontFamily: {
         sans: [
+          'var(--font-inter)',
           '-apple-system',
           'BlinkMacSystemFont',
           'SF Pro Display',
-          'Inter',
           'Segoe UI',
           'sans-serif',
         ],

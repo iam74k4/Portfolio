@@ -71,12 +71,42 @@ export default function ContactSection() {
     }
 
     setIsSubmitting(true);
-    setTimeout(() => {
+
+    try {
+      // Formspreeを使用する場合、以下のURLを置き換えてください
+      // https://formspree.io/ でフォームを作成し、URLを取得
+      const FORM_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
+      
+      // 本番環境でFormspreeが設定されている場合
+      if (FORM_ENDPOINT !== 'https://formspree.io/f/YOUR_FORM_ID') {
+        const response = await fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to send message');
+        }
+      } else {
+        // 開発環境: mailtoリンクを使用
+        const mailtoLink = `mailto:${siteConfig.email}?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(
+          `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+        )}`;
+        window.location.href = mailtoLink;
+      }
+
       setSubmitSuccess(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
+      setTimeout(() => setSubmitSuccess(false), 5000);
+    } catch (error) {
+      console.error('Error sending message:', error);
+      alert('メッセージの送信に失敗しました。もう一度お試しください。');
+    } finally {
       setIsSubmitting(false);
-      setTimeout(() => setSubmitSuccess(false), 3000);
-    }, 1000);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

@@ -1,9 +1,11 @@
 /** @type {import('next').NextConfig} */
+const isProd = process.env.NODE_ENV === 'production';
+
 const nextConfig = {
   output: 'export',
-  // GitHub Pagesでサブディレクトリにデプロイする場合の設定
-  basePath: '/Portfolio',
-  assetPrefix: '/Portfolio',
+  // GitHub Pagesでサブディレクトリにデプロイする場合の設定（本番環境のみ）
+  basePath: isProd ? '/Portfolio' : '',
+  assetPrefix: isProd ? '/Portfolio' : '',
 
   images: {
     unoptimized: true, // GitHub Pagesでは画像最適化が使えないため
