@@ -9,52 +9,52 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![Framer Motion](https://img.shields.io/badge/Framer_Motion-12-0055FF?style=flat-square&logo=framer&logoColor=white)](https://www.framer.com/motion/)
 
-A modern portfolio website built with Next.js 14
+Next.js 14 で構築されたモダンなポートフォリオサイト
 
-[**Demo**](https://iam74k4.github.io/Portfolio/) | [日本語](./README.ja.md)
+[**デモ**](https://iam74k4.github.io/Portfolio/) | [English](./README.md)
 
 </div>
 
 ---
 
-## Overview
+## 概要
 
-A modern, responsive portfolio website built with Next.js 14, TypeScript, and Tailwind CSS. Features dark mode support, smooth animations, SEO optimization, and PWA capabilities.
+Next.js 14、TypeScript、Tailwind CSSで構築されたモダンでレスポンシブなポートフォリオサイト。ダークモード対応、スムーズなアニメーション、SEO最適化、PWA機能を備えています。
 
-## Tech Stack
+## 技術スタック
 
-- **Framework**: Next.js 14 (App Router, Static Export)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **Animation**: Framer Motion
-- **Icons**: Lucide React
-- **Dark Mode**: next-themes
+- **フレームワーク**: Next.js 14 (App Router, Static Export)
+- **言語**: TypeScript
+- **スタイリング**: Tailwind CSS
+- **アニメーション**: Framer Motion
+- **アイコン**: Lucide React
+- **ダークモード**: next-themes
 
-## Features
+## 機能
 
-- Dark mode support (automatically adapts to system settings)
-- Responsive design
-- Smooth animations
-- SEO optimization (OGP, Twitter Card)
-- Accessibility support
-- PWA support
+- ダークモード対応（システム設定に自動対応）
+- レスポンシブデザイン
+- スムーズなアニメーション
+- SEO 最適化（OGP, Twitter Card）
+- アクセシビリティ対応
+- PWA 対応
 
-## Installation
+## インストール
 
 ```bash
-# Install dependencies
+# 依存関係をインストール
 npm install
 
-# Start development server
+# 開発サーバーを起動
 npm run dev
 
-# Build for production
+# 本番用にビルド
 npm run build
 ```
 
-## Usage
+## 使い方
 
-Edit `config/site.config.ts` to customize the entire site:
+`config/site.config.ts` を編集するだけでサイト全体が更新されます。
 
 ```typescript
 export const siteConfig = {
@@ -79,9 +79,9 @@ export const projectsConfig = [ ... ];
 export const blogPostsConfig = [ ... ];
 ```
 
-### Theme Colors
+### テーマカラー
 
-Customize colors in `app/globals.css`:
+`app/globals.css` でカラーをカスタマイズ:
 
 ```css
 :root {
@@ -92,7 +92,7 @@ Customize colors in `app/globals.css`:
 }
 ```
 
-## Project Structure
+## プロジェクト構造
 
 ```
 Portfolio/
@@ -110,36 +110,33 @@ Portfolio/
     └── favicon.ico
 ```
 
-## Environment Variables
+## 環境変数
 
-For GitHub Pages deployment, set the following environment variable:
+GitHub Pagesへのデプロイ時は、以下の環境変数を設定してください:
 
-- `NEXT_PUBLIC_BASE_PATH`: Base path for the site (e.g., `/Portfolio` for GitHub Pages)
+- `NEXT_PUBLIC_BASE_PATH`: サイトのベースパス（例: GitHub Pagesの場合は`/Portfolio`）
 
-In GitHub Actions, this can be set via repository variables or defaults to `/Portfolio`.
+GitHub Actionsでは、リポジトリ変数で設定するか、デフォルトで`/Portfolio`が使用されます。
 
-For local development, create a `.env.local` file:
+ローカル開発時は、`.env.local`ファイルを作成してください:
 
 ```env
 NEXT_PUBLIC_BASE_PATH=
 ```
 
-## Deploy
+## デプロイ
 
 ### GitHub Pages
 
 1. **Settings** → **Pages** → **Source**: `GitHub Actions`
-2. Push to `main` branch to trigger automatic deployment
+2. `main` ブランチへのプッシュで自動デプロイ
 
 ### Vercel / Netlify
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start)
 
-## Changelog
+## ライセンス
 
-See [CHANGELOG.md](CHANGELOG.md) for a list of changes and updates.
+MIT License - 詳細は[LICENSE](LICENSE)ファイルを参照してください
 
-## License
-
-MIT License - see [LICENSE](LICENSE) file for details

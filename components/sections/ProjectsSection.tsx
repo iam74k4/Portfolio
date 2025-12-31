@@ -2,15 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
-import {
-  Github,
-  ExternalLink,
-  ShoppingBag,
-  CheckSquare,
-  Palette,
-  FileText,
-  LucideIcon,
-} from 'lucide-react';
+import { Github, ExternalLink, ShoppingBag, CheckSquare, Palette, FileText, LucideIcon } from 'lucide-react';
 import { projectsConfig } from '@/config/site.config';
 
 export default function ProjectsSection() {
@@ -18,46 +10,28 @@ export default function ProjectsSection() {
   const isInView = useInView(ref, { once: true, amount: 0.1 });
   const [activeFilter, setActiveFilter] = useState('All');
 
-  // アイコンのマッピング
   const iconMap: Record<string, LucideIcon> = {
     Eコマースプラットフォーム: ShoppingBag,
     タスク管理アプリ: CheckSquare,
     ポートフォリオビルダー: Palette,
   };
 
-  // 設定からプロジェクトを読み込み、アイコンを追加
   const projects = projectsConfig.map((project) => ({
     ...project,
-    icon: iconMap[project.title] || FileText, // デフォルトアイコン
+    icon: iconMap[project.title] || FileText,
   }));
 
   const filters = ['All', 'Full Stack', 'Frontend', 'Backend'];
-
-  const filteredProjects =
-    activeFilter === 'All'
-      ? projects
-      : projects.filter((project) => project.category === activeFilter);
+  const filteredProjects = activeFilter === 'All' ? projects : projects.filter((p) => p.category === activeFilter);
 
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-      },
-    },
+    visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
   };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.4, 0, 0.2, 1] as const,
-      },
-    },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.4, 0, 0.2, 1] as const } },
   };
 
   return (
@@ -69,28 +43,24 @@ export default function ProjectsSection() {
         animate={isInView ? 'visible' : 'hidden'}
       >
         <motion.div variants={itemVariants} className="text-center mb-16">
-          <h2 className="text-[40px] md:text-[56px] font-bold text-foreground mb-4">
-            Featured Projects
-          </h2>
+          <h2 className="text-[40px] md:text-[56px] font-bold text-foreground mb-4">Featured Projects</h2>
           <div className="modern-divider mb-6" />
           <p className="text-[16px] text-secondary max-w-[600px] mx-auto leading-relaxed mb-10">
             私が手掛けたプロジェクトの一部をご紹介します
           </p>
 
-          {/* Filter Buttons */}
+          {/* Filters */}
           <div className="flex flex-wrap justify-center gap-3">
             {filters.map((filter) => (
-              <button
+              <motion.button
                 key={filter}
                 onClick={() => setActiveFilter(filter)}
-                className={`px-6 py-2.5 rounded-full text-[14px] font-medium transition-all duration-300 ${
-                  activeFilter === filter
-                    ? 'bg-accent text-white shadow-modern-md'
-                    : 'bg-surface text-secondary hover:bg-accent/10 hover:text-accent'
-                }`}
+                className={`glass-pill ${activeFilter === filter ? 'active' : ''}`}
+                whileHover={{ scale: activeFilter === filter ? 1 : 1.05 }}
+                whileTap={{ scale: 0.98 }}
               >
                 {filter}
-              </button>
+              </motion.button>
             ))}
           </div>
         </motion.div>
@@ -100,58 +70,36 @@ export default function ProjectsSection() {
             <motion.div
               key={index}
               variants={itemVariants}
-              className="modern-card group relative overflow-hidden"
+              className="glass-card no-hover p-7 group"
+              whileHover={{ y: -8 }}
+              transition={{ duration: 0.4 }}
             >
-              {/* Decorative corner accent */}
-              <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-accent/5 to-transparent rounded-bl-[48px]"></div>
-
-              {/* Icon container */}
               <div className="mb-6 relative">
-                <div className="w-16 h-16 rounded-2xl bg-accent/5 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-                  {(() => {
-                    const Icon = project.icon;
-                    return <Icon size={28} strokeWidth={1} className="text-accent" />;
-                  })()}
+                <div className="w-16 h-16 rounded-2xl bg-accent/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  {(() => { const Icon = project.icon; return <Icon size={28} strokeWidth={1.5} className="text-accent" />; })()}
                 </div>
-                <div className="absolute -bottom-2 -right-2 w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center text-[11px] font-bold text-accent">
+                <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-xl bg-[var(--glass-bg)] border border-[var(--glass-border)] flex items-center justify-center text-[11px] font-bold text-accent">
                   {String(index + 1).padStart(2, '0')}
                 </div>
               </div>
 
-              {/* Content */}
               <div className="space-y-4">
                 <h3 className="text-[20px] font-bold text-foreground">{project.title}</h3>
-                <p className="text-[15px] text-secondary leading-relaxed line-clamp-3">
-                  {project.description}
-                </p>
+                <p className="text-[15px] text-secondary leading-relaxed line-clamp-3">{project.description}</p>
 
-                {/* Tags */}
                 <div className="flex flex-wrap gap-2 pt-2">
                   {project.tags.map((tag) => (
-                    <span key={tag} className="modern-badge text-[12px]">
-                      {tag}
-                    </span>
+                    <span key={tag} className="modern-badge text-[12px]">{tag}</span>
                   ))}
                 </div>
 
-                {/* Links */}
-                <div className="flex gap-4 pt-6 border-t border-border">
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-[14px] text-foreground hover:text-accent transition-colors font-medium"
-                  >
-                    <Github size={16} strokeWidth={1} />
+                <div className="flex gap-4 pt-6 border-t border-[var(--glass-border)]">
+                  <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-[14px] text-foreground hover:text-accent transition-colors font-medium group/link">
+                    <Github size={16} strokeWidth={1.5} className="group-hover/link:scale-110 transition-transform" />
                     <span>Code</span>
                   </a>
-                  <a
-                    href={project.demo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-[14px] text-foreground hover:text-accent transition-colors font-medium"
-                  >
-                    <ExternalLink size={16} strokeWidth={1} />
+                  <a href={project.demo} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-[14px] text-foreground hover:text-accent transition-colors font-medium group/link">
+                    <ExternalLink size={16} strokeWidth={1.5} className="group-hover/link:scale-110 transition-transform" />
                     <span>Demo</span>
                   </a>
                 </div>
@@ -163,4 +111,3 @@ export default function ProjectsSection() {
     </section>
   );
 }
-

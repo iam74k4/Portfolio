@@ -8,12 +8,12 @@ export function useDeviceDetection() {
 
   useEffect(() => {
     const checkDevice = () => {
-      // モバイルデバイスの検出
+      // Detect mobile devices
       const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
         navigator.userAgent
       ) || window.innerWidth <= 768;
 
-      // 低性能デバイスの検出（簡易版）
+      // Detect low-end devices (simplified)
       const isLowEnd = isMobileDevice || 
         (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2) ||
         ((navigator as any).deviceMemory && (navigator as any).deviceMemory <= 2);

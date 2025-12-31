@@ -10,24 +10,24 @@ export default function ThemeColorMeta() {
     const currentTheme = theme === 'system' ? systemTheme : theme;
     const isDark = currentTheme === 'dark';
     
-    // ライトモードとダークモードの色を定義
+    // Define colors for light and dark modes
     const lightThemeColor = '#6366f1';
     const darkThemeColor = '#09090b';
     const themeColor = isDark ? darkThemeColor : lightThemeColor;
     
-    // 既存のtheme-colorメタタグを更新
+    // Update existing theme-color meta tag
     const metaThemeColor = document.querySelector('meta[name="theme-color"]');
     if (metaThemeColor) {
       metaThemeColor.setAttribute('content', themeColor);
     }
 
-    // Apple Safari用のmetaタグも更新
+    // Update Apple Safari meta tags
     const appleMetaThemeColor = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
     if (appleMetaThemeColor) {
       appleMetaThemeColor.setAttribute('content', isDark ? 'black-translucent' : 'default');
     }
 
-    // Apple Safari用のtheme-colorメタタグも追加
+    // Add Apple Safari theme-color meta tag
     let appleThemeColorMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-color"]');
     if (!appleThemeColorMeta) {
       appleThemeColorMeta = document.createElement('meta');
@@ -36,19 +36,19 @@ export default function ThemeColorMeta() {
     }
     appleThemeColorMeta.setAttribute('content', themeColor);
 
-    // Microsoft Edge用のmetaタグ
+    // Microsoft Edge meta tags
     const msMetaThemeColor = document.querySelector('meta[name="msapplication-navbutton-color"]');
     if (msMetaThemeColor) {
       msMetaThemeColor.setAttribute('content', themeColor);
     }
 
-    // 背景色も更新
+    // Update background color
     const metaBackgroundColor = document.querySelector('meta[name="msapplication-TileColor"]');
     if (metaBackgroundColor) {
       metaBackgroundColor.setAttribute('content', themeColor);
     }
 
-    // 追加のPWA用メタタグ
+    // Additional PWA meta tags
     const pwaThemeColor = document.querySelector('meta[name="mobile-web-app-capable"]');
     if (!pwaThemeColor) {
       const meta = document.createElement('meta');
@@ -57,7 +57,7 @@ export default function ThemeColorMeta() {
       document.head.appendChild(meta);
     }
 
-    // より詳細なApple Safari制御
+    // More detailed Apple Safari control
     const appleWebAppCapable = document.querySelector('meta[name="apple-mobile-web-app-capable"]');
     if (!appleWebAppCapable) {
       const meta = document.createElement('meta');
@@ -66,23 +66,21 @@ export default function ThemeColorMeta() {
       document.head.appendChild(meta);
     }
 
-    // ドキュメントの背景色も設定
+    // Set document background color
     document.documentElement.style.setProperty('--theme-color', themeColor);
     
-    // PWAのmanifest.jsonのtheme_colorも動的に更新
-    // 注意: これは実際のmanifest.jsonファイルを変更しませんが、
-    // ブラウザが認識するtheme_colorを動的に変更します
+    // Dynamically update PWA manifest.json theme_color
+    // Note: This does not modify the actual manifest.json file,
+    // but dynamically changes the theme_color recognized by the browser
     const manifestLink = document.querySelector('link[rel="manifest"]');
     if (manifestLink) {
-      // キャッシュを無効化して再読み込み
+      // Invalidate cache and reload
       const href = manifestLink.getAttribute('href');
       if (href) {
         manifestLink.setAttribute('href', `${href}?v=${Date.now()}`);
       }
     }
     
-    // デバッグ用ログ（本番環境では削除可能）
-    console.log(`Theme changed to: ${currentTheme}, Status bar color: ${themeColor}`);
   }, [theme, systemTheme]);
 
   return null;

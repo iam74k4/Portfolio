@@ -31,94 +31,92 @@ export default function Header() {
 
   return (
     <>
-      {/* Skip to main content link for accessibility */}
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-accent focus:text-white focus:rounded-lg"
       >
-        メインコンテンツへスキップ
+        Skip to main content
       </a>
 
       <motion.header
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled ? 'modern-nav' : 'bg-transparent'
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          scrolled ? 'modern-nav py-2' : 'bg-transparent py-4'
         }`}
         role="banner"
       >
-        <nav className="max-w-[1400px] mx-auto px-8 py-3" aria-label="メインナビゲーション">
+        <nav className="max-w-[1400px] mx-auto px-8" aria-label="Main navigation">
           <div className="flex items-center justify-between">
-            {/* Logo */}
             <Link
               href="/"
-              className="text-[20px] font-bold gradient-text hover:opacity-80 transition-opacity"
-              aria-label="ホームページへ"
+              className="text-[22px] font-bold gradient-text hover:opacity-80 transition-opacity"
+              aria-label="Go to home page"
             >
               Portfolio
             </Link>
 
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-8">
+            <div className="hidden md:flex items-center gap-1">
               {navItems.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
-                  className="text-[15px] text-foreground hover:text-accent transition-colors font-medium"
-                  aria-label={`${item.name}セクションへ移動`}
+                  className="relative px-4 py-2 text-[14px] text-foreground/80 hover:text-foreground transition-all duration-300 font-medium rounded-xl hover:bg-[var(--glass-bg)]"
+                  aria-label={`Go to ${item.name} section`}
                 >
                   {item.name}
                 </a>
               ))}
-              <ThemeToggle />
+              <div className="ml-4 pl-4 border-l border-[var(--glass-border)]">
+                <ThemeToggle />
+              </div>
             </div>
 
-            {/* Mobile Menu Button */}
             <div className="md:hidden flex items-center gap-3">
               <ThemeToggle />
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="p-2 text-foreground hover:text-accent transition-colors"
-                aria-label="メニューを開く"
+                className="glass-icon-btn"
+                aria-label="Open menu"
                 aria-expanded={isMobileMenuOpen}
               >
                 {isMobileMenuOpen ? (
-                  <X size={24} strokeWidth={1.5} />
+                  <X size={20} strokeWidth={1.5} className="text-foreground" />
                 ) : (
-                  <Menu size={24} strokeWidth={1.5} />
+                  <Menu size={20} strokeWidth={1.5} className="text-foreground" />
                 )}
               </button>
             </div>
           </div>
         </nav>
 
-        {/* Mobile Navigation Menu */}
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-              className="md:hidden border-t border-border bg-background/95 backdrop-blur-xl overflow-hidden"
+              transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+              className="md:hidden overflow-hidden"
             >
-              <nav
-                className="max-w-[1400px] mx-auto px-8 py-4 space-y-2"
-                aria-label="モバイルナビゲーション"
-              >
-                {navItems.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="block text-[17px] text-foreground hover:text-accent transition-colors py-2 font-medium"
-                    aria-label={`${item.name}セクションへ移動`}
-                  >
-                    {item.name}
-                  </a>
-                ))}
-              </nav>
+              <div className="mx-4 my-2 glass-card rounded-2xl">
+                <nav className="p-4 space-y-1" aria-label="Mobile navigation">
+                  {navItems.map((item, index) => (
+                    <motion.a
+                      key={item.name}
+                      href={item.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="block text-[16px] text-foreground hover:text-accent transition-all py-3 px-4 font-medium rounded-xl hover:bg-[var(--glass-bg-hover)]"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.05 }}
+                    >
+                      {item.name}
+                    </motion.a>
+                  ))}
+                </nav>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -126,4 +124,3 @@ export default function Header() {
     </>
   );
 }
-

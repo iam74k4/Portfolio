@@ -8,6 +8,7 @@ import BackgroundElements from '@/components/BackgroundElements';
 import ScrollProgress from '@/components/ScrollProgress';
 import SplashScreen from '@/components/SplashScreen';
 import ThemeColorMeta from '@/components/ThemeColorMeta';
+import JsonLd from '@/components/JsonLd';
 import { siteConfig } from '@/config/site.config';
 
 const inter = Inter({
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
   creator: siteConfig.name,
   openGraph: {
     type: 'website',
-    locale: 'ja_JP',
+    locale: 'en_US',
     url: siteConfig.url,
     title: `${siteConfig.name} - ${siteConfig.title}`,
     description: siteConfig.description,
@@ -88,9 +89,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja" suppressHydrationWarning className={`${inter.variable} ${spaceGrotesk.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <head>
-        {/* 初回読み込み用のデフォルトメタタグ - ThemeColorMetaで動的に更新される */}
+        {/* Default meta tags for initial load - dynamically updated by ThemeColorMeta */}
         <meta name="theme-color" content="#6366f1" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-status-bar-color" content="#6366f1" />
@@ -99,6 +100,7 @@ export default function RootLayout({
       </head>
       <body className="antialiased font-sans">
         <Providers>
+          <JsonLd />
           <ThemeColorMeta />
           <SplashScreen />
           <ScrollProgress />

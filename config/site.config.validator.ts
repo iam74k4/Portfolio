@@ -1,7 +1,7 @@
 /**
- * サイト設定のバリデーション
+ * Site configuration validation
  *
- * ビルド時に設定の妥当性をチェック
+ * Validates configuration during build
  */
 
 import {
@@ -22,53 +22,53 @@ export class ConfigValidationError extends Error {
 }
 
 /**
- * サイト設定の検証
+ * Validate site configuration
  */
 export function validateSiteConfig() {
   const errors: string[] = [];
 
-  // 必須フィールドのチェック
+  // Check required fields
   if (!siteConfig.name || siteConfig.name === 'Your Name') {
-    errors.push('name が未設定です。config/site.config.ts で設定してください。');
+    errors.push('name is not set. Please configure it in config/site.config.ts');
   }
 
   if (!siteConfig.email || siteConfig.email === 'your.email@example.com') {
-    errors.push('email が未設定です。config/site.config.ts で設定してください。');
+    errors.push('email is not set. Please configure it in config/site.config.ts');
   } else if (!isValidEmail(siteConfig.email)) {
-    errors.push(`email の形式が不正です: ${siteConfig.email}`);
+    errors.push(`Invalid email format: ${siteConfig.email}`);
   }
 
   if (!siteConfig.url || siteConfig.url === 'https://yourdomain.com') {
-    errors.push('url が未設定です。config/site.config.ts で設定してください。');
+    errors.push('url is not set. Please configure it in config/site.config.ts');
   } else if (!isValidUrl(siteConfig.url)) {
-    errors.push(`url の形式が不正です: ${siteConfig.url}`);
+    errors.push(`Invalid url format: ${siteConfig.url}`);
   }
 
-  // SNSリンクのチェック
+  // Check social links
   if (!siteConfig.social.github || siteConfig.social.github === 'https://github.com/yourusername') {
-    errors.push('GitHub URL が未設定です。config/site.config.ts で設定してください。');
+    errors.push('GitHub URL is not set. Please configure it in config/site.config.ts');
   } else if (!isValidUrl(siteConfig.social.github)) {
-    errors.push(`GitHub URL の形式が不正です: ${siteConfig.social.github}`);
+    errors.push(`Invalid GitHub URL format: ${siteConfig.social.github}`);
   }
 
-  // スキルレベルのチェック
+  // Check skill levels
   skillsConfig.forEach((category) => {
     category.items.forEach((skill) => {
       if (!isValidSkillLevel(skill.level)) {
         errors.push(
-          `スキル「${skill.name}」のレベルが不正です（0-100の範囲で設定してください）: ${skill.level}`
+          `Invalid skill level for "${skill.name}" (must be between 0-100): ${skill.level}`
         );
       }
     });
   });
 
-  // プロジェクトのチェック
+  // Check projects
   projectsConfig.forEach((project) => {
     if (project.github && !isValidUrl(project.github)) {
-      errors.push(`プロジェクト「${project.title}」のGitHub URLが不正です: ${project.github}`);
+      errors.push(`Invalid GitHub URL for project "${project.title}": ${project.github}`);
     }
     if (project.demo && !isValidUrl(project.demo)) {
-      errors.push(`プロジェクト「${project.title}」のデモURLが不正です: ${project.demo}`);
+      errors.push(`Invalid demo URL for project "${project.title}": ${project.demo}`);
     }
   });
 
@@ -76,63 +76,63 @@ export function validateSiteConfig() {
 }
 
 /**
- * 警告レベルのチェック（ビルドは通すが推奨事項を表示）
+ * Check for warnings (non-blocking recommendations)
  */
 export function getConfigWarnings() {
   const warnings: string[] = [];
 
-  // スキルが少ない場合
+  // Check if skills are configured
   if (skillsConfig.length === 0) {
-    warnings.push('スキルが1つも設定されていません。');
+    warnings.push('No skills are configured.');
   }
 
-  // プロジェクトが少ない場合
+  // Check if projects are configured
   if (projectsConfig.length === 0) {
-    warnings.push('プロジェクトが1つも設定されていません。');
+    warnings.push('No projects are configured.');
   }
 
-  // 職歴が少ない場合
+  // Check if work experience is configured
   const workExperiences = experiencesConfig.filter((e) => e.type === 'work');
   if (workExperiences.length === 0) {
-    warnings.push('職歴が1つも設定されていません。');
+    warnings.push('No work experience is configured.');
   }
 
   return warnings;
 }
 
 /**
- * 設定の完全性チェック（開発時の確認用）
+ * Complete configuration validation (for development use)
  */
 export function validateConfig() {
   const errors = validateSiteConfig();
   const warnings = getConfigWarnings();
 
   if (errors.length > 0) {
-    console.error('\n🚨 設定エラーが見つかりました:\n');
+    console.error('\n🚨 Configuration errors found:\n');
     errors.forEach((error, index) => {
       console.error(`  ${index + 1}. ${error}`);
     });
     console.error('\n');
-    throw new ConfigValidationError(`${errors.length}個の設定エラーがあります。`);
+    throw new ConfigValidationError(`Found ${errors.length} configuration error(s).`);
   }
 
   if (warnings.length > 0) {
-    console.warn('\n⚠️  設定の推奨事項:\n');
+    console.warn('\n⚠️  Configuration recommendations:\n');
     warnings.forEach((warning, index) => {
       console.warn(`  ${index + 1}. ${warning}`);
     });
     console.warn('\n');
   }
 
-  console.log('✅ 設定ファイルの検証が完了しました。\n');
+  console.log('✅ Configuration validation completed.\n');
 }
 
-// 開発環境でのみ実行
+// Run only in development environment
 if (process.env.NODE_ENV === 'development') {
   try {
     validateConfig();
   } catch (error) {
-    // 開発時はエラーを表示するが、ビルドは継続
+    // Display errors in development but continue build
     console.error(error);
   }
 }

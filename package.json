@@ -7,6 +7,7 @@
   "homepage": "https://iam74k4.github.io/Portfolio/",
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node scripts/generate-manifest.js && node scripts/generate-seo-files.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

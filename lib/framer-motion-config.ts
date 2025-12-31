@@ -1,6 +1,6 @@
 import { MotionConfig, Variants } from 'framer-motion';
 
-// モバイル用のFramer Motion設定
+// Framer Motion configuration for mobile
 export const mobileMotionConfig: Partial<typeof MotionConfig> = {
   reducedMotion: 'user',
   features: {
@@ -9,7 +9,7 @@ export const mobileMotionConfig: Partial<typeof MotionConfig> = {
   },
 };
 
-// デスクトップ用の設定
+// Configuration for desktop
 export const desktopMotionConfig: Partial<typeof MotionConfig> = {
   reducedMotion: 'user',
   features: {
@@ -18,14 +18,14 @@ export const desktopMotionConfig: Partial<typeof MotionConfig> = {
   },
 };
 
-// 共通イージング関数
+// Common easing functions
 export const easings = {
   smooth: [0.4, 0, 0.2, 1] as const,
   easeOut: [0, 0, 0.2, 1] as const,
   easeIn: [0.4, 0, 1, 1] as const,
 };
 
-// 共通アニメーションバリアント生成関数
+// Common animation variant generator functions
 export const createContainerVariants = (isLowEndDevice = false): Variants => ({
   hidden: { opacity: 0 },
   visible: {
@@ -49,7 +49,7 @@ export const createItemVariants = (isLowEndDevice = false): Variants => ({
   },
 });
 
-// フェードイン用バリアント
+// Fade in variant
 export const fadeInVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
@@ -58,7 +58,7 @@ export const fadeInVariants: Variants = {
   },
 };
 
-// スライドアップ用バリアント
+// Slide up variant
 export const slideUpVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {

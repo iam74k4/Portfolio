@@ -31,12 +31,12 @@ export default function NotFound() {
           className="space-y-4 mb-12"
         >
           <h2 className="text-[32px] md:text-[40px] font-bold text-foreground">
-            ページが見つかりません
+            Page Not Found
           </h2>
           <p className="text-[16px] text-secondary leading-relaxed">
-            お探しのページは存在しないか、移動した可能性があります。
+            The page you are looking for does not exist or has been moved.
             <br />
-            URLをご確認いただくか、ホームページに戻ってください。
+            Please check the URL or return to the home page.
           </p>
         </motion.div>
 
@@ -49,14 +49,14 @@ export default function NotFound() {
         >
           <Link href="/" className="modern-button inline-flex items-center gap-2 justify-center">
             <Home size={18} strokeWidth={1} />
-            <span>ホームに戻る</span>
+            <span>Go Home</span>
           </Link>
           <button
             onClick={() => window.history.back()}
             className="modern-button-secondary inline-flex items-center gap-2 justify-center"
           >
             <ArrowLeft size={18} strokeWidth={1} />
-            <span>前のページに戻る</span>
+            <span>Go Back</span>
           </button>
         </motion.div>
 
@@ -68,7 +68,7 @@ export default function NotFound() {
           className="mt-16"
         >
           <div className="inline-block px-6 py-3 rounded-full bg-accent/5 text-accent text-[14px] font-medium">
-            エラーコード: 404 - Not Found
+            Error Code: 404 - Not Found
           </div>
         </motion.div>
       </motion.div>

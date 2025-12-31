@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
+import { motion } from 'framer-motion';
 
 export default function ThemeToggle() {
   const [mounted, setMounted] = useState(false);
@@ -13,31 +14,34 @@ export default function ThemeToggle() {
   }, []);
 
   if (!mounted) {
-    return (
-      <button className="w-10 h-10 rounded-xl bg-surface hover:shadow-modern-md transition-all flex items-center justify-center">
-        <div className="w-5 h-5" />
-      </button>
-    );
+    return <div className="glass-icon-btn"><div className="w-5 h-5" /></div>;
   }
 
   return (
-    <button
+    <motion.button
       onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-      className="w-10 h-10 rounded-xl bg-surface hover:shadow-modern-md hover:scale-105 transition-all flex items-center justify-center group"
+      className="glass-icon-btn group"
+      whileHover={{ scale: 1.08 }}
+      whileTap={{ scale: 0.95 }}
       aria-label="Toggle theme"
     >
       {theme === 'dark' ? (
-        <Sun
-          className="w-5 h-5 text-accent group-hover:rotate-12 transition-transform"
-          strokeWidth={1}
-        />
+        <motion.div
+          initial={{ rotate: -45, opacity: 0 }}
+          animate={{ rotate: 0, opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          <Sun className="w-5 h-5 text-accent" strokeWidth={1.5} />
+        </motion.div>
       ) : (
-        <Moon
-          className="w-5 h-5 text-accent group-hover:-rotate-12 transition-transform"
-          strokeWidth={1}
-        />
+        <motion.div
+          initial={{ rotate: 45, opacity: 0 }}
+          animate={{ rotate: 0, opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          <Moon className="w-5 h-5 text-accent" strokeWidth={1.5} />
+        </motion.div>
       )}
-    </button>
+    </motion.button>
   );
 }
-

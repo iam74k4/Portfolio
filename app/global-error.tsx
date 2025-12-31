@@ -14,7 +14,7 @@ export default function GlobalError({
   }, [error]);
 
   return (
-    <html lang="ja">
+    <html lang="en">
       <body>
         <div
           style={{
@@ -28,10 +28,10 @@ export default function GlobalError({
         >
           <div style={{ textAlign: 'center', maxWidth: '600px' }}>
             <h1 style={{ fontSize: '32px', fontWeight: 'bold', marginBottom: '16px' }}>
-              重大なエラーが発生しました
+              A Critical Error Occurred
             </h1>
             <p style={{ fontSize: '16px', color: '#666', marginBottom: '32px' }}>
-              アプリケーションに問題が発生しました。ページを再読み込みしてください。
+              Something went wrong with the application. Please reload the page.
             </p>
             <button
               onClick={reset}
@@ -46,7 +46,7 @@ export default function GlobalError({
                 cursor: 'pointer',
               }}
             >
-              再読み込み
+              Reload
             </button>
           </div>
         </div>

@@ -1,34 +1,36 @@
 /** @type {import('next').NextConfig} */
 const isProd = process.env.NODE_ENV === 'production';
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || (isProd ? '/Portfolio' : '');
 
 const nextConfig = {
   output: 'export',
-  // GitHub Pagesでサブディレクトリにデプロイする場合の設定（本番環境のみ）
-  basePath: isProd ? '/Portfolio' : '',
-  assetPrefix: isProd ? '/Portfolio' : '',
+  // GitHub Pages deployment with subdirectory support
+  basePath: basePath,
+  assetPrefix: basePath,
+  trailingSlash: true,
 
   images: {
-    unoptimized: true, // GitHub Pagesでは画像最適化が使えないため
+    unoptimized: true, // Image optimization is not available on GitHub Pages
   },
 
-  // コンパイラ最適化
+  // Compiler optimization
   compiler: {
-    removeConsole: process.env.NODE_ENV === 'production', // 本番環境でconsole.logを削除
+    removeConsole: process.env.NODE_ENV === 'production', // Remove console.log in production
   },
 
-  // パフォーマンス最適化
-  swcMinify: true, // SWCミニファイを使用
+  // Performance optimization
+  swcMinify: true, // Use SWC minification
 
-  // 圧縮設定
+  // Compression settings
   compress: true,
 
-  // 本番環境でのソースマップを無効化（セキュリティとサイズ削減）
+  // Disable source maps in production (security and size reduction)
   productionBrowserSourceMaps: false,
 
-  // Reactの厳格モード
+  // React strict mode
   reactStrictMode: true,
 
-  // トレース設定
+  // Logging settings
   logging: {
     fetches: {
       fullUrl: false,

@@ -13,24 +13,12 @@ export default function ExperienceSection() {
 
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
+    visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
   };
 
   const itemVariants = {
     hidden: { opacity: 0, x: -30 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.6,
-        ease: [0.4, 0, 0.2, 1] as const,
-      },
-    },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: [0.4, 0, 0.2, 1] as const } },
   };
 
   return (
@@ -50,53 +38,46 @@ export default function ExperienceSection() {
 
         <div className="relative">
           {/* Timeline line */}
-          <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-border hidden md:block" />
+          <div className="absolute left-8 top-0 bottom-0 w-[2px] hidden md:block bg-gradient-to-b from-accent via-[var(--accent-light)] to-accent/30" />
 
           <div className="space-y-8">
             {experiences.map((exp, index) => (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                className="relative modern-card md:ml-20 hover:shadow-modern-lg transition-shadow"
-              >
-                {/* Icon */}
-                <div className="absolute -left-28 top-8 hidden md:flex items-center justify-center">
-                  <div className="w-12 h-12 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center">
+              <motion.div key={index} variants={itemVariants} className="relative md:ml-20">
+                {/* Timeline Icon */}
+                <div className="absolute -left-28 top-8 hidden md:flex">
+                  <div className="glass-icon-btn !w-14 !h-14 !rounded-full glow-accent">
                     {exp.type === 'work' ? (
-                      <Briefcase size={18} strokeWidth={1} className="text-accent" />
+                      <Briefcase size={20} strokeWidth={1.5} className="text-accent" />
                     ) : (
-                      <GraduationCap size={18} strokeWidth={1} className="text-accent" />
+                      <GraduationCap size={20} strokeWidth={1.5} className="text-accent" />
                     )}
                   </div>
                 </div>
 
-                {/* Mobile Icon */}
-                <div className="flex items-center gap-3 mb-4 md:hidden">
-                  <div className="w-10 h-10 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0">
-                    {exp.type === 'work' ? (
-                      <Briefcase size={16} strokeWidth={1} className="text-accent" />
-                    ) : (
-                      <GraduationCap size={16} strokeWidth={1} className="text-accent" />
-                    )}
+                <motion.div className="glass-card no-hover p-7" whileHover={{ y: -4 }} transition={{ duration: 0.3 }}>
+                  {/* Mobile Icon */}
+                  <div className="flex items-center gap-3 mb-4 md:hidden">
+                    <div className="w-11 h-11 rounded-xl bg-accent/10 flex items-center justify-center">
+                      {exp.type === 'work' ? (
+                        <Briefcase size={18} strokeWidth={1.5} className="text-accent" />
+                      ) : (
+                        <GraduationCap size={18} strokeWidth={1.5} className="text-accent" />
+                      )}
+                    </div>
+                    <span className="modern-badge text-[12px]">{exp.period}</span>
                   </div>
-                  <div className="text-[13px] text-accent font-semibold">{exp.period}</div>
-                </div>
 
-                {/* Content */}
-                <div className="space-y-2">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <h3 className="text-[20px] font-bold text-foreground">{exp.title}</h3>
-                      <p className="text-[15px] text-accent font-medium">{exp.company}</p>
+                  <div className="space-y-2">
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <h3 className="text-[20px] font-bold text-foreground">{exp.title}</h3>
+                        <p className="text-[15px] text-accent font-medium">{exp.company}</p>
+                      </div>
+                      <span className="hidden md:block modern-badge text-[12px]">{exp.period}</span>
                     </div>
-                    <div className="hidden md:block text-[13px] text-secondary font-medium whitespace-nowrap">
-                      {exp.period}
-                    </div>
+                    <p className="text-[15px] text-secondary leading-relaxed pt-2">{exp.description}</p>
                   </div>
-                  <p className="text-[15px] text-secondary leading-relaxed pt-2">
-                    {exp.description}
-                  </p>
-                </div>
+                </motion.div>
               </motion.div>
             ))}
           </div>
@@ -105,4 +86,3 @@ export default function ExperienceSection() {
     </section>
   );
 }
-

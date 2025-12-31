@@ -1,12 +1,12 @@
 /**
- * サイト設定ファイル
+ * Site configuration file
  *
- * ⚠️ このファイルだけ編集すれば全体に反映されます！
+ * ⚠️ Edit this file to update the entire site!
  *
- * カスタマイズ手順：
- * 1. 下記の情報をあなたの情報に書き換える
- * 2. npm run build でビルド
- * 3. git push でデプロイ
+ * Customization steps:
+ * 1. Replace the information below with your own
+ * 2. Run npm run build
+ * 3. Deploy with git push
  */
 
 import type {
@@ -20,33 +20,33 @@ import type {
 
 export const siteConfig: SiteConfig = {
   // ========================================
-  // 基本情報（必須）
+  // Basic Information (Required)
   // ========================================
-  name: 'Your Name', // あなたの名前
-  title: 'Full Stack Developer', // あなたの肩書き
-  url: 'https://iam74k4.github.io/Portfolio', // ⚠️ デプロイURL（必須）
+  name: 'Your Name', // Your name
+  title: 'Full Stack Developer', // Your title
+  url: 'https://iam74k4.github.io/Portfolio', // ⚠️ Deployment URL (Required)
   description:
     'Modern portfolio website showcasing full stack development projects, skills, and experience.',
 
   // ========================================
-  // 連絡先（必須）
+  // Contact Information (Required)
   // ========================================
-  email: 'your.email@example.com', // ⚠️ メールアドレス（必須）
-  location: 'Tokyo, Japan', // 所在地
-  phone: '+81-XX-XXXX-XXXX', // 電話番号（任意）
+  email: 'your.email@example.com', // ⚠️ Email address (Required)
+  location: 'Tokyo, Japan', // Location
+  phone: '+81-XX-XXXX-XXXX', // Phone number (Optional)
 
   // ========================================
-  // SNSリンク（必須）
+  // Social Links (Required)
   // ========================================
   social: {
-    github: 'https://github.com/iam74k4', // ⚠️ GitHub（必須）
+    github: 'https://github.com/iam74k4', // ⚠️ GitHub (Required)
     linkedin: 'https://linkedin.com/in/yourname', // LinkedIn
     twitter: 'https://twitter.com/yourhandle', // Twitter/X
-    twitterHandle: '@yourhandle', // Twitter @ (OGP用)
+    twitterHandle: '@yourhandle', // Twitter @ (for OGP)
   },
 
   // ========================================
-  // Hero セクション
+  // Hero Section
   // ========================================
   hero: {
     roles: ['Full Stack Developer', 'UI/UX Enthusiast', 'Problem Solver', 'Tech Innovator'],
@@ -54,7 +54,7 @@ export const siteConfig: SiteConfig = {
   },
 
   // ========================================
-  // About セクション
+  // About Section
   // ========================================
   about: {
     description: `
@@ -73,7 +73,7 @@ export const siteConfig: SiteConfig = {
   },
 
   // ========================================
-  // SEO設定
+  // SEO Settings
   // ========================================
   seo: {
     keywords: [
@@ -87,11 +87,11 @@ export const siteConfig: SiteConfig = {
       'UI/UX',
     ],
     ogImage: '/og-image.svg', // public/og-image.svg (1200x630px)
-    googleVerification: 'your-google-verification-code', // Google Search Console登録後に設定
+    googleVerification: 'your-google-verification-code', // Set after registering with Google Search Console
   },
 
   // ========================================
-  // PWA設定
+  // PWA Settings
   // ========================================
   pwa: {
     name: 'Portfolio Website',
@@ -102,7 +102,7 @@ export const siteConfig: SiteConfig = {
 };
 
 // ========================================
-// スキル設定
+// Skills Configuration
 // ========================================
 export const skillsConfig: SkillCategory[] = [
   {
@@ -138,7 +138,7 @@ export const skillsConfig: SkillCategory[] = [
 ];
 
 // ========================================
-// 職歴・学歴
+// Work Experience & Education
 // ========================================
 export const experiencesConfig: Experience[] = [
   {
@@ -167,7 +167,7 @@ export const experiencesConfig: Experience[] = [
 ];
 
 // ========================================
-// 資格・受賞歴
+// Certifications & Awards
 // ========================================
 export const certificationsConfig: Certification[] = [
   {
@@ -191,7 +191,7 @@ export const certificationsConfig: Certification[] = [
 ];
 
 // ========================================
-// プロジェクト
+// Projects
 // ========================================
 export const projectsConfig: Project[] = [
   {
@@ -224,7 +224,7 @@ export const projectsConfig: Project[] = [
 ];
 
 // ========================================
-// ブログ記事
+// Blog Posts
 // ========================================
 export const blogPostsConfig: BlogPost[] = [
   {
@@ -234,7 +234,7 @@ export const blogPostsConfig: BlogPost[] = [
     date: '2024年1月15日',
     readTime: '5分',
     category: 'React',
-    url: '#', // ブログ記事のURL
+    url: '#', // Blog post URL
   },
   {
     title: 'Next.js App Routerの実践的な使い方',

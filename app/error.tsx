@@ -13,7 +13,7 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    // エラーをログに記録
+    // Log error
     console.error('Application error:', error);
   }, [error]);
 
@@ -45,17 +45,17 @@ export default function Error({
           className="space-y-4 mb-12"
         >
           <h1 className="text-[32px] md:text-[40px] font-bold text-foreground">
-            問題が発生しました
+            Something Went Wrong
           </h1>
           <p className="text-[16px] text-secondary leading-relaxed">
-            申し訳ございません。予期しないエラーが発生しました。
+            We&apos;re sorry. An unexpected error occurred.
             <br />
-            ページを再読み込みするか、ホームに戻ってください。
+            Please try reloading the page or return to the home page.
           </p>
           {process.env.NODE_ENV === 'development' && (
             <details className="mt-4 p-4 bg-surface rounded-lg text-left">
               <summary className="cursor-pointer text-[14px] font-medium text-foreground mb-2">
-                エラー詳細（開発環境のみ）
+                Error Details (Development Only)
               </summary>
               <pre className="text-[12px] text-red-600 dark:text-red-400 overflow-auto">
                 {error.message}
@@ -76,14 +76,14 @@ export default function Error({
             className="modern-button inline-flex items-center gap-2 justify-center"
           >
             <RefreshCw size={18} strokeWidth={1} />
-            <span>再試行</span>
+            <span>Try Again</span>
           </button>
           <Link
             href="/"
             className="modern-button-secondary inline-flex items-center gap-2 justify-center"
           >
             <Home size={18} strokeWidth={1} />
-            <span>ホームに戻る</span>
+            <span>Go Home</span>
           </Link>
         </motion.div>
 
@@ -95,7 +95,7 @@ export default function Error({
           className="mt-16"
         >
           <p className="text-[13px] text-secondary">
-            問題が解決しない場合は、ページを再読み込みするか、しばらく時間をおいてから再度お試しください。
+            If the problem persists, please reload the page or try again later.
           </p>
         </motion.div>
       </motion.div>

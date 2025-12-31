@@ -15,11 +15,13 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative py-12 border-t border-border/50 bg-transparent">
+    <footer className="relative py-16 bg-transparent">
+      <div className="glass-divider mb-12" />
+
       <div className="max-w-[980px] mx-auto px-6">
-        <div className="flex flex-col items-center space-y-6">
+        <div className="flex flex-col items-center space-y-8">
           {/* Social Links */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             {socialLinks.map((link) => {
               const Icon = link.icon;
               return (
@@ -28,12 +30,12 @@ export default function Footer() {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-secondary hover:text-accent transition-colors"
+                  className="glass-icon-btn !w-12 !h-12"
                   aria-label={link.name}
-                  whileHover={{ scale: 1.1 }}
+                  whileHover={{ scale: 1.1, boxShadow: '0 0 24px var(--accent-glow)' }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Icon size={20} strokeWidth={1} />
+                  <Icon size={20} strokeWidth={1.5} className="text-secondary hover:text-accent transition-colors" />
                 </motion.a>
               );
             })}
@@ -41,16 +43,15 @@ export default function Footer() {
 
           {/* Copyright */}
           <motion.div
-            className="text-[13px] text-secondary text-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            className="glass-pill !py-2 !px-6"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            <p>© {currentYear} Portfolio. All rights reserved.</p>
+            <p className="text-[13px] text-secondary">© {currentYear} Portfolio. All rights reserved.</p>
           </motion.div>
         </div>
       </div>
     </footer>
   );
 }
-

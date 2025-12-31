@@ -12,9 +12,7 @@ export default function AboutSection() {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
+      transition: { staggerChildren: 0.2 },
     },
   };
 
@@ -23,10 +21,7 @@ export default function AboutSection() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.4, 0, 0.2, 1] as const,
-      },
+      transition: { duration: 0.8, ease: [0.4, 0, 0.2, 1] as const },
     },
   };
 
@@ -47,23 +42,28 @@ export default function AboutSection() {
 
         <div className="max-w-[1200px] mx-auto">
           <div className="grid lg:grid-cols-2 gap-16 items-center mb-16">
-            {/* Left - Description */}
-            <motion.div variants={itemVariants} className="space-y-6">
-              {siteConfig.about.description
-                .trim()
-                .split('\n\n')
-                .filter((p) => p.trim())
-                .map((paragraph, index) => (
-                  <p key={index} className="text-[18px] text-secondary leading-relaxed">
-                    {paragraph.trim()}
-                  </p>
-                ))}
+            <motion.div variants={itemVariants} className="glass-card p-8">
+              <div className="space-y-6">
+                {siteConfig.about.description
+                  .trim()
+                  .split('\n\n')
+                  .filter((p) => p.trim())
+                  .map((paragraph, index) => (
+                    <p key={index} className="text-[17px] text-secondary leading-relaxed">
+                      {paragraph.trim()}
+                    </p>
+                  ))}
+              </div>
             </motion.div>
 
-            {/* Right - Stats */}
             <motion.div variants={itemVariants} className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {stats.map((stat, index) => (
-                <div key={index} className="modern-card text-center p-8">
+                <motion.div
+                  key={index}
+                  className="glass-card no-hover text-center p-8"
+                  whileHover={{ y: -6 }}
+                  transition={{ duration: 0.3 }}
+                >
                   <motion.div
                     className="text-[48px] font-bold gradient-text mb-3 leading-none"
                     initial={{ opacity: 0, scale: 0.5 }}
@@ -73,7 +73,7 @@ export default function AboutSection() {
                     {stat.value}
                   </motion.div>
                   <div className="text-[15px] text-secondary font-medium">{stat.label}</div>
-                </div>
+                </motion.div>
               ))}
             </motion.div>
           </div>
@@ -82,4 +82,3 @@ export default function AboutSection() {
     </section>
   );
 }
-
