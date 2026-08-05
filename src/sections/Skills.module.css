@@ -1,70 +1,70 @@
+/*
+ * 3列 × 縦リスト。1行 = 名称（左）+ 経験年数（右）で、
+ * About の経歴と同じ組み方。列ごとの行数がほぼ同じなので下端が揃う。
+ */
 .skills {
   flex: 1;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--gutter);
+  /* 列の上端をそろえたうえで、塊ごと中央に置く */
+  align-items: start;
+  align-content: center;
+  align-content: safe center;
   min-height: 0;
 }
 
 .group {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  justify-content: safe center;
-  gap: 16px;
+  gap: 10px;
   min-width: 0;
-  min-height: 0;
 }
 
 .groupHead {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--line);
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line-strong);
 }
 
-.groupHead::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-}
-
-/* 項目数が少なくても縦の余白が空きすぎないよう、パネル高さいっぱいに分散させる */
 .items {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  gap: 14px;
-  min-height: 0;
-  max-height: 460px;
 }
 
 .item {
   display: flex;
   flex-direction: column;
   gap: 7px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.item:last-child {
+  border-bottom: 0;
 }
 
 .itemHead {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 10px;
+  gap: 12px;
 }
 
 .name {
   font-size: 13px;
   letter-spacing: 0.01em;
+  min-width: 0;
 }
 
 .level {
+  flex: none;
   font-family: var(--font-mono);
   font-size: 10px;
+  letter-spacing: 0.02em;
   color: var(--ink-weak);
 }
 
+/* ---------- level を入れたときだけ出るメーター ---------- */
 .track {
   height: 4px;
   border-radius: 999px;
@@ -94,60 +94,7 @@
     align-content: start;
   }
 
-  .items {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px 18px;
-    flex: none;
-    max-height: none;
+  .item {
+    padding: 8px 0;
   }
-}
-
-/* ---------- 年数・習熟度を持たない場合のタグ表示 ---------- */
-/*
- * タグ表示のときは各グループの高さがバラつくため、上端をそろえたうえで
- * ブロック全体を中央に置く。グループ単位で中央寄せすると見出しの高さがズレる。
- */
-.tagMode {
-  align-items: start;
-  align-content: center;
-  align-content: safe center;
-}
-
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  align-content: flex-start;
-  gap: 8px;
-}
-
-.tags li {
-  padding: 7px 14px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--surface);
-  font-size: 12.5px;
-  letter-spacing: 0.01em;
-  color: var(--ink-mid);
-  white-space: nowrap;
-  transition:
-    border-color 180ms var(--ease),
-    color 180ms var(--ease);
-}
-
-.tags li:hover {
-  border-color: var(--accent);
-  color: var(--ink);
-}
-
-/* 経験年数がある項目だけ、名前の後ろに小さく添える */
-.tags li b {
-  margin-left: 7px;
-  padding-left: 7px;
-  border-left: 1px solid var(--line);
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 400;
-  letter-spacing: 0.02em;
-  color: var(--ink-weak);
 }
