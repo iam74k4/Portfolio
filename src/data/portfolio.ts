@@ -50,94 +50,127 @@ export const career: CareerEntry[] = [
 
 export interface Work {
   title: string
+  /** 何を作ったか + 結果。数字で言えることは数字で書く */
   summary: string
   year: string
+  /** その案件での立場。個人開発なら「個人開発」 */
+  role: string
+  /** 使った技術。1つ目が主役になるよう並べる */
   tags: string[]
-  url?: string
+  /** ソースコード。公開していなければ省略 */
+  repo?: string
+  /** 動くもの。公開していなければ省略 */
+  demo?: string
 }
 
 export const works: Work[] = [
   {
     title: 'Atlas Design System',
-    summary: '80 以上のコンポーネントを擁するデザインシステム。設計から運用まで担当。',
+    summary: '84 コンポーネントを 6 プロダクトへ横展開。UI 実装の工数を平均 40% 削減した。',
     year: '2025',
-    tags: ['React', 'TypeScript', 'Storybook'],
+    role: '設計・実装リード（3名）',
+    tags: ['TypeScript', 'React', 'Storybook'],
+    repo: 'https://github.com/',
+    demo: 'https://example.com/',
   },
   {
     title: 'Nomad Booking',
-    summary: '宿泊予約サービスのリニューアル。予約完了率を 18% 改善。',
+    summary: '宿泊予約フローを再設計。離脱率の高い3画面を統合し、予約完了率を 18% 改善。',
     year: '2025',
-    tags: ['Next.js', 'GraphQL'],
+    role: 'フロントエンド担当',
+    tags: ['Next.js', 'GraphQL', 'Playwright'],
+    demo: 'https://example.com/',
   },
   {
     title: 'Pulse Analytics',
-    summary: 'リアルタイム分析ダッシュボード。数万点の描画を WebGL で最適化。',
+    summary: '5万点の時系列を 60fps で描画。Canvas から WebGL へ移行し描画時間を 1/12 に。',
     year: '2024',
-    tags: ['React', 'D3.js', 'WebGL'],
+    role: '個人開発',
+    tags: ['WebGL', 'React', 'D3.js'],
+    repo: 'https://github.com/',
+    demo: 'https://example.com/',
   },
   {
     title: 'Kotoba Editor',
-    summary: '日本語に最適化した Markdown エディタ。縦書きプレビューを実装。',
+    summary: '日本語組版に対応した Markdown エディタ。CRDT による同時編集を自前実装。',
     year: '2024',
-    tags: ['TypeScript', 'CRDT'],
+    role: '個人開発',
+    tags: ['TypeScript', 'CRDT', 'WebSocket'],
+    repo: 'https://github.com/',
+    demo: 'https://example.com/',
   },
   {
     title: 'Orbit Portfolio Kit',
-    summary: 'ポートフォリオ向けテーマの OSS。GitHub で 1.2k スター。',
+    summary: 'ポートフォリオ向けテーマの OSS。1.2k スター、コントリビュータ 23 名。',
     year: '2023',
+    role: 'メンテナ',
     tags: ['Astro', 'OSS'],
+    repo: 'https://github.com/',
+    demo: 'https://example.com/',
   },
   {
     title: 'Sonar CLI',
-    summary: 'Web パフォーマンスを継続計測する CLI。CI に組み込んで回帰を検知。',
+    summary: 'Lighthouse を CI に組み込む CLI。PR ごとに計測し、性能低下を自動で検知する。',
     year: '2023',
-    tags: ['Node.js', 'CI'],
+    role: '個人開発',
+    tags: ['Node.js', 'GitHub Actions'],
+    repo: 'https://github.com/',
   },
   {
     title: 'Mellow Player',
-    summary: '波形表示つきの音楽プレイヤー。Web Audio API で解析処理を実装。',
+    summary: 'Web Audio API で FFT 解析した波形を描画する音楽プレイヤー。',
     year: '2022',
+    role: '個人開発',
     tags: ['Web Audio', 'Canvas'],
+    repo: 'https://github.com/',
+    demo: 'https://example.com/',
   },
   {
     title: 'Tsumugi Docs',
-    summary: '社内向けドキュメント基盤。全文検索を WASM で クライアント側に。',
+    summary: '社内ドキュメント基盤。全文検索を WASM でクライアント側に置き、検索を 80ms に。',
     year: '2022',
-    tags: ['WASM', 'Search'],
+    role: 'フロントエンド担当',
+    tags: ['Rust', 'WASM', 'Vite'],
   },
 ]
 
 export interface SkillGroup {
   category: string
-  items: { name: string; level: number }[]
+  items: {
+    name: string
+    /** 実務での経験年数。バーの根拠として表に出す */
+    years: number
+    /** 習熟度（0–100）。バーの長さになる */
+    level: number
+  }[]
 }
 
 export const skillGroups: SkillGroup[] = [
   {
     category: 'Frontend',
     items: [
-      { name: 'TypeScript', level: 90 },
-      { name: 'React / Next.js', level: 85 },
-      { name: 'CSS / Design System', level: 80 },
-      { name: 'Accessibility', level: 65 },
+      { name: 'TypeScript', years: 6, level: 90 },
+      { name: 'React / Next.js', years: 5, level: 85 },
+      { name: 'CSS / Design System', years: 6, level: 80 },
+      { name: 'Web Accessibility', years: 3, level: 65 },
     ],
   },
   {
-    category: 'Backend',
+    category: 'Backend / Infra',
     items: [
-      { name: 'Node.js', level: 75 },
-      { name: 'GraphQL', level: 65 },
-      { name: 'PostgreSQL', level: 60 },
-      { name: 'Go', level: 45 },
+      { name: 'Node.js', years: 5, level: 75 },
+      { name: 'GraphQL', years: 3, level: 65 },
+      { name: 'PostgreSQL', years: 3, level: 60 },
+      { name: 'Docker / CI', years: 4, level: 60 },
     ],
   },
   {
-    category: 'Tools',
+    category: 'Practice',
     items: [
-      { name: 'Git / GitHub', level: 90 },
-      { name: 'Figma', level: 75 },
-      { name: 'Vite / Bundler', level: 70 },
-      { name: 'Docker', level: 55 },
+      { name: 'Git / コードレビュー', years: 7, level: 90 },
+      { name: 'テスト自動化', years: 4, level: 75 },
+      { name: 'パフォーマンス改善', years: 4, level: 80 },
+      { name: 'Figma / デザイン連携', years: 5, level: 70 },
     ],
   },
 ]

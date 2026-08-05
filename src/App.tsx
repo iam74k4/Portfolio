@@ -20,7 +20,7 @@ export default function App() {
     home: `${profileYears()}年目 — ${works.length} projects`,
     about: 'Profile / Career',
     works: `${works.length} projects — ページ送りで全件`,
-    skills: '主に使う技術と習熟度',
+    skills: '数字は実務での経験年数。バーはおおよその習熟度',
     contact: '2営業日以内に返信します',
   }
 

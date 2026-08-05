@@ -96,18 +96,78 @@
     linear-gradient(90deg, rgba(255, 255, 255, 0.28) 1px, transparent 1px);
   background-size: 20px 20px;
   mask-image: linear-gradient(to bottom right, #000, transparent 72%);
+  pointer-events: none;
 }
 
-.year {
+/* サムネイル上に重ねる情報。カードの縦幅を増やさずに済ませる */
+.year,
+.role {
   position: absolute;
-  right: 9px;
   bottom: 7px;
   z-index: 1;
   font-family: var(--font-mono);
   font-size: 10px;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.94);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.year {
+  right: 9px;
   letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.92);
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.28);
+}
+
+.role {
+  left: 9px;
+  max-width: calc(100% - 60px);
+}
+
+/* リポジトリ / デモへの導線 */
+.links {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 1;
+  display: flex;
+  gap: 6px;
+}
+
+.linkBtn {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.82);
+  color: #1a1a20;
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transform: translateY(-4px);
+  transition:
+    opacity 200ms var(--ease),
+    transform 200ms var(--ease),
+    background 160ms var(--ease);
+}
+
+/* ホバーできない環境では常に見せる（隠れたままにしない） */
+.card:hover .linkBtn,
+.linkBtn:focus-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.linkBtn:hover {
+  background: #ffffff;
+}
+
+@media (hover: none) {
+  .linkBtn {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .meta {
@@ -119,23 +179,17 @@
 }
 
 .title {
-  display: flex;
-  align-items: center;
-  gap: 6px;
   font-size: 13.5px;
   font-weight: 600;
   line-height: 1.35;
 }
 
-.title svg {
-  flex: none;
-  color: var(--ink-weak);
-  opacity: 0;
-  transition: opacity 200ms var(--ease);
+.title a {
+  transition: color 180ms var(--ease);
 }
 
-.card:hover .title svg {
-  opacity: 1;
+.title a:hover {
+  color: var(--accent);
 }
 
 .summary {

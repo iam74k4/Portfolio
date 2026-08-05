@@ -43,21 +43,50 @@ export function Works({ page, onChangePage }: Props) {
           // 作品ごとにサムネイルの色相をずらす。
           // アクセント（青紫）を基点に狭い範囲だけ振り、全体の色調をまとめる。
           const hue = { ['--h']: `${228 + ((page * PER_PAGE + i) % 6) * 15}` } as CSSProperties
+          // タイトルは「動くもの」優先、なければソースへ
+          const primary = work.demo ?? work.repo
 
           return (
             <li key={work.title}>
-              <a
-                className={styles.card}
-                href={work.url ?? '#works'}
-                {...(work.url ? { target: '_blank', rel: 'noreferrer noopener' } : {})}
-              >
-                <div className={styles.thumb} style={hue} aria-hidden="true">
+              <article className={styles.card}>
+                <div className={styles.thumb} style={hue}>
+                  <div className={styles.links}>
+                    {work.repo && (
+                      <a
+                        className={styles.linkBtn}
+                        href={work.repo}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        aria-label={`${work.title} のソースコード`}
+                      >
+                        <Icon name="github" size={14} />
+                      </a>
+                    )}
+                    {work.demo && (
+                      <a
+                        className={styles.linkBtn}
+                        href={work.demo}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        aria-label={`${work.title} のデモ`}
+                      >
+                        <Icon name="external" size={13} />
+                      </a>
+                    )}
+                  </div>
+                  <span className={styles.role}>{work.role}</span>
                   <span className={styles.year}>{work.year}</span>
                 </div>
+
                 <div className={styles.meta}>
                   <h3 className={styles.title}>
-                    {work.title}
-                    <Icon name="external" size={12} />
+                    {primary ? (
+                      <a href={primary} target="_blank" rel="noreferrer noopener">
+                        {work.title}
+                      </a>
+                    ) : (
+                      work.title
+                    )}
                   </h3>
                   <p className={styles.summary}>{work.summary}</p>
                   <ul className={styles.tags}>
@@ -66,7 +95,7 @@ export function Works({ page, onChangePage }: Props) {
                     ))}
                   </ul>
                 </div>
-              </a>
+              </article>
             </li>
           )
         })}

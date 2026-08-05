@@ -20,7 +20,7 @@ export function Skills({ active }: Props) {
               <li className={styles.item} key={item.name}>
                 <div className={styles.itemHead}>
                   <span className={styles.name}>{item.name}</span>
-                  <span className={styles.level}>{item.level}</span>
+                  <span className={styles.level}>{item.years}年</span>
                 </div>
                 <div
                   className={styles.track}
@@ -28,7 +28,7 @@ export function Skills({ active }: Props) {
                   aria-valuenow={item.level}
                   aria-valuemin={0}
                   aria-valuemax={100}
-                  aria-label={item.name}
+                  aria-label={`${item.name}（実務 ${item.years} 年）`}
                 >
                   <span
                     // key に active を混ぜて、表示のたびにアニメーションを再生させる
