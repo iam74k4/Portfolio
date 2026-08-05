@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portfolio Wireframe — SPA / No-Scroll</title>
+<style>
+/* =========================================================
+   WIREFRAME STYLESHEET
+   低忠実度ワイヤーフレーム。装飾は意図的に排除し、
+   「どこに」「何が」「どれくらいの面積で」置かれるかだけを表現する。
+   ========================================================= */
+
+:root {
+  --bg:        #ffffff;
+  --panel:     #f4f4f5;
+  --line:      #c9c9cf;
+  --line-soft: #e2e2e6;
+  --ink:       #18181b;
+  --ink-mid:   #6b6b75;
+  --ink-weak:  #a1a1ab;
+  --accent:    #18181b;
+  --nav-w:     260px;
+  --gutter:    clamp(24px, 3.2vw, 56px);
+  --radius:    4px;
+}
+
+:root[data-theme="dark"] {
+  --bg:        #101012;
+  --panel:     #17171a;
+  --line:      #3a3a42;
+  --line-soft: #26262c;
+  --ink:       #f4f4f5;
+  --ink-mid:   #8f8f9a;
+  --ink-weak:  #5c5c66;
+  --accent:    #f4f4f5;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  overflow: hidden;              /* ← 「スクロールなし」の担保 */
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- ワイヤーフレーム用プリミティブ ---------- */
+
+/* プレースホルダ矩形（画像・サムネイル） */
+.ph {
+  background: var(--panel);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  display: grid;
+  place-items: center;
+  color: var(--ink-weak);
+  font-size: 11px;
+  letter-spacing: .08em;
+  position: relative;
+  overflow: hidden;
+}
+.ph::after {                     /* 画像プレースホルダの斜線 */
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to top right,
+      transparent calc(50% - .5px), var(--line-soft) 50%,
+      transparent calc(50% + .5px));
+  pointer-events: none;
+}
+.ph > span { position: relative; z-index: 1; background: var(--panel); padding: 0 6px; }
+
+/* ダミーテキスト行 */
+.line {
+  height: 8px;
+  background: var(--line-soft);
+  border-radius: 2px;
+}
+.line + .line { margin-top: 9px; }
+.line.w90 { width: 90%; } .line.w75 { width: 75%; }
+.line.w60 { width: 60%; } .line.w45 { width: 45%; }
+
+/* 見出し用の太いバー */
+.bar {
+  height: 22px;
+  background: var(--line);
+  border-radius: 2px;
+}
+.bar.sm { height: 14px; }
+
+.label {
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink-weak);
+}
+
+/* =========================================================
+   LAYOUT — 100vh 固定 2ペイン
+   ========================================================= */
+.app {
+  height: 100dvh;
+  display: grid;
+  grid-template-columns: var(--nav-w) 1fr;
+}
+
+/* ---------- 左：固定サイドナビ ---------- */
+.nav {
+  border-right: 1px solid var(--line);
+  padding: var(--gutter) 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  min-height: 0;
+}
+
+.brand { display: grid; gap: 12px; }
+.brand .avatar { width: 56px; height: 56px; border-radius: 50%; }
+.brand .name   { width: 120px; }
+.brand .role   { width: 88px; }
+
+.nav-list { list-style: none; display: grid; gap: 2px; margin-top: 4px; }
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 9px 10px;
+  border: 0;
+  border-radius: var(--radius);
+  background: none;
+  color: var(--ink-mid);
+  font: inherit;
+  letter-spacing: .1em;
+  text-align: left;
+  cursor: pointer;
+  transition: background .18s, color .18s;
+}
+.nav-item:hover { background: var(--panel); color: var(--ink); }
+.nav-item .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  border: 1px solid var(--ink-weak);
+  flex: none;
+  transition: background .18s, border-color .18s;
+}
+.nav-item .num { margin-left: auto; font-size: 10px; color: var(--ink-weak); }
+.nav-item[aria-current="true"] { color: var(--ink); background: var(--panel); }
+.nav-item[aria-current="true"] .dot { background: var(--accent); border-color: var(--accent); }
+
+.nav-foot { margin-top: auto; display: grid; gap: 14px; }
+.sns { display: flex; gap: 8px; }
+.sns i {
+  width: 26px; height: 26px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  display: grid; place-items: center;
+  font-style: normal; font-size: 9px;
+  color: var(--ink-weak);
+}
+.theme-toggle {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: none; color: var(--ink-mid);
+  font: inherit; font-size: 10px; letter-spacing: .1em;
+  cursor: pointer; width: fit-content;
+}
+.theme-toggle:hover { color: var(--ink); }
+
+/* ---------- 右：切替ペイン ---------- */
+.stage {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+}
+
+.panel {
+  grid-area: 1 / 1;                 /* 全パネルを重ねてクロスフェード */
+  padding: var(--gutter);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity .34s ease, transform .34s ease, visibility .34s;
+}
+.panel[data-active] { opacity: 1; visibility: visible; transform: none; }
+
+.panel-head {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding-bottom: 18px;
+  margin-bottom: 22px;
+  border-bottom: 1px solid var(--line-soft);
+  flex: none;
+}
+.panel-head .bar { width: 180px; }
+
+.panel-body { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+
+.panel-foot {
+  flex: none;
+  padding-top: 16px;
+  margin-top: 18px;
+  border-top: 1px solid var(--line-soft);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.pager { display: flex; gap: 8px; }
+.pager button {
+  width: 30px; height: 30px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: none; color: var(--ink-mid);
+  font: inherit; cursor: pointer;
+}
+.pager button:hover { color: var(--ink); background: var(--panel); }
+
+/* ---------- 01 HOME ---------- */
+.home {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  gap: var(--gutter);
+  align-items: center;
+  min-height: 0;
+}
+.home-copy { display: grid; gap: 20px; align-content: center; }
+.home-copy .bar.hero { height: 46px; width: 78%; }
+.home-copy .bar.hero2 { height: 46px; width: 54%; }
+.home-cta { display: flex; gap: 10px; margin-top: 6px; }
+.btn {
+  height: 38px; padding: 0 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  display: grid; place-items: center;
+  font-size: 10px; letter-spacing: .14em; color: var(--ink-mid);
+}
+.btn.primary { background: var(--panel); border-color: var(--ink-weak); color: var(--ink); }
+.home-visual { height: min(58vh, 420px); }
+
+/* ---------- 02 ABOUT ---------- */
+.about {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: var(--gutter);
+  min-height: 0;
+}
+.about-photo { height: 100%; }
+.about-text { display: grid; gap: 26px; align-content: start; min-height: 0; }
+.timeline { display: grid; gap: 12px; }
+.tl-row {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 16px;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+/* ---------- 03 WORKS ---------- */
+.works {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 16px;
+  min-height: 0;
+}
+.card {
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+  padding: 12px;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: 12px;
+  min-height: 0;
+  transition: border-color .18s, transform .18s;
+}
+.card:hover { border-color: var(--line); transform: translateY(-2px); }
+.card .thumb { min-height: 0; }
+.card .meta { display: grid; gap: 7px; }
+.tags { display: flex; gap: 6px; }
+.tags b {
+  font-weight: 400; font-size: 9px; letter-spacing: .1em;
+  color: var(--ink-weak);
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+/* ---------- 04 SKILLS ---------- */
+.skills {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gutter);
+  align-content: start;
+  min-height: 0;
+}
+.skill-group { display: grid; gap: 14px; align-content: start; }
+.meter { display: grid; gap: 6px; }
+.meter .track {
+  height: 4px;
+  background: var(--line-soft);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.meter .track i { display: block; height: 100%; background: var(--line); }
+
+/* ---------- 05 CONTACT ---------- */
+.contact {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gutter);
+  align-items: center;
+  min-height: 0;
+}
+.contact-form { display: grid; gap: 14px; align-content: center; }
+.field {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  height: 42px;
+  display: flex; align-items: center;
+  padding: 0 12px;
+  color: var(--ink-weak); font-size: 10px; letter-spacing: .12em;
+}
+.field.area { height: 108px; align-items: flex-start; padding-top: 12px; }
+.contact-info { display: grid; gap: 22px; align-content: center; }
+.info-row { display: grid; gap: 6px; padding-bottom: 14px; border-bottom: 1px solid var(--line-soft); }
+
+/* =========================================================
+   注釈オーバーレイ（ワイヤーフレーム説明用・実装時は削除）
+   ========================================================= */
+.note {
+  position: absolute;
+  right: var(--gutter);
+  bottom: var(--gutter);
+  font-size: 10px;
+  color: var(--ink-weak);
+  letter-spacing: .1em;
+  pointer-events: none;
+}
+
+.hint {
+  position: fixed;
+  left: 50%; bottom: 14px; transform: translateX(-50%);
+  font-size: 10px; letter-spacing: .12em; color: var(--ink-weak);
+  background: var(--bg);
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
+  padding: 5px 14px;
+  pointer-events: none;
+}
+
+/* =========================================================
+   狭幅時のフォールバック（1024px 未満）
+   サイドナビ → 上部バー。ここでも縦スクロールは発生させない。
+   ========================================================= */
+@media (max-width: 1024px) {
+  .app { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+  .nav {
+    border-right: 0; border-bottom: 1px solid var(--line);
+    flex-direction: row; align-items: center; gap: 16px;
+    padding: 14px var(--gutter);
+    overflow-x: auto;
+  }
+  .brand { display: none; }
+  .nav-list { display: flex; gap: 4px; margin: 0; }
+  .nav-item .num { display: none; }
+  .nav-foot { margin: 0 0 0 auto; }
+  .sns { display: none; }
+  .home, .about, .contact { grid-template-columns: 1fr; }
+  .home-visual, .about-photo { display: none; }
+  .works { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(3, 1fr); }
+  .skills { grid-template-columns: 1fr; }
+  .note { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ============ 左：固定サイドナビ ============ -->
+  <nav class="nav">
+    <div class="brand">
+      <div class="ph avatar"><span>IMG</span></div>
+      <div class="bar sm name"></div>
+      <div class="line role"></div>
+    </div>
+
+    <ul class="nav-list" id="navList">
+      <li><button class="nav-item" data-target="home"    aria-current="true"><i class="dot"></i>HOME<span class="num">01</span></button></li>
+      <li><button class="nav-item" data-target="about"><i class="dot"></i>ABOUT<span class="num">02</span></button></li>
+      <li><button class="nav-item" data-target="works"><i class="dot"></i>WORKS<span class="num">03</span></button></li>
+      <li><button class="nav-item" data-target="skills"><i class="dot"></i>SKILLS<span class="num">04</span></button></li>
+      <li><button class="nav-item" data-target="contact"><i class="dot"></i>CONTACT<span class="num">05</span></button></li>
+    </ul>
+
+    <div class="nav-foot">
+      <button class="theme-toggle" id="themeToggle">◐ THEME</button>
+      <div class="sns"><i>GH</i><i>X</i><i>IN</i><i>@</i></div>
+    </div>
+  </nav>
+
+  <!-- ============ 右：切替ペイン ============ -->
+  <main class="stage" id="stage">
+
+    <!-- 01 HOME -->
+    <section class="panel" data-panel="home" data-active>
+      <div class="panel-head"><span class="label">01 — Home</span><div class="bar"></div></div>
+      <div class="panel-body">
+        <div class="home">
+          <div class="home-copy">
+            <span class="label">Greeting</span>
+            <div><div class="bar hero"></div><div class="bar hero2" style="margin-top:12px"></div></div>
+            <div>
+              <div class="line w75"></div>
+              <div class="line w60"></div>
+            </div>
+            <div class="home-cta">
+              <div class="btn primary">VIEW WORKS</div>
+              <div class="btn">CONTACT</div>
+            </div>
+          </div>
+          <div class="ph home-visual"><span>KEY VISUAL</span></div>
+        </div>
+      </div>
+      <div class="panel-foot">
+        <span class="label">Scroll-free / 100vh</span>
+        <div class="pager"><button>←</button><button>→</button></div>
+      </div>
+      <p class="note">01 / 05</p>
+    </section>
+
+    <!-- 02 ABOUT -->
+    <section class="panel" data-panel="about">
+      <div class="panel-head"><span class="label">02 — About</span><div class="bar"></div></div>
+      <div class="panel-body">
+        <div class="about">
+          <div class="ph about-photo"><span>PORTRAIT</span></div>
+          <div class="about-text">
+            <div>
+              <span class="label">Profile</span>
+              <div style="margin-top:12px">
+                <div class="line"></div><div class="line"></div>
+                <div class="line w90"></div><div class="line w45"></div>
+              </div>
+            </div>
+            <div>
+              <span class="label">Career</span>
+              <div class="timeline" style="margin-top:12px">
+                <div class="tl-row"><div class="line w90"></div><div class="line w75"></div></div>
+                <div class="tl-row"><div class="line w90"></div><div class="line w60"></div></div>
+                <div class="tl-row"><div class="line w90"></div><div class="line w75"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-foot">
+        <span class="label">Profile / Career</span>
+        <div class="pager"><button>←</button><button>→</button></div>
+      </div>
+      <p class="note">02 / 05</p>
+    </section>
+
+    <!-- 03 WORKS -->
+    <section class="panel" data-panel="works">
+      <div class="panel-head"><span class="label">03 — Works</span><div class="bar"></div></div>
+      <div class="panel-body">
+        <div class="works">
+          <article class="card"><div class="ph thumb"><span>THUMB</span></div>
+            <div class="meta"><div class="line w75"></div><div class="tags"><b>TAG</b><b>TAG</b></div></div></article>
+          <article class="card"><div class="ph thumb"><span>THUMB</span></div>
+            <div class="meta"><div class="line w60"></div><div class="tags"><b>TAG</b><b>TAG</b></div></div></article>
+          <article class="card"><div class="ph thumb"><span>THUMB</span></div>
+            <div class="meta"><div class="line w90"></div><div class="tags"><b>TAG</b></div></div></article>
+          <article class="card"><div class="ph thumb"><span>THUMB</span></div>
+            <div class="meta"><div class="line w75"></div><div class="tags"><b>TAG</b><b>TAG</b></div></div></article>
+          <article class="card"><div class="ph thumb"><span>THUMB</span></div>
+            <div class="meta"><div class="line w60"></div><div class="tags"><b>TAG</b></div></div></article>
+          <article class="card"><div class="ph thumb"><span>THUMB</span></div>
+            <div class="meta"><div class="line w90"></div><div class="tags"><b>TAG</b><b>TAG</b></div></div></article>
+        </div>
+      </div>
+      <div class="panel-foot">
+        <span class="label">6 items — 1 screen (7件目以降はページャ)</span>
+        <div class="pager"><button>←</button><button>→</button></div>
+      </div>
+      <p class="note">03 / 05</p>
+    </section>
+
+    <!-- 04 SKILLS -->
+    <section class="panel" data-panel="skills">
+      <div class="panel-head"><span class="label">04 — Skills</span><div class="bar"></div></div>
+      <div class="panel-body">
+        <div class="skills">
+          <div class="skill-group">
+            <span class="label">Frontend</span>
+            <div class="meter"><div class="line w45"></div><div class="track"><i style="width:85%"></i></div></div>
+            <div class="meter"><div class="line w60"></div><div class="track"><i style="width:70%"></i></div></div>
+            <div class="meter"><div class="line w45"></div><div class="track"><i style="width:60%"></i></div></div>
+          </div>
+          <div class="skill-group">
+            <span class="label">Backend</span>
+            <div class="meter"><div class="line w60"></div><div class="track"><i style="width:75%"></i></div></div>
+            <div class="meter"><div class="line w45"></div><div class="track"><i style="width:55%"></i></div></div>
+            <div class="meter"><div class="line w60"></div><div class="track"><i style="width:45%"></i></div></div>
+          </div>
+          <div class="skill-group">
+            <span class="label">Tools</span>
+            <div class="meter"><div class="line w45"></div><div class="track"><i style="width:80%"></i></div></div>
+            <div class="meter"><div class="line w60"></div><div class="track"><i style="width:65%"></i></div></div>
+            <div class="meter"><div class="line w45"></div><div class="track"><i style="width:50%"></i></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-foot">
+        <span class="label">3 columns × N rows</span>
+        <div class="pager"><button>←</button><button>→</button></div>
+      </div>
+      <p class="note">04 / 05</p>
+    </section>
+
+    <!-- 05 CONTACT -->
+    <section class="panel" data-panel="contact">
+      <div class="panel-head"><span class="label">05 — Contact</span><div class="bar"></div></div>
+      <div class="panel-body">
+        <div class="contact">
+          <div class="contact-info">
+            <div><div class="bar" style="width:60%"></div>
+              <div style="margin-top:14px"><div class="line w90"></div><div class="line w60"></div></div></div>
+            <div class="info-row"><span class="label">Email</span><div class="line w75"></div></div>
+            <div class="info-row"><span class="label">Social</span><div class="sns"><i>GH</i><i>X</i><i>IN</i></div></div>
+          </div>
+          <div class="contact-form">
+            <div class="field">NAME</div>
+            <div class="field">EMAIL</div>
+            <div class="field area">MESSAGE</div>
+            <div class="btn primary" style="width:160px">SEND</div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-foot">
+        <span class="label">Form / Direct links</span>
+        <div class="pager"><button>←</button><button>→</button></div>
+      </div>
+      <p class="note">05 / 05</p>
+    </section>
+
+  </main>
+</div>
+
+<p class="hint">ワイヤーフレーム — 左ナビ / ← → キー / ◐ でテーマ切替</p>
+
+<script>
+(() => {
+  const ORDER  = ['home', 'about', 'works', 'skills', 'contact'];
+  const items  = [...document.querySelectorAll('.nav-item')];
+  const panels = [...document.querySelectorAll('.panel')];
+  let current  = 0;
+
+  function show(index) {
+    current = (index + ORDER.length) % ORDER.length;
+    const key = ORDER[current];
+    panels.forEach(p => p.toggleAttribute('data-active', p.dataset.panel === key));
+    items.forEach(b => b.setAttribute('aria-current', String(b.dataset.target === key)));
+    history.replaceState(null, '', '#' + key);   // SPA: URL と状態を同期
+  }
+
+  items.forEach(b => b.addEventListener('click', () => show(ORDER.indexOf(b.dataset.target))));
+
+  document.querySelectorAll('.pager button').forEach(b =>
+    b.addEventListener('click', () => show(current + (b.textContent.includes('→') ? 1 : -1))));
+
+  addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') show(current + 1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   show(current - 1);
+  });
+
+  const start = ORDER.indexOf(location.hash.slice(1));
+  if (start >= 0) show(start);
+
+  // テーマ切替
+  const root = document.documentElement;
+  const prefersDark = matchMedia('(prefers-color-scheme: dark)').matches;
+  root.dataset.theme = prefersDark ? 'dark' : 'light';
+  document.getElementById('themeToggle').addEventListener('click', () => {
+    root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+  });
+})();
+</script>
+</body>
+</html>
