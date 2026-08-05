@@ -1,1 +1,78 @@
 # Portfolio
+
+スクロールしない SPA 型のポートフォリオサイト。
+
+- **SPA** — 5つのセクションを、ページ遷移なしで切り替える
+- **スクロールなし** — 常に `100dvh` に収まり、ページ全体はスクロールしない
+- **ライト / ダーク** — OS 設定に追従し、手動切り替えは `localStorage` に保存
+
+## セットアップ
+
+```bash
+npm install
+npm run dev      # 開発サーバ
+npm run build    # 型チェック + 本番ビルド
+npm run preview  # ビルド結果の確認
+npm run lint     # Oxlint
+```
+
+## 内容の差し替え
+
+表示される内容はすべて **[`src/data/portfolio.ts`](src/data/portfolio.ts)** に集約している。
+名前・経歴・作品・スキル・SNS リンクを書き換えれば、他のファイルに触れずに自分の内容になる。
+
+現在は仮データが入っている。あわせて差し替えるもの:
+
+| 対象 | 場所 |
+| --- | --- |
+| ページタイトル / description | `index.html` |
+| ポートレート写真 | `src/sections/About.tsx` の `.portrait` を `<img>` に置き換え |
+| 作品のリンク先 | `src/data/portfolio.ts` の `works[].url` |
+| 問い合わせの送信先 | `src/sections/Contact.tsx`（現在は `mailto:` を開く実装） |
+| 配色 | `src/styles/tokens.css` |
+
+## 構成
+
+```
+src/
+├─ data/portfolio.ts        表示内容（ここだけ編集すればよい）
+├─ hooks/
+│  ├─ useSectionRouter.ts   現在のセクション・URL hash 同期・キーボード操作
+│  └─ useTheme.ts           ライト/ダークの保持
+├─ components/
+│  ├─ Sidebar.tsx           左の固定ナビ
+│  ├─ Panel.tsx             各セクション共通の枠（見出し / 本体 / フッタ）
+│  └─ Icon.tsx              インライン SVG アイコン
+├─ sections/                Home / About / Works / Skills / Contact
+└─ styles/
+   ├─ tokens.css            配色・余白・モーションのトークン
+   └─ global.css            リセットと基本スタイル
+```
+
+## 操作
+
+| 操作 | 動作 |
+| --- | --- |
+| 左ナビのクリック | 該当セクションへ |
+| `←` `→` `↑` `↓` `PageUp` `PageDown` | 前後のセクションへ |
+| フッタの `←` `→` | 前後のセクションへ |
+| ブラウザの戻る / 進む | セクション履歴をたどる |
+| URL の `#works` など | 直接そのセクションを開く |
+
+入力欄にフォーカスがあるときは、矢印キーをセクション送りに使わない。
+
+## スクロールさせないための設計
+
+1. `html, body, #root` に `height: 100%` と `overflow: hidden`、ルートは `100dvh`。
+2. Grid / Flex の子には `min-height: 0` `min-width: 0` を付ける
+   （既定の `min-content` が、はみ出しの主な原因になる）。
+3. 各パネルは「見出し（固定）/ 本体（`flex: 1`）/ フッタ（固定）」の3層。
+   高さが変わっても本体だけが伸縮する。
+4. 件数が可変の Works は **1画面6件** に固定し、超過分はページ送りに逃がす。
+5. 余白と文字サイズは `clamp()` でビューポートに連動させる。
+6. 900px 未満では左ナビを上部バーに切り替える。
+   1カラムになる 560px 未満の Works だけは、例外的にグリッド内部のスクロールに閉じ込めている。
+
+## ワイヤーフレーム
+
+設計時のワイヤーフレームと意図は [`docs/wireframe/`](docs/wireframe/) に残してある。

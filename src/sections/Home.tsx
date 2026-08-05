@@ -1,0 +1,59 @@
+import { Icon } from '../components/Icon'
+import { profile, works, type SectionId } from '../data/portfolio'
+import styles from './Home.module.css'
+
+interface Props {
+  onNavigate: (id: SectionId) => void
+}
+
+export function Home({ onNavigate }: Props) {
+  return (
+    <div className={styles.home}>
+      <div className={styles.copy}>
+        <span className="eyebrow">Hello — {profile.nameEn}</span>
+
+        <h1 className={styles.headline}>
+          {profile.headline.map((line, i) => (
+            <span key={line}>{i === 0 ? <em>{line}</em> : line}</span>
+          ))}
+        </h1>
+
+        <p className={styles.lead}>{profile.lead}</p>
+
+        <div className={styles.actions}>
+          <button
+            type="button"
+            className={`${styles.btn} ${styles.primary}`}
+            onClick={() => onNavigate('works')}
+          >
+            作品を見る
+            <Icon name="arrow" size={15} />
+          </button>
+          <button
+            type="button"
+            className={`${styles.btn} ${styles.ghost}`}
+            onClick={() => onNavigate('contact')}
+          >
+            連絡する
+          </button>
+        </div>
+      </div>
+
+      <div className={styles.visual} aria-hidden="true">
+        <div className={`${styles.orb} ${styles.orb1}`} />
+        <div className={`${styles.orb} ${styles.orb2}`} />
+        <div className={`${styles.orb} ${styles.orb3}`} />
+        <div className={styles.stats}>
+          <div className={styles.stat}>
+            <b>{new Date().getFullYear() - 2019}+</b>
+            <span>Years</span>
+          </div>
+          <div className={styles.stat}>
+            <b>{works.length}</b>
+            <span>Projects</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}

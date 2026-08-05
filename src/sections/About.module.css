@@ -1,0 +1,124 @@
+.about {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: var(--gutter);
+  min-height: 0;
+}
+
+/* ---------- 左：ポートレート枠 ---------- */
+.portrait {
+  position: relative;
+  min-height: 0;
+  border-radius: calc(var(--radius) * 1.6);
+  border: 1px solid var(--line);
+  background: linear-gradient(150deg, var(--accent-soft), var(--surface) 62%);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.portrait::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(var(--line-strong) 1px, transparent 1px);
+  background-size: 12px 12px;
+  opacity: 0.35;
+}
+
+.initials {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-mono);
+  font-size: clamp(38px, 5vw, 60px);
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+}
+
+/* ---------- 右：本文 ---------- */
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(18px, 3vh, 34px);
+  min-height: 0;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
+}
+
+.bio {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 68ch;
+  color: var(--ink-mid);
+  font-size: clamp(12.5px, 1vw, 14px);
+}
+
+/* Career ブロックだけを伸ばし、行を残りの高さに分散させる */
+.career {
+  flex: 1;
+  min-height: 0;
+}
+
+.timeline {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  min-height: 0;
+  max-height: 420px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 116px 1fr;
+  gap: 18px;
+  align-items: baseline;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.row:last-child {
+  border-bottom: 0;
+}
+
+.period {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--ink-weak);
+  white-space: nowrap;
+}
+
+.jobTitle {
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.org {
+  font-size: 12px;
+  color: var(--ink-mid);
+}
+
+@media (max-width: 900px) {
+  .about {
+    grid-template-columns: 1fr;
+  }
+
+  .portrait {
+    display: none;
+  }
+
+  .row {
+    grid-template-columns: 92px 1fr;
+    gap: 12px;
+    padding: 8px 0;
+  }
+}

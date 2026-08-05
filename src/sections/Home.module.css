@@ -1,0 +1,189 @@
+.home {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--gutter);
+  align-items: center;
+  min-height: 0;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px, 2.4vh, 26px);
+  min-width: 0;
+}
+
+.headline {
+  font-size: clamp(30px, 4.2vw, 56px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.headline span {
+  display: block;
+}
+
+.headline em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.lead {
+  max-width: 46ch;
+  color: var(--ink-mid);
+  font-size: clamp(13px, 1.05vw, 15px);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 42px;
+  padding: 0 20px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  transition: background 200ms var(--ease), color 200ms var(--ease),
+    border-color 200ms var(--ease), transform 200ms var(--ease);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+.primary:hover {
+  filter: brightness(1.08);
+}
+
+.ghost:hover {
+  background: var(--surface-hover);
+  border-color: var(--ink-weak);
+}
+
+/* ---------- 右：抽象ビジュアル ---------- */
+.visual {
+  position: relative;
+  height: min(52vh, 400px);
+  border-radius: calc(var(--radius) * 2);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* 背景の細いグリッド */
+.visual::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 34px 34px;
+  opacity: 0.5;
+  mask-image: radial-gradient(circle at 50% 50%, #000 30%, transparent 78%);
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(38px);
+  opacity: 0.75;
+  animation: drift 14s var(--ease) infinite alternate;
+}
+
+.orb1 {
+  width: 58%;
+  aspect-ratio: 1;
+  top: 6%;
+  left: 8%;
+  background: var(--accent);
+}
+
+.orb2 {
+  width: 46%;
+  aspect-ratio: 1;
+  bottom: 4%;
+  right: 6%;
+  background: #f0a5c8;
+  animation-delay: -5s;
+  animation-duration: 18s;
+}
+
+.orb3 {
+  width: 34%;
+  aspect-ratio: 1;
+  bottom: 26%;
+  left: 34%;
+  background: #7ad3e6;
+  animation-delay: -9s;
+  animation-duration: 22s;
+}
+
+@keyframes drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(9%, -7%, 0) scale(1.12);
+  }
+}
+
+/* 数値バッジ */
+.stats {
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  display: flex;
+  gap: 8px;
+  z-index: 1;
+}
+
+.stat {
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface) 76%, transparent);
+  backdrop-filter: blur(10px);
+}
+
+.stat b {
+  display: block;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.stat span {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+}
+
+@media (max-width: 900px) {
+  .home {
+    grid-template-columns: 1fr;
+    align-content: center;
+  }
+
+  .visual {
+    display: none;
+  }
+}
