@@ -102,3 +102,40 @@
     max-height: none;
   }
 }
+
+/* ---------- 年数・習熟度を持たない場合のタグ表示 ---------- */
+/*
+ * タグ表示のときは各グループの高さがバラつくため、上端をそろえたうえで
+ * ブロック全体を中央に置く。グループ単位で中央寄せすると見出しの高さがズレる。
+ */
+.tagMode {
+  align-items: start;
+  align-content: center;
+  align-content: safe center;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 8px;
+}
+
+.tags li {
+  padding: 7px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: 12.5px;
+  letter-spacing: 0.01em;
+  color: var(--ink-mid);
+  white-space: nowrap;
+  transition:
+    border-color 180ms var(--ease),
+    color 180ms var(--ease);
+}
+
+.tags li:hover {
+  border-color: var(--accent);
+  color: var(--ink);
+}

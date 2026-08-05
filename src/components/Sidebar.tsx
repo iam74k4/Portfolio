@@ -3,8 +3,6 @@ import type { Theme } from '../hooks/useTheme'
 import { Icon } from './Icon'
 import styles from './Sidebar.module.css'
 
-const iconOf = { GitHub: 'github', X: 'x', LinkedIn: 'linkedin' } as const
-
 interface Props {
   current: SectionId
   onNavigate: (id: SectionId) => void
@@ -13,16 +11,11 @@ interface Props {
 }
 
 export function Sidebar({ current, onNavigate, theme, onToggleTheme }: Props) {
-  const initials = profile.nameEn
-    .split(' ')
-    .map((w) => w[0])
-    .join('')
-
   return (
     <nav className={styles.nav} aria-label="セクション">
       <div className={styles.brand}>
         <div className={styles.monogram} aria-hidden="true">
-          {initials}
+          {profile.initials}
         </div>
         <div>
           <p className={styles.name}>{profile.name}</p>
@@ -72,7 +65,7 @@ export function Sidebar({ current, onNavigate, theme, onToggleTheme }: Props) {
                 rel="noreferrer noopener"
                 aria-label={s.label}
               >
-                <Icon name={iconOf[s.label as keyof typeof iconOf] ?? 'external'} size={15} />
+                <Icon name={s.icon} size={15} />
               </a>
             </li>
           ))}

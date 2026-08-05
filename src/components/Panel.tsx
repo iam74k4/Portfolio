@@ -1,5 +1,6 @@
-import type { ReactNode } from 'react'
+import { useRef, type ReactNode } from 'react'
 import type { Section } from '../data/portfolio'
+import { useScrollable } from '../hooks/useScrollable'
 import { Icon } from './Icon'
 import styles from './Panel.module.css'
 
@@ -15,6 +16,9 @@ interface Props {
 }
 
 export function Panel({ section, index, total, active, note, onShift, children }: Props) {
+  const bodyRef = useRef<HTMLDivElement>(null)
+  const scrollable = useScrollable(bodyRef)
+
   return (
     <section
       className={styles.panel}
@@ -32,7 +36,16 @@ export function Panel({ section, index, total, active, note, onShift, children }
         <p className={styles.caption}>{section.caption}</p>
       </header>
 
-      <div className={styles.body}>{children}</div>
+      {/* はみ出したときだけキーボードで掴めるようにする */}
+      <div
+        className={styles.body}
+        ref={bodyRef}
+        tabIndex={scrollable ? 0 : undefined}
+        role={scrollable ? 'group' : undefined}
+        aria-label={scrollable ? `${section.label} の内容（スクロールできます）` : undefined}
+      >
+        {children}
+      </div>
 
       <footer className={styles.foot}>
         <p className={styles.note}>{note ?? section.caption}</p>

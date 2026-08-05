@@ -3,8 +3,6 @@ import { Icon } from '../components/Icon'
 import { profile, socials } from '../data/portfolio'
 import styles from './Contact.module.css'
 
-const iconOf = { GitHub: 'github', X: 'x', LinkedIn: 'linkedin' } as const
-
 export function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' })
   const [status, setStatus] = useState('')
@@ -55,7 +53,7 @@ export function Contact() {
                   target="_blank"
                   rel="noreferrer noopener"
                 >
-                  <Icon name={iconOf[s.label as keyof typeof iconOf] ?? 'external'} size={13} />
+                  <Icon name={s.icon} size={13} />
                   {s.label}
                 </a>
               ))}

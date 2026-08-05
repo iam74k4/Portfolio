@@ -2,7 +2,7 @@ import { useState } from 'react'
 import styles from './App.module.css'
 import { Panel } from './components/Panel'
 import { Sidebar } from './components/Sidebar'
-import { sections, works } from './data/portfolio'
+import { profile, sections, works, type SectionId } from './data/portfolio'
 import { useSectionRouter } from './hooks/useSectionRouter'
 import { useTheme } from './hooks/useTheme'
 import { About } from './sections/About'
@@ -16,12 +16,12 @@ export default function App() {
   const { theme, toggle } = useTheme()
   const [worksPage, setWorksPage] = useState(0)
 
-  const notes: Record<string, string> = {
-    home: `${profileYears()}年目 — ${works.length} projects`,
+  const notes: Record<SectionId, string> = {
+    home: `${profile.role} — ${profile.location}`,
     about: 'Profile / Career',
-    works: `${works.length} projects — ページ送りで全件`,
-    skills: '数字は実務での経験年数。バーはおおよその習熟度',
-    contact: '2営業日以内に返信します',
+    works: `${works.length} projects — すべて個人開発`,
+    skills: '実際に手を動かしてきた技術',
+    contact: 'GitHub からでも構いません',
   }
 
   return (
@@ -57,8 +57,4 @@ export default function App() {
       </p>
     </div>
   )
-}
-
-function profileYears() {
-  return new Date().getFullYear() - 2019
 }

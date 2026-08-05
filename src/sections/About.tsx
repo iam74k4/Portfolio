@@ -2,16 +2,11 @@ import { career, profile } from '../data/portfolio'
 import styles from './About.module.css'
 
 export function About() {
-  const initials = profile.nameEn
-    .split(' ')
-    .map((w) => w[0])
-    .join('')
-
   return (
     <div className={styles.about}>
       {/* 写真を入れるときは、この枠を <img> に差し替える */}
       <div className={styles.portrait}>
-        <span className={styles.initials}>{initials}</span>
+        <span className={styles.initials}>{profile.initials}</span>
       </div>
 
       <div className={styles.text}>

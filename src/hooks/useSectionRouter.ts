@@ -44,13 +44,18 @@ export function useSectionRouter() {
     [current, go],
   )
 
+  /*
+   * セクション送りは横方向（← →）だけに割り当てる。
+   * 縦方向（↑ ↓ PageUp PageDown）まで奪うと、パネル内に収まりきらなかった
+   * 内容をキーボードでスクロールできなくなる。縦はコンテンツに譲る。
+   */
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.metaKey || e.ctrlKey || e.altKey || isTypingTarget(e.target)) return
-      if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'PageDown') {
+      if (e.metaKey || e.ctrlKey || e.altKey || e.shiftKey || isTypingTarget(e.target)) return
+      if (e.key === 'ArrowRight') {
         e.preventDefault()
         shift(1)
-      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'PageUp') {
+      } else if (e.key === 'ArrowLeft') {
         e.preventDefault()
         shift(-1)
       }

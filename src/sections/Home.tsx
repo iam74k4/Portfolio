@@ -1,5 +1,5 @@
 import { Icon } from '../components/Icon'
-import { profile, works, type SectionId } from '../data/portfolio'
+import { profile, type SectionId } from '../data/portfolio'
 import styles from './Home.module.css'
 
 interface Props {
@@ -10,7 +10,7 @@ export function Home({ onNavigate }: Props) {
   return (
     <div className={styles.home}>
       <div className={styles.copy}>
-        <span className="eyebrow">Hello — {profile.nameEn}</span>
+        <span className="eyebrow">Hello — {profile.role}</span>
 
         <h1 className={styles.headline}>
           {profile.headline.map((line, i) => (
@@ -44,14 +44,12 @@ export function Home({ onNavigate }: Props) {
         <div className={`${styles.orb} ${styles.orb2}`} />
         <div className={`${styles.orb} ${styles.orb3}`} />
         <div className={styles.stats}>
-          <div className={styles.stat}>
-            <b>{new Date().getFullYear() - 2019}+</b>
-            <span>Years</span>
-          </div>
-          <div className={styles.stat}>
-            <b>{works.length}</b>
-            <span>Projects</span>
-          </div>
+          {profile.stats.map((s) => (
+            <div className={styles.stat} key={s.label}>
+              <b>{s.value}</b>
+              <span>{s.label}</span>
+            </div>
+          ))}
         </div>
       </div>
     </div>

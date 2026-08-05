@@ -7,16 +7,22 @@
     <meta name="color-scheme" content="light dark" />
     <meta
       name="description"
-      content="山田 太郎（Frontend Engineer）のポートフォリオ。制作実績、経歴、スキル、連絡先。"
+      content="Taka（System Engineer）のポートフォリオ。個人開発の制作物、スキル、連絡先。"
     />
-    <title>山田 太郎 — Frontend Engineer</title>
+    <title>Taka — System Engineer</title>
     <script>
-      // 初回描画前にテーマを確定させ、切り替わりのちらつきを防ぐ
+      // 初回描画前にテーマを確定させ、切り替わりのちらつきを防ぐ。
+      // localStorage は環境によってアクセス自体が例外を投げるので必ず包む。
       ;(() => {
-        const saved = localStorage.getItem('portfolio-theme')
+        let saved = null
+        try {
+          saved = localStorage.getItem('portfolio-theme')
+        } catch {
+          /* 使えなければ OS 設定にまかせる */
+        }
         const dark = saved
           ? saved === 'dark'
-          : matchMedia('(prefers-color-scheme: dark)').matches
+          : window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches
         document.documentElement.dataset.theme = dark ? 'dark' : 'light'
       })()
     </script>
