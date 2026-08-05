@@ -241,14 +241,12 @@
 
 @media (max-width: 560px) {
   /*
-   * 1カラムでは6件が1画面に収まらない。ページ全体はスクロールさせない方針なので、
-   * ここだけグリッド内部のスクロールに閉じ込める。
+   * 1カラムでは6件が1画面に収まらない。はみ出した分のスクロールは
+   * パネル本体（Panel.module.css）が受け持つので、ここでは行の高さだけ決める。
    */
   .grid {
     grid-template-columns: 1fr;
     grid-auto-rows: 168px;
     grid-template-rows: none;
-    overflow-y: auto;
-    overscroll-behavior: contain;
   }
 }

@@ -26,13 +26,11 @@ export function Contact() {
   return (
     <div className={styles.contact}>
       <div className={styles.info}>
-        <div>
-          <h3 className={styles.title}>
-            お仕事のご相談、
-            <br />
-            お待ちしています。
-          </h3>
-        </div>
+        <h3 className={styles.title}>
+          お仕事のご相談、
+          <br />
+          お待ちしています。
+        </h3>
         <p className={styles.lead}>
           制作のご依頼から技術的なご相談、雑談まで。内容を問わずお気軽にご連絡ください。
           2営業日以内にお返事します。
