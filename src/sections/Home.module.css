@@ -53,8 +53,11 @@
   border-radius: 999px;
   font-size: 13px;
   letter-spacing: 0.03em;
-  transition: background 200ms var(--ease), color 200ms var(--ease),
-    border-color 200ms var(--ease), transform 200ms var(--ease);
+  transition:
+    background 200ms var(--ease),
+    color 200ms var(--ease),
+    border-color 200ms var(--ease),
+    transform 200ms var(--ease);
 }
 
 .btn:hover {
@@ -92,7 +95,8 @@
   content: '';
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(var(--line) 1px, transparent 1px),
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
     linear-gradient(90deg, var(--line) 1px, transparent 1px);
   background-size: 34px 34px;
   opacity: 0.5;

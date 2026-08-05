@@ -25,7 +25,9 @@
   height: 4px;
   border-radius: 999px;
   background: var(--line-strong);
-  transition: background 200ms var(--ease), width 200ms var(--ease);
+  transition:
+    background 200ms var(--ease),
+    width 200ms var(--ease);
 }
 
 .pageDot[aria-current='true'] {
@@ -59,7 +61,9 @@
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
-  transition: border-color 220ms var(--ease), transform 220ms var(--ease),
+  transition:
+    border-color 220ms var(--ease),
+    transform 220ms var(--ease),
     box-shadow 220ms var(--ease);
 }
 
@@ -87,7 +91,8 @@
   content: '';
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.28) 1px, transparent 1px),
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.28) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.28) 1px, transparent 1px);
   background-size: 20px 20px;
   mask-image: linear-gradient(to bottom right, #000, transparent 72%);

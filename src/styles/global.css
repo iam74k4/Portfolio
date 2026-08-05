@@ -1,4 +1,4 @@
-@import "./tokens.css";
+@import './tokens.css';
 
 *,
 *::before,
@@ -25,7 +25,7 @@ body {
   font-family: var(--font-sans);
   font-size: 14px;
   line-height: 1.75;
-  font-feature-settings: "palt";
+  font-feature-settings: 'palt';
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overscroll-behavior: none;

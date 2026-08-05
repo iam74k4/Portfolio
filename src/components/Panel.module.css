@@ -9,7 +9,9 @@
   opacity: 0;
   visibility: hidden;
   transform: translateY(14px);
-  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease),
+  transition:
+    opacity var(--dur) var(--ease),
+    transform var(--dur) var(--ease),
     visibility var(--dur) var(--ease);
 }
 
@@ -95,7 +97,9 @@
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   color: var(--ink-mid);
-  transition: color 180ms var(--ease), border-color 180ms var(--ease),
+  transition:
+    color 180ms var(--ease),
+    border-color 180ms var(--ease),
     background 180ms var(--ease);
 }
 

@@ -8,13 +8,65 @@
 
 ## セットアップ
 
+Node は **22.12 以上**（`.nvmrc` を置いてあるので `nvm use` で合う）。
+
 ```bash
 npm install
 npm run dev      # 開発サーバ
 npm run build    # 型チェック + 本番ビルド
 npm run preview  # ビルド結果の確認
-npm run lint     # Oxlint
 ```
+
+## 品質チェック
+
+```bash
+npm run check         # 整形チェック → Lint → 型チェック＋ビルド（CI と同じ内容）
+npm run format        # Prettier で整形
+npm run format:check  # 整形されているかだけ確認
+npm run lint          # Oxlint
+```
+
+`npm run check` が通れば CI も通る。push 前にこれだけ流せばよい。
+
+## 公開
+
+**main に push すると自動でビルドされ、GitHub Pages に公開される。**
+手動のビルドやアップロードは不要。
+
+初回だけ、リポジトリ設定でスイッチを入れる必要がある:
+
+1. GitHub の **Settings → Pages** を開く
+2. **Source** を `GitHub Actions` にする
+3. main に push（または Actions タブから `Deploy` を手動実行）
+
+公開先は `https://<ユーザー名>.github.io/<リポジトリ名>/`。
+サブパス配信になるため、ビルド時に `BASE_PATH` を渡して `vite.config.ts` の `base` を合わせている
+（`.github/workflows/deploy.yml` が自動で設定する）。
+
+独自ドメインや `<ユーザー名>.github.io` リポジトリで公開する場合は、
+`deploy.yml` の `BASE_PATH` を `/` に変更する。
+
+## 自動チェック
+
+| 仕組み       | 実行タイミング                   | 内容                              |
+| ------------ | -------------------------------- | --------------------------------- |
+| `CI`         | main 以外への push、Pull Request | 整形 / Lint / 型チェック / ビルド |
+| `Deploy`     | main への push、手動実行         | ビルドして GitHub Pages に公開    |
+| `Dependabot` | 毎週月曜（Actions は毎月）       | 依存の更新 PR をまとめて作成      |
+
+Dependabot の PR は CI が通っていればマージするだけでよい。
+
+## ふだんの流れ
+
+```bash
+git switch -c update-works        # 作業ブランチを切る
+# src/data/portfolio.ts を編集
+npm run dev                       # 見た目を確認
+npm run check                     # CI と同じチェック
+git commit -am "作品を追加" && git push -u origin update-works
+```
+
+Pull Request を作ると CI が回る。main にマージすれば、そのまま公開まで自動で進む。
 
 ## 内容の差し替え
 
@@ -23,13 +75,13 @@ npm run lint     # Oxlint
 
 現在は仮データが入っている。あわせて差し替えるもの:
 
-| 対象 | 場所 |
-| --- | --- |
-| ページタイトル / description | `index.html` |
-| ポートレート写真 | `src/sections/About.tsx` の `.portrait` を `<img>` に置き換え |
-| 作品のリンク先 | `src/data/portfolio.ts` の `works[].url` |
-| 問い合わせの送信先 | `src/sections/Contact.tsx`（現在は `mailto:` を開く実装） |
-| 配色 | `src/styles/tokens.css` |
+| 対象                         | 場所                                                          |
+| ---------------------------- | ------------------------------------------------------------- |
+| ページタイトル / description | `index.html`                                                  |
+| ポートレート写真             | `src/sections/About.tsx` の `.portrait` を `<img>` に置き換え |
+| 作品のリンク先               | `src/data/portfolio.ts` の `works[].url`                      |
+| 問い合わせの送信先           | `src/sections/Contact.tsx`（現在は `mailto:` を開く実装）     |
+| 配色                         | `src/styles/tokens.css`                                       |
 
 ## 構成
 
@@ -51,13 +103,13 @@ src/
 
 ## 操作
 
-| 操作 | 動作 |
-| --- | --- |
-| 左ナビのクリック | 該当セクションへ |
-| `←` `→` `↑` `↓` `PageUp` `PageDown` | 前後のセクションへ |
-| フッタの `←` `→` | 前後のセクションへ |
-| ブラウザの戻る / 進む | セクション履歴をたどる |
-| URL の `#works` など | 直接そのセクションを開く |
+| 操作                                | 動作                     |
+| ----------------------------------- | ------------------------ |
+| 左ナビのクリック                    | 該当セクションへ         |
+| `←` `→` `↑` `↓` `PageUp` `PageDown` | 前後のセクションへ       |
+| フッタの `←` `→`                    | 前後のセクションへ       |
+| ブラウザの戻る / 進む               | セクション履歴をたどる   |
+| URL の `#works` など                | 直接そのセクションを開く |
 
 入力欄にフォーカスがあるときは、矢印キーをセクション送りに使わない。
 

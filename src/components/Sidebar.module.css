@@ -62,7 +62,9 @@
   font-size: 13px;
   letter-spacing: 0.04em;
   text-align: left;
-  transition: background 180ms var(--ease), color 180ms var(--ease);
+  transition:
+    background 180ms var(--ease),
+    color 180ms var(--ease);
 }
 
 .item:hover {
@@ -82,7 +84,9 @@
   height: 6px;
   border: 1px solid var(--ink-weak);
   border-radius: 50%;
-  transition: background 180ms var(--ease), border-color 180ms var(--ease),
+  transition:
+    background 180ms var(--ease),
+    border-color 180ms var(--ease),
     transform 180ms var(--ease);
 }
 
@@ -120,7 +124,9 @@
   font-size: 10px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  transition: color 180ms var(--ease), border-color 180ms var(--ease);
+  transition:
+    color 180ms var(--ease),
+    border-color 180ms var(--ease);
 }
 
 .themeToggle:hover {
@@ -141,7 +147,9 @@
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   color: var(--ink-mid);
-  transition: color 180ms var(--ease), border-color 180ms var(--ease),
+  transition:
+    color 180ms var(--ease),
+    border-color 180ms var(--ease),
     transform 180ms var(--ease);
 }
 
