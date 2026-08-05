@@ -31,7 +31,7 @@ export const profile = {
   location: 'Kanagawa, Japan',
   /** Home の大見出し。行ごとに配列で持つ */
   headline: ['つくる速さを、', '仕組みで変える。'],
-  lead: '証券会社向け基幹システムの刷新に、システムエンジニアとして要件整理から設計・実装・テスト・レビューまで携わっています。生成AIと自動化ツールで開発工程そのものを効率化することに関心があり、社内外での発表や勉強会の運営も行っています。',
+  lead: '金融系の基幹システム開発を本業に、生成AIと自動化で「つくる工程そのもの」を速くすることに取り組んでいます。手元の不便もそのまま道具にする性分で、macOS アプリから Discord Bot まで個人でつくっています。',
   bio: [
     'コンピュータサイエンスを専攻し、2024年から株式会社リンクレアの金融ビジネス本部でシステム開発に携わっています。証券会社向け基幹システムのモダナイゼーション案件で、基礎検討・要件定義から基本設計、C# による実装、単体からシナリオまでのテスト、レビューまでを担当しています。',
     '生成AIと自動化ツールで開発工程を効率化することに取り組んでいます。設計書の Markdown 変換、画面コードの生成、テスト支援などを通じて、40人日を見込んでいた14画面の製造・単体テストを約20人日で完了しました。ステップ数計算やテスト件数集計など、プロジェクトを横断して使えるツールの作成・展開も行っています。',
@@ -41,8 +41,13 @@ export const profile = {
   /** Home の右下に出る数値バッジ */
   stats: [
     { value: '約2倍', label: '開発生産性' },
-    { value: '200+', label: 'LT 登壇規模' },
+    { value: '200名+', label: '登壇' },
   ],
+  /** Contact セクションの文言。コンポーネント側に文字を置かない */
+  contact: {
+    title: ['AI 活用の話も、', 'コードの話も。'],
+    lead: '開発効率化や生成AIの活用、個人開発について話せる機会を探しています。お仕事のご相談も歓迎です。',
+  },
 }
 
 export interface CareerEntry {
@@ -89,9 +94,17 @@ export interface Work {
 
 export const works: Work[] = [
   {
+    title: '開発工程の効率化',
+    summary:
+      '生成AIと自動化を設計・製造・テストに組み込み、40人日を見込んでいた14画面を約20人日で完了。横断で使える集計ツールも展開している。',
+    year: '2024 —',
+    role: '業務 / 金融系基幹システム',
+    tags: ['生成AI', 'C#', 'Playwright'],
+  },
+  {
     title: 'AppMixer',
     summary:
-      'macOS でアプリごとに音量を変えるメニューバー常駐アプリ。Core Audio の Process Tap でアプリ単位の音声を扱い、出力デバイスごとに音量を記憶する。',
+      'macOS 14.4 の Core Audio Process Tap でアプリ単位の音量と出力先を制御する常駐アプリ。署名と公証を通して配布している。',
     year: '2026',
     role: '個人開発',
     tags: ['Swift', 'SwiftUI', 'Core Audio'],
@@ -99,27 +112,27 @@ export const works: Work[] = [
     demo: 'https://github.com/iam74k4/AppMixer-MacOS/releases/latest',
   },
   {
-    title: 'Discord Bot',
-    summary:
-      'discord.js v14 で組んだモジュール式の Bot。スラッシュコマンド、VC 録音、権限とクールダウンのミドルウェアを備え、Railway へ継続デプロイしている。',
-    year: '2026',
-    role: '個人開発',
-    tags: ['TypeScript', 'discord.js', 'SQLite'],
-    repo: 'https://github.com/iam74k4/DiscordBot',
-  },
-  {
     title: 'AI Agent Config',
     summary:
-      'Cursor / Claude Code / GitHub Copilot で同じルールを共有するための設定集。各環境へのセットアップを1コマンドにまとめた。',
+      'Cursor / Claude Code / Copilot でばらつくルールを1か所に集約し、1コマンドで各環境へ配る。本業の AI 活用を自分の環境にも通すため。',
     year: '2026',
     role: '個人開発',
     tags: ['Shell', 'PowerShell', 'Node.js'],
     repo: 'https://github.com/iam74k4/ai-agent-config',
   },
   {
+    title: 'Discord Bot',
+    summary:
+      '機能追加がコマンド単位で完結する153ファイルのモジュール構成。VC 録音と SQLite 永続化を備え、Railway へ継続デプロイしている。',
+    year: '2026',
+    role: '個人開発',
+    tags: ['TypeScript', 'discord.js', 'SQLite'],
+    repo: 'https://github.com/iam74k4/DiscordBot',
+  },
+  {
     title: 'EventPlayback',
     summary:
-      'マウスとキーボードの操作を記録して再生する Windows 向けツール。依存を3つに絞り、マクロは JSON で保存する。',
+      'マウスとキーボードの操作を記録・再生する Windows 向けツール。依存3つ・単一ファイル約800行。exe は Actions で自動ビルド。',
     year: '2025',
     role: '個人開発',
     tags: ['Python', 'pynput', 'CustomTkinter'],
@@ -129,7 +142,7 @@ export const works: Work[] = [
   {
     title: 'Portfolio',
     summary:
-      'このサイト。ページ全体をスクロールさせない SPA として実装し、main に push すると GitHub Pages へ自動で公開される。',
+      'このサイト。「ページ全体をスクロールさせない」制約を先に置いて設計。main への push で GitHub Pages へ自動公開している。',
     year: '2026',
     role: '個人開発',
     tags: ['TypeScript', 'React', 'Vite'],
@@ -175,10 +188,10 @@ export const skillGroups: SkillGroup[] = [
   {
     category: 'Practice',
     items: [
+      { name: '生成AI活用・開発効率化' },
       { name: '基本設計 / 詳細設計', experience: '3年以上' },
       { name: '開発・実装', experience: '3年以上' },
       { name: 'テスト（単体〜シナリオ）', experience: '3年以上' },
-      { name: '生成AI活用・業務効率化' },
       { name: 'Git / GitHub Actions' },
       { name: 'Playwright' },
     ],

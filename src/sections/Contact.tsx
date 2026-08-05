@@ -25,14 +25,14 @@ export function Contact() {
     <div className={styles.contact}>
       <div className={styles.info}>
         <h3 className={styles.title}>
-          お仕事のご相談、
-          <br />
-          お待ちしています。
+          {profile.contact.title.map((line, i) => (
+            <span key={line}>
+              {i > 0 && <br />}
+              {line}
+            </span>
+          ))}
         </h3>
-        <p className={styles.lead}>
-          制作のご依頼から技術的なご相談、雑談まで。内容を問わずお気軽にご連絡ください。
-          2営業日以内にお返事します。
-        </p>
+        <p className={styles.lead}>{profile.contact.lead}</p>
 
         <div className={styles.rows}>
           <div className={styles.row}>
@@ -45,18 +45,20 @@ export function Contact() {
           <div className={styles.row}>
             <span className={`eyebrow ${styles.rowLabel}`}>Social</span>
             <div className={styles.links}>
-              {socials.map((s) => (
-                <a
-                  key={s.label}
-                  className={styles.link}
-                  href={s.url}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                >
-                  <Icon name={s.icon} size={13} />
-                  {s.label}
-                </a>
-              ))}
+              {socials
+                .filter((s) => s.icon !== 'mail')
+                .map((s) => (
+                  <a
+                    key={s.label}
+                    className={styles.link}
+                    href={s.url}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    <Icon name={s.icon} size={13} />
+                    {s.label}
+                  </a>
+                ))}
             </div>
           </div>
         </div>
@@ -70,7 +72,7 @@ export function Contact() {
           <input
             id="contact-name"
             required
-            placeholder="山田 花子"
+            placeholder="お名前"
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
           />

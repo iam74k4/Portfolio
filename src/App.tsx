@@ -19,9 +19,9 @@ export default function App() {
   const notes: Record<SectionId, string> = {
     home: `${profile.role} — ${profile.location}`,
     about: 'Profile / Career',
-    works: `${works.length} projects — すべて個人開発`,
-    skills: '実際に手を動かしてきた技術',
-    contact: 'GitHub からでも構いません',
+    works: `${works.length} projects — 業務 1 / 個人開発 ${works.length - 1}`,
+    skills: '実務の経験年数は履歴書の表記のまま',
+    contact: 'Email か GitHub から',
   }
 
   return (
