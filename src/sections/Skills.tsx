@@ -28,8 +28,8 @@ export function Skills({ active }: Props) {
                   <li className={styles.item} key={item.name}>
                     <div className={styles.itemHead}>
                       <span className={styles.name}>{item.name}</span>
-                      {item.years != null && (
-                        <span className={styles.level}>{item.years}年</span>
+                      {item.experience && (
+                        <span className={styles.level}>{item.experience}</span>
                       )}
                     </div>
                     <div
@@ -39,7 +39,7 @@ export function Skills({ active }: Props) {
                       aria-valuemin={0}
                       aria-valuemax={100}
                       aria-label={
-                        item.years != null ? `${item.name}（実務 ${item.years} 年）` : item.name
+                        item.experience ? `${item.name}（${item.experience}）` : item.name
                       }
                     >
                       <span
@@ -55,7 +55,10 @@ export function Skills({ active }: Props) {
             ) : (
               <ul className={styles.tags}>
                 {group.items.map((item) => (
-                  <li key={item.name}>{item.name}</li>
+                  <li key={item.name}>
+                    {item.name}
+                    {item.experience && <b>{item.experience}</b>}
+                  </li>
                 ))}
               </ul>
             )}

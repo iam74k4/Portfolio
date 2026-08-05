@@ -1,6 +1,9 @@
 /**
  * サイトに表示する内容はすべてこのファイルに集約している。
  * 内容を変えるときは、ここだけを編集すればよい。
+ *
+ * 注意: 履歴書に載っていても、公開サイトに出してはいけない情報がある。
+ * 生年月日・性別・電話番号・年収・転職希望条件などはここに書かないこと。
  */
 
 export type SectionId = 'home' | 'about' | 'works' | 'skills' | 'contact'
@@ -13,7 +16,7 @@ export interface Section {
 }
 
 export const sections: Section[] = [
-  { id: 'home', label: 'Home', caption: '必要なものを、つくる。' },
+  { id: 'home', label: 'Home', caption: 'つくる速さを、変える。' },
   { id: 'about', label: 'About', caption: 'これまでと、いま。' },
   { id: 'works', label: 'Works', caption: '手を動かした記録。' },
   { id: 'skills', label: 'Skills', caption: '使ってきた道具。' },
@@ -21,23 +24,24 @@ export const sections: Section[] = [
 ]
 
 export const profile = {
-  name: 'Taka',
+  name: '岡崎 昂功',
   /** サイドバーと About のモノグラムに出る文字 */
-  initials: 'T',
+  initials: 'TO',
   role: 'System Engineer',
-  location: 'Japan',
+  location: 'Kanagawa, Japan',
   /** Home の大見出し。行ごとに配列で持つ */
-  headline: ['使う道具は、', '自分でつくる。'],
-  lead: '自然言語処理を専攻したのち、システムエンジニアとして開発しています。手元で困ったことをそのまま道具にするのが好きで、macOS のボリュームミキサーから Discord Bot、AI エージェントの設定管理まで、必要になったものを個人開発でつくっています。',
+  headline: ['つくる速さを、', '仕組みで変える。'],
+  lead: '証券会社向け基幹システムの刷新に、システムエンジニアとして要件整理から設計・実装・テスト・レビューまで携わっています。生成AIと自動化ツールで開発工程そのものを効率化することに関心があり、社内外での発表や勉強会の運営も行っています。',
   bio: [
-    '人工知能（自然言語処理）を専攻し、現在はシステムエンジニアとして開発に携わっています。Python・TypeScript・C# を中心に、Web からデスクトップアプリまで幅広く手を動かしています。',
-    '個人開発では「自分が毎日使うもの」を基準に選んでいます。公開するものには README と CI を必ず用意し、他の人が読んでそのまま動かせる状態にしておくことを大事にしています。',
+    'コンピュータサイエンスを専攻し、2024年から株式会社リンクレアの金融ビジネス本部でシステム開発に携わっています。証券会社向け基幹システムのモダナイゼーション案件で、基礎検討・要件定義から基本設計、C# による実装、単体からシナリオまでのテスト、レビューまでを担当しています。',
+    '生成AIと自動化ツールで開発工程を効率化することに取り組んでいます。設計書の Markdown 変換、画面コードの生成、テスト支援などを通じて、40人日を見込んでいた14画面の製造・単体テストを約20人日で完了しました。ステップ数計算やテスト件数集計など、プロジェクトを横断して使えるツールの作成・展開も行っています。',
+    '社外では顧客・ベンダーを含む約200名規模のライトニングトークで AI 活用事例を発表し、社内では約500名規模の全社発表に登壇しました。自部署ではハンズオン形式の AI 勉強会を企画・開催しています。',
   ],
   email: 'iam74k4@gmail.com',
   /** Home の右下に出る数値バッジ */
   stats: [
-    { value: '5', label: 'Projects' },
-    { value: 'AI / NLP', label: 'Major' },
+    { value: '約2倍', label: '開発生産性' },
+    { value: '200+', label: 'LT 登壇規模' },
   ],
 }
 
@@ -48,12 +52,24 @@ export interface CareerEntry {
 }
 
 /**
- * TODO: 実際の経歴に差し替える。
- * GitHub からは読み取れなかったので、期間と所属は仮置きのままにしてある。
+ * 新しい順。学歴は卒業年月しか分かっていないため、入学年は書いていない。
  */
 export const career: CareerEntry[] = [
-  { period: '要記入', title: 'System Engineer', org: '所属を記入してください' },
-  { period: '要記入', title: '人工知能専攻（自然言語処理）', org: '学校名を記入してください' },
+  {
+    period: '2024.03 — 現在',
+    title: 'システムエンジニア / 金融ビジネス本部',
+    org: '株式会社リンクレア',
+  },
+  {
+    period: '〜 2024.03 卒業',
+    title: 'コンピュータサイエンス学部 コンピュータサイエンス学科',
+    org: '東京工科大学',
+  },
+  {
+    period: '〜 2021.03 卒業',
+    title: '情報処理科',
+    org: '日本工学院八王子専門学校',
+  },
 ]
 
 export interface Work {
@@ -125,11 +141,9 @@ export interface SkillGroup {
   category: string
   items: {
     name: string
-    /**
-     * 実務での経験年数と習熟度。両方入れるとメーター表示になり、
-     * 省略するとタグ表示になる。根拠のない数字を置かないため、既定では省略している。
-     */
-    years?: number
+    /** 経験年数などの補足。履歴書の表記をそのまま使う（例: '3年以上'） */
+    experience?: string
+    /** 0–100。入れるとメーター表示に切り替わる。根拠がなければ入れない */
     level?: number
   }[]
 }
@@ -138,34 +152,35 @@ export const skillGroups: SkillGroup[] = [
   {
     category: 'Languages',
     items: [
-      { name: 'Python' },
+      { name: 'C#', experience: '3年以上' },
+      { name: 'SQL', experience: '3年以上' },
+      { name: 'JavaScript', experience: '3年以上' },
+      { name: 'HTML / CSS', experience: '3年以上' },
+      { name: 'Python', experience: '1年以上' },
       { name: 'TypeScript' },
-      { name: 'JavaScript' },
-      { name: 'C#' },
-      { name: 'Java' },
-      { name: 'PHP' },
       { name: 'Swift' },
     ],
   },
   {
     category: 'Frameworks / Infra',
     items: [
-      { name: '.NET' },
-      { name: 'Django' },
+      { name: '.NET Framework', experience: '3年以上' },
+      { name: 'ASP.NET', experience: '3年以上' },
+      { name: 'SQL Server', experience: '3年以上' },
+      { name: 'Oracle Database', experience: '3年以上' },
       { name: 'Docker' },
       { name: 'Google Cloud' },
-      { name: 'Nginx' },
-      { name: 'MySQL' },
     ],
   },
   {
-    category: 'Environment / Tools',
+    category: 'Practice',
     items: [
-      { name: 'Windows' },
-      { name: 'Linux / Ubuntu' },
+      { name: '基本設計 / 詳細設計', experience: '3年以上' },
+      { name: '開発・実装', experience: '3年以上' },
+      { name: 'テスト（単体〜シナリオ）', experience: '3年以上' },
+      { name: '生成AI活用・業務効率化' },
       { name: 'Git / GitHub Actions' },
-      { name: 'VS Code' },
-      { name: 'Visual Studio' },
+      { name: 'Playwright' },
     ],
   },
 ]

@@ -139,3 +139,15 @@
   border-color: var(--accent);
   color: var(--ink);
 }
+
+/* 経験年数がある項目だけ、名前の後ろに小さく添える */
+.tags li b {
+  margin-left: 7px;
+  padding-left: 7px;
+  border-left: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--ink-weak);
+}
