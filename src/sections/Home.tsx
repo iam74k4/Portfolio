@@ -39,10 +39,17 @@ export function Home({ onNavigate }: Props) {
         </div>
       </div>
 
-      <div className={styles.visual} aria-hidden="true">
-        <div className={`${styles.orb} ${styles.orb1}`} />
-        <div className={`${styles.orb} ${styles.orb2}`} />
-        <div className={`${styles.orb} ${styles.orb3}`} />
+      {/* 装飾ではなく事実を置く。Skills と同じ「ラベル + 内容」の組み方 */}
+      <aside className={styles.side}>
+        <dl className={styles.now}>
+          {profile.now.map((row) => (
+            <div className={styles.row} key={row.label}>
+              <dt className="eyebrow">{row.label}</dt>
+              <dd>{row.value}</dd>
+            </div>
+          ))}
+        </dl>
+
         <div className={styles.stats}>
           {profile.stats.map((s) => (
             <div className={styles.stat} key={s.label}>
@@ -51,7 +58,7 @@ export function Home({ onNavigate }: Props) {
             </div>
           ))}
         </div>
-      </div>
+      </aside>
     </div>
   )
 }

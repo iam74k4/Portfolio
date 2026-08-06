@@ -26,16 +26,20 @@
   flex: none;
   display: flex;
   align-items: baseline;
-  gap: 16px;
-  padding-bottom: 16px;
-  margin-bottom: clamp(18px, 2.6vh, 32px);
+  gap: 14px;
+  padding-bottom: 12px;
+  margin-bottom: clamp(16px, 2.4vh, 28px);
   border-bottom: 1px solid var(--line);
 }
 
+/*
+ * 左ナビが現在地を示しているので、ここは大きく主張しなくてよい。
+ * 中身より目立たない大きさに抑えてある。
+ */
 .title {
-  font-size: clamp(19px, 2vw, 24px);
+  font-size: clamp(15px, 1.3vw, 18px);
   font-weight: 600;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
   line-height: 1.3;
 }
 

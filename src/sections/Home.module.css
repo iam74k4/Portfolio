@@ -1,9 +1,9 @@
 .home {
   flex: 1;
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
+  grid-template-columns: 1.15fr 0.85fr;
   gap: var(--gutter);
-  /* はみ出したときに先頭が切れないよう safe を付ける（Contact と同じ理由） */
+  /* はみ出したときに先頭が切れないよう safe を付ける */
   align-items: center;
   align-items: safe center;
   min-height: 0;
@@ -81,106 +81,56 @@
   border-color: var(--ink-weak);
 }
 
-/* ---------- 右：抽象ビジュアル ---------- */
-.visual {
-  position: relative;
-  height: min(52vh, 400px);
-  border-radius: calc(var(--radius) * 2);
-  border: 1px solid var(--line);
-  background: var(--surface);
-  overflow: hidden;
-  isolation: isolate;
-}
-
-/* 背景の細いグリッド */
-.visual::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(var(--line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px);
-  background-size: 34px 34px;
-  opacity: 0.5;
-  mask-image: radial-gradient(circle at 50% 50%, #000 30%, transparent 78%);
-}
-
-.orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(38px);
-  opacity: 0.75;
-  animation: drift 14s var(--ease) infinite alternate;
-}
-
-.orb1 {
-  width: 58%;
-  aspect-ratio: 1;
-  top: 6%;
-  left: 8%;
-  background: var(--accent);
-}
-
-.orb2 {
-  width: 46%;
-  aspect-ratio: 1;
-  bottom: 4%;
-  right: 6%;
-  background: #f0a5c8;
-  animation-delay: -5s;
-  animation-duration: 18s;
-}
-
-.orb3 {
-  width: 34%;
-  aspect-ratio: 1;
-  bottom: 26%;
-  left: 34%;
-  background: #7ad3e6;
-  animation-delay: -9s;
-  animation-duration: 22s;
-}
-
-@keyframes drift {
-  from {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  to {
-    transform: translate3d(9%, -7%, 0) scale(1.12);
-  }
-}
-
-/* 数値バッジ */
-.stats {
-  position: absolute;
-  left: 20px;
-  bottom: 20px;
+/* ---------- 右：いま何をしているか ---------- */
+.side {
   display: flex;
-  gap: 8px;
-  z-index: 1;
+  flex-direction: column;
+  gap: clamp(16px, 2.6vh, 28px);
+  min-width: 0;
 }
 
-.stat {
-  padding: 8px 14px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--line);
-  background: color-mix(in srgb, var(--surface) 76%, transparent);
-  backdrop-filter: blur(10px);
+.now {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.row:first-child {
+  padding-top: 0;
+}
+
+.row dd {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.stats {
+  display: flex;
+  gap: 28px;
 }
 
 .stat b {
   display: block;
-  font-size: 17px;
+  font-size: clamp(20px, 1.8vw, 26px);
   font-weight: 700;
   line-height: 1.2;
+  letter-spacing: -0.01em;
 }
 
 .stat span {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 10px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--ink-mid);
+  color: var(--ink-weak);
 }
 
 @media (max-width: 900px) {
@@ -190,7 +140,8 @@
     align-content: safe center;
   }
 
-  .visual {
+  /* 狭い画面では見出しと導線を優先する */
+  .side {
     display: none;
   }
 }
