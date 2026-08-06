@@ -5,7 +5,7 @@ export function About() {
   return (
     <div className={styles.about}>
       {/*
-        写真を入れるなら、この左に <img className={styles.portrait} /> を足し、
+        写真を入れるなら、この左に <img> を足し、
         About.module.css の .about を3カラムにする。
         中身のないプレースホルダ枠は場所を取るだけなので置いていない。
       */}

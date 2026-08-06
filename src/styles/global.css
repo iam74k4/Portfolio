@@ -61,6 +61,19 @@ svg {
   border-radius: 3px;
 }
 
+/* 目では見せず、スクリーンリーダーには読ませる */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip-path: inset(50%);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 /* 小さなラベル（セクション番号、カテゴリ名など）の共通スタイル */
 .eyebrow {
   font-family: var(--font-mono);

@@ -8,38 +8,6 @@
   min-height: 0;
 }
 
-/* ---------- 左：ポートレート枠 ---------- */
-.portrait {
-  position: relative;
-  min-height: 0;
-  border-radius: calc(var(--radius) * 1.6);
-  border: 1px solid var(--line);
-  background: linear-gradient(150deg, var(--accent-soft), var(--surface) 62%);
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-}
-
-.portrait::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(var(--line-strong) 1px, transparent 1px);
-  background-size: 12px 12px;
-  opacity: 0.35;
-}
-
-.initials {
-  position: relative;
-  z-index: 1;
-  font-family: var(--font-mono);
-  font-size: clamp(38px, 5vw, 60px);
-  font-weight: 300;
-  letter-spacing: 0.06em;
-  color: var(--accent);
-}
-
-/* ---------- 右：本文 ---------- */
 .block {
   display: flex;
   flex-direction: column;

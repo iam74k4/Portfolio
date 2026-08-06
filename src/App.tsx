@@ -26,6 +26,11 @@ export default function App() {
 
   return (
     <div className={styles.app}>
+      {/* ページ全体の見出し。各パネルの h2 より前に置く */}
+      <h1 className="sr-only">
+        {profile.name} — {profile.role}
+      </h1>
+
       <Sidebar current={current} onNavigate={go} theme={theme} onToggleTheme={toggle} />
 
       <main className={styles.stage}>
@@ -52,7 +57,7 @@ export default function App() {
       </main>
 
       {/* 現在地をスクリーンリーダーに伝える */}
-      <p role="status" aria-live="polite" style={{ position: 'absolute', left: -9999 }}>
+      <p role="status" aria-live="polite" className="sr-only">
         {sections[index].label}（{index + 1} / {total}）
       </p>
     </div>

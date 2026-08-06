@@ -12,11 +12,12 @@ export function Home({ onNavigate }: Props) {
       <div className={styles.copy}>
         <span className="eyebrow">Hello — {profile.role}</span>
 
-        <h1 className={styles.headline}>
+        {/* ページの h1 は App が持っているので、ここは見出し要素にしない */}
+        <p className={styles.headline}>
           {profile.headline.map((line, i) => (
             <span key={line}>{i === 0 ? <em>{line}</em> : line}</span>
           ))}
-        </h1>
+        </p>
 
         <p className={styles.lead}>{profile.lead}</p>
 
