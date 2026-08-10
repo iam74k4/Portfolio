@@ -1,0 +1,56 @@
+.panel {
+  /* すべてのパネルを同じグリッドセルに重ねてクロスフェードさせる */
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  padding: var(--gutter);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(14px);
+  transition:
+    opacity var(--dur) var(--ease),
+    transform var(--dur) var(--ease),
+    visibility var(--dur) var(--ease);
+}
+
+.panel[data-active='true'] {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+/*
+ * 見出し。左ナビが現在地を示しているので、ここは大きく主張しない。
+ * ページ送りは左ナビとキーボードが担うため、フッタは置いていない。
+ */
+.head {
+  flex: none;
+  padding-bottom: 12px;
+  margin-bottom: clamp(16px, 2.4vh, 28px);
+  border-bottom: 1px solid var(--line);
+}
+
+.title {
+  font-size: clamp(15px, 1.3vw, 18px);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  line-height: 1.3;
+}
+
+/* ---------- 本体：ここだけが伸縮する ---------- */
+.body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  /*
+   * 安全網。どれだけ余白を詰めても収まらない画面（狭い端末、縦が短いウィンドウ）で、
+   * 本体が見出しに重なるのを防ぐ。収まっている限りスクロールバーは出ないし、
+   * ページ全体は変わらずスクロールしない。
+   */
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}

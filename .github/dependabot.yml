@@ -1,0 +1,25 @@
+version: 2
+
+# 依存の更新を手で追いかけなくて済むように、毎週まとめて Pull Request を作らせる。
+# CI が通っていればマージするだけでよい。
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    groups:
+      # まとめて1つの PR にする。個別に5本立つのを避ける。
+      dev-dependencies:
+        dependency-type: development
+      production-dependencies:
+        dependency-type: production
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      actions:
+        patterns: ['*']

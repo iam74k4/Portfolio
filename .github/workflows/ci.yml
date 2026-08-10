@@ -1,0 +1,31 @@
+name: CI
+
+# 壊れたまま push されるのを防ぐ。整形・Lint・型チェック・ビルドを通す。
+on:
+  push:
+    branches-ignore: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - name: Format
+        run: npm run format:check
+
+      - name: Lint
+        run: npm run lint
+
+      # build が tsc -b も走らせるので、型チェックはここで一緒に見る
+      - name: Typecheck & build
+        run: npm run build

@@ -1,0 +1,74 @@
+/* デザイントークン。配色はここだけで完結させる。 */
+
+:root {
+  /* --- タイポグラフィ --- */
+  --font-sans:
+    'Helvetica Neue', 'Hiragino Sans', 'Noto Sans JP', system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', 'SF Mono', Menlo, monospace;
+
+  /*
+   * 文字サイズは5段階に固定する。中間の値を足すと差が読み取れず、
+   * 揃っていない印象になるだけなので増やさないこと。
+   */
+  --fs-label: 10px; /* eyebrow、タグ、数値バッジのラベル */
+  --fs-meta: 11px; /* 日付など、本文に添える情報 */
+  --fs-sm: 12px; /* 補足の文章 */
+  --fs-base: 13px; /* 一覧の項目、ボタン、リード文 */
+  --fs-md: 14px; /* 項目名を強調するとき */
+  --fs-lg: 17px; /* 氏名とモノグラム */
+
+  /* 区切り線つきの行の上下余白。行数が多い一覧は tight を使う */
+  --row-pad: 12px;
+  --row-pad-tight: 7px;
+
+  /* --- レイアウト --- */
+  --nav-w: 264px;
+  --gutter: clamp(24px, 3.4vw, 60px);
+  --radius: 10px;
+  --radius-sm: 6px;
+
+  /* --- モーション --- */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur: 340ms;
+
+  /* --- 配色（ライト） --- */
+  --bg: #fbfbfc;
+  --surface: #ffffff;
+  --surface-hover: #f4f4f6;
+  --line: #e5e5ea;
+  --line-strong: #d3d3da;
+  --ink: #16161a;
+  --ink-mid: #4a4a55;
+  --ink-weak: #6f6f7a;
+  --accent: #5b5bd6;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(91, 91, 214, 0.09);
+  --shadow: 0 1px 2px rgba(22, 22, 26, 0.05), 0 8px 24px rgba(22, 22, 26, 0.05);
+}
+
+/*
+ * 縦が短いウィンドウ（ノートPCで開発者ツールを開いた状態など）では、
+ * 余白を先に削って本文の場所を確保する。
+ */
+@media (max-height: 720px) {
+  :root {
+    --gutter: clamp(16px, 2.6vw, 34px);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0c0c0e;
+    --surface: #141418;
+    --surface-hover: #1c1c22;
+    --line: #26262e;
+    --line-strong: #3a3a45;
+    --ink: #f2f2f4;
+    --ink-mid: #b4b4c2;
+    --ink-weak: #8a8a96;
+    --accent: #8f8ff5;
+    --accent-ink: #12121a;
+    --accent-soft: rgba(143, 143, 245, 0.13);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.34);
+  }
+}
