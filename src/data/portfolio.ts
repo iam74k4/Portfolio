@@ -6,21 +6,19 @@
  * 生年月日・性別・電話番号・年収・転職希望条件などはここに書かないこと。
  */
 
-export type SectionId = 'home' | 'about' | 'works' | 'skills' | 'contact'
+export type SectionId = 'home' | 'about' | 'works' | 'contact'
 
 export interface Section {
   id: SectionId
   label: string
-  /** パネル見出しに出す一言 */
-  caption: string
 }
 
+/** Skills は About に統合したので4つ */
 export const sections: Section[] = [
-  { id: 'home', label: 'Home', caption: 'つくる速さを、変える。' },
-  { id: 'about', label: 'About', caption: 'これまでと、いま。' },
-  { id: 'works', label: 'Works', caption: '手を動かした記録。' },
-  { id: 'skills', label: 'Skills', caption: '使ってきた道具。' },
-  { id: 'contact', label: 'Contact', caption: 'お気軽にどうぞ。' },
+  { id: 'home', label: 'Home' },
+  { id: 'about', label: 'About' },
+  { id: 'works', label: 'Works' },
+  { id: 'contact', label: 'Contact' },
 ]
 
 export const profile = {
@@ -52,7 +50,7 @@ export const profile = {
   /** Contact セクションの文言。コンポーネント側に文字を置かない */
   contact: {
     title: ['AI 活用の話も、', 'コードの話も。'],
-    lead: '開発効率化や生成AIの活用、個人開発について話せる機会を探しています。お仕事のご相談も歓迎です。',
+    lead: '開発効率化や生成AIの活用、個人開発について話せる機会を探しています。お仕事のご相談も歓迎です。返信は数日いただくことがあります。',
   },
 }
 
@@ -98,6 +96,10 @@ export interface Work {
   demo?: string
 }
 
+/**
+ * Works は1画面に収まる6件までを厳選して載せる。
+ * 7件目を足すときは、代わりに1件外すこと。
+ */
 export const works: Work[] = [
   {
     title: '開発工程の効率化',
@@ -204,7 +206,7 @@ export const skillGroups: SkillGroup[] = [
   },
 ]
 
-export type SocialIcon = 'github' | 'x' | 'linkedin' | 'mail'
+export type SocialIcon = 'github' | 'mail'
 
 export interface SocialLink {
   label: string

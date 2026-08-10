@@ -1,24 +1,12 @@
 .contact {
   flex: 1;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--gutter);
-  /*
-   * safe を付けないと、内容がはみ出したときに中央揃えが先頭を
-   * スクロール範囲の外へ押し出してしまい、Email 行に到達できなくなる。
-   * 未対応ブラウザ向けに素の center を先に置いている。
-   */
-  align-items: center;
-  align-items: safe center;
-  min-height: 0;
-}
-
-/* ---------- 左：連絡先 ---------- */
-.info {
   display: flex;
   flex-direction: column;
-  gap: clamp(16px, 3vh, 30px);
-  min-width: 0;
+  gap: clamp(16px, 2.8vh, 30px);
+  align-items: flex-start;
+  justify-content: center;
+  justify-content: safe center;
+  min-height: 0;
 }
 
 .title {
@@ -29,48 +17,43 @@
 }
 
 .lead {
-  max-width: 40ch;
+  max-width: 46ch;
   color: var(--ink-mid);
   font-size: 13px;
 }
 
-.rows {
-  display: flex;
-  flex-direction: column;
-}
-
-.row {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 13px 0;
-  border-top: 1px solid var(--line);
-}
-
-.row:last-child {
-  border-bottom: 1px solid var(--line);
-}
-
-.rowLabel {
-  width: 72px;
-  flex: none;
-}
-
+/* 主役の導線。押せばそのままメールが開く */
 .mail {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: var(--ink);
-  transition: color 180ms var(--ease);
+  gap: 12px;
+  padding: 16px 26px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: clamp(14px, 1.3vw, 17px);
+  letter-spacing: 0.01em;
+  transition:
+    filter 180ms var(--ease),
+    transform 180ms var(--ease);
 }
 
 .mail:hover {
-  color: var(--accent);
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+}
+
+.arrow {
+  transition: transform 200ms var(--ease);
+}
+
+.mail:hover .arrow {
+  transform: translateX(3px);
 }
 
 .links {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
 }
 
@@ -78,10 +61,10 @@
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  padding: 5px 13px;
+  padding: 7px 15px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  font-size: 12px;
+  font-size: 12.5px;
   color: var(--ink-mid);
   transition:
     color 180ms var(--ease),
@@ -91,141 +74,4 @@
 .link:hover {
   color: var(--accent);
   border-color: var(--accent);
-}
-
-/* ---------- 右：フォーム ---------- */
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: clamp(18px, 2.6vw, 28px);
-  border: 1px solid var(--line);
-  border-radius: calc(var(--radius) * 1.4);
-  background: var(--surface);
-  box-shadow: var(--shadow);
-}
-
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.field input,
-.field textarea {
-  width: 100%;
-  padding: 11px 13px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
-  background: var(--bg);
-  color: var(--ink);
-  font: inherit;
-  font-size: 13px;
-  transition:
-    border-color 180ms var(--ease),
-    background 180ms var(--ease);
-}
-
-.field textarea {
-  resize: none;
-  height: clamp(84px, 14vh, 128px);
-  line-height: 1.6;
-}
-
-.field input::placeholder,
-.field textarea::placeholder {
-  color: var(--ink-weak);
-}
-
-.field input:focus,
-.field textarea:focus {
-  outline: none;
-  border-color: var(--accent);
-  background: var(--surface);
-}
-
-.submit {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  height: 44px;
-  margin-top: 2px;
-  border-radius: 999px;
-  background: var(--accent);
-  color: var(--accent-ink);
-  font-size: 13px;
-  letter-spacing: 0.04em;
-  transition:
-    filter 180ms var(--ease),
-    transform 180ms var(--ease);
-}
-
-.submit:hover {
-  filter: brightness(1.08);
-  transform: translateY(-2px);
-}
-
-.status {
-  font-size: 12px;
-  color: var(--accent);
-  min-height: 1.6em;
-}
-
-@media (max-width: 900px) {
-  .contact {
-    grid-template-columns: 1fr;
-    align-content: center;
-    align-content: safe center;
-    gap: 16px;
-  }
-
-  /*
-   * 装飾的な見出しとリード文だけ落とし、Email と SNS は必ず残す。
-   * ここを丸ごと隠すと、モバイルから GitHub への導線が消えてしまう。
-   */
-  .title,
-  .lead {
-    display: none;
-  }
-
-  .info {
-    gap: 0;
-  }
-
-  .row {
-    padding: 9px 0;
-  }
-
-  .row:first-child {
-    border-top: 0;
-  }
-
-  .rowLabel {
-    width: 56px;
-  }
-
-  .mail {
-    font-size: 13px;
-  }
-
-  .links {
-    flex-wrap: wrap;
-  }
-}
-
-/* 縦が短いときはフォームの余白を詰める */
-@media (max-height: 720px) {
-  .form {
-    gap: 9px;
-    padding: 16px;
-  }
-
-  .field textarea {
-    height: clamp(68px, 11vh, 104px);
-  }
-
-  .row {
-    padding: 9px 0;
-  }
 }
