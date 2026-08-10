@@ -6,60 +6,38 @@ interface Props {
   onNavigate: (id: SectionId) => void
 }
 
+/*
+ * ここは第一印象だけを担う。所属・実績・数字は About と Works にあるので置かない。
+ */
 export function Home({ onNavigate }: Props) {
   return (
     <div className={styles.home}>
-      <div className={styles.copy}>
-        <span className="eyebrow">Hello — {profile.role}</span>
+      {/* ページの h1 は App が持っているので、ここは見出し要素にしない */}
+      <p className={styles.headline}>
+        {profile.headline.map((line, i) => (
+          <span key={line}>{i === 0 ? <em>{line}</em> : line}</span>
+        ))}
+      </p>
 
-        {/* ページの h1 は App が持っているので、ここは見出し要素にしない */}
-        <p className={styles.headline}>
-          {profile.headline.map((line, i) => (
-            <span key={line}>{i === 0 ? <em>{line}</em> : line}</span>
-          ))}
-        </p>
+      <p className={styles.lead}>{profile.lead}</p>
 
-        <p className={styles.lead}>{profile.lead}</p>
-
-        <div className={styles.actions}>
-          <button
-            type="button"
-            className={`${styles.btn} ${styles.primary}`}
-            onClick={() => onNavigate('works')}
-          >
-            作品を見る
-            <Icon name="arrow" size={15} />
-          </button>
-          <button
-            type="button"
-            className={`${styles.btn} ${styles.ghost}`}
-            onClick={() => onNavigate('contact')}
-          >
-            連絡する
-          </button>
-        </div>
+      <div className={styles.actions}>
+        <button
+          type="button"
+          className={`${styles.btn} ${styles.primary}`}
+          onClick={() => onNavigate('works')}
+        >
+          作品を見る
+          <Icon name="arrow" size={15} />
+        </button>
+        <button
+          type="button"
+          className={`${styles.btn} ${styles.ghost}`}
+          onClick={() => onNavigate('contact')}
+        >
+          連絡する
+        </button>
       </div>
-
-      {/* 装飾ではなく事実を置く。Skills と同じ「ラベル + 内容」の組み方 */}
-      <aside className={styles.side}>
-        <dl className={styles.now}>
-          {profile.now.map((row) => (
-            <div className={styles.row} key={row.label}>
-              <dt className="eyebrow">{row.label}</dt>
-              <dd>{row.value}</dd>
-            </div>
-          ))}
-        </dl>
-
-        <div className={styles.stats}>
-          {profile.stats.map((s) => (
-            <div className={styles.stat} key={s.label}>
-              <b>{s.value}</b>
-              <span>{s.label}</span>
-            </div>
-          ))}
-        </div>
-      </aside>
     </div>
   )
 }
