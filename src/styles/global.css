@@ -23,7 +23,7 @@ body {
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: var(--fs-md);
   line-height: 1.75;
   font-feature-settings: 'palt';
   -webkit-font-smoothing: antialiased;
@@ -77,7 +77,7 @@ svg {
 /* 小さなラベル（セクション番号、カテゴリ名など）の共通スタイル */
 .eyebrow {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--fs-label);
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--ink-weak);

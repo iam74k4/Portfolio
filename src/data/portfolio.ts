@@ -2,6 +2,12 @@
  * サイトに表示する内容はすべてこのファイルに集約している。
  * 内容を変えるときは、ここだけを編集すればよい。
  *
+ * 文言の書き方:
+ * - 本文（lead / bio）は「です・ます」、カードの説明は「である」でそろえる
+ * - works の summary は「何であるか。何をしたか（〜している / 〜した）。」の2文
+ * - 英数字と日本語のあいだには半角スペースを1つ入れる
+ *   （「生成AI」のように語として定着しているものは例外）
+ *
  * 注意: 履歴書に載っていても、公開サイトに出してはいけない情報がある。
  * 生年月日・性別・電話番号・年収・転職希望条件などはここに書かないこと。
  */
@@ -45,12 +51,12 @@ export const profile = {
   /** Home 右側の数値 */
   stats: [
     { value: '約2倍', label: '開発生産性' },
-    { value: '200名+', label: '登壇' },
+    { value: '200名超', label: '登壇' },
   ],
   /** Contact セクションの文言。コンポーネント側に文字を置かない */
   contact: {
     title: ['AI 活用の話も、', 'コードの話も。'],
-    lead: '開発効率化や生成AIの活用、個人開発について話せる機会を探しています。お仕事のご相談も歓迎です。返信は数日いただくことがあります。',
+    lead: '開発効率化や生成AIの活用、個人開発について話せる機会を探しています。お仕事のご相談も歓迎です。',
   },
 }
 
@@ -70,12 +76,12 @@ export const career: CareerEntry[] = [
     org: '株式会社リンクレア',
   },
   {
-    period: '〜 2024.03 卒業',
+    period: '2024.03 卒業',
     title: 'コンピュータサイエンス学部 コンピュータサイエンス学科',
     org: '東京工科大学',
   },
   {
-    period: '〜 2021.03 卒業',
+    period: '2021.03 卒業',
     title: '情報処理科',
     org: '日本工学院八王子専門学校',
   },
@@ -104,7 +110,7 @@ export const works: Work[] = [
   {
     title: '開発工程の効率化',
     summary:
-      '生成AIと自動化を設計・製造・テストに組み込み、40人日を見込んでいた14画面を約20人日で完了。横断で使える集計ツールも展開している。',
+      '生成AIと自動化を設計・製造・テストに組み込み、40人日を見込んでいた14画面を約20人日で完了した。横断で使える集計ツールも展開している。',
     year: '2024 —',
     role: '業務 / 金融系基幹システム',
     tags: ['生成AI', 'C#', 'Playwright'],
@@ -122,7 +128,7 @@ export const works: Work[] = [
   {
     title: 'AI Agent Config',
     summary:
-      'Cursor / Claude Code / Copilot でばらつくルールを1か所に集約し、1コマンドで各環境へ配る。本業の AI 活用を自分の環境にも通すため。',
+      'Cursor / Claude Code / Copilot でばらつくルールを1か所に集約し、1コマンドで各環境へ配る。本業の AI 活用を自分の環境にも通すためにつくった。',
     year: '2026',
     role: '個人開発',
     tags: ['Shell', 'PowerShell', 'Node.js'],
@@ -140,7 +146,7 @@ export const works: Work[] = [
   {
     title: 'EventPlayback',
     summary:
-      'マウスとキーボードの操作を記録・再生する Windows 向けツール。依存3つ・単一ファイル約800行。exe は Actions で自動ビルド。',
+      'マウスとキーボードの操作を記録・再生する Windows 向けツール。依存3つ・単一ファイル約800行に収め、exe は Actions で自動ビルドしている。',
     year: '2025',
     role: '個人開発',
     tags: ['Python', 'pynput', 'CustomTkinter'],
@@ -150,7 +156,7 @@ export const works: Work[] = [
   {
     title: 'Portfolio',
     summary:
-      'このサイト。「ページ全体をスクロールさせない」制約を先に置いて設計。main への push で GitHub Pages へ自動公開している。',
+      'このサイト。「ページ全体をスクロールさせない」制約を先に置いて設計し、main への push で GitHub Pages へ自動公開している。',
     year: '2026',
     role: '個人開発',
     tags: ['TypeScript', 'React', 'Vite'],
@@ -196,7 +202,7 @@ export const skillGroups: SkillGroup[] = [
   {
     category: 'Practice',
     items: [
-      { name: '生成AI活用・開発効率化' },
+      { name: '生成AI・開発効率化' },
       { name: '基本設計 / 詳細設計', experience: '3年以上' },
       { name: '開発・実装', experience: '3年以上' },
       { name: 'テスト（単体〜シナリオ）', experience: '3年以上' },

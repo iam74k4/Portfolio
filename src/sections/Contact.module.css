@@ -19,7 +19,7 @@
 .lead {
   max-width: 46ch;
   color: var(--ink-mid);
-  font-size: 13px;
+  font-size: var(--fs-base);
 }
 
 /* 主役の導線。押せばそのままメールが開く */
@@ -64,7 +64,7 @@
   padding: 7px 15px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  font-size: 12.5px;
+  font-size: var(--fs-base);
   color: var(--ink-mid);
   transition:
     color 180ms var(--ease),

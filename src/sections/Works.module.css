@@ -49,7 +49,7 @@
   align-items: baseline;
   gap: 10px;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--fs-label);
   letter-spacing: 0.08em;
   color: var(--ink-weak);
 }
@@ -82,7 +82,7 @@
 }
 
 .summary {
-  font-size: 12px;
+  font-size: var(--fs-sm);
   line-height: 1.7;
   color: var(--ink-mid);
   /* 溢れたら省略。カード高さが崩れてスクロールが出るのを防ぐ */
@@ -115,7 +115,7 @@
   border: 1px solid var(--line);
   border-radius: 999px;
   font-family: var(--font-mono);
-  font-size: 9.5px;
+  font-size: var(--fs-label);
   letter-spacing: 0.06em;
   color: var(--ink-weak);
   white-space: nowrap;

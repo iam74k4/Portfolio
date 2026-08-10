@@ -6,6 +6,21 @@
     'Helvetica Neue', 'Hiragino Sans', 'Noto Sans JP', system-ui, -apple-system, sans-serif;
   --font-mono: ui-monospace, 'SFMono-Regular', 'SF Mono', Menlo, monospace;
 
+  /*
+   * 文字サイズは5段階に固定する。中間の値を足すと差が読み取れず、
+   * 揃っていない印象になるだけなので増やさないこと。
+   */
+  --fs-label: 10px; /* eyebrow、タグ、数値バッジのラベル */
+  --fs-meta: 11px; /* 日付など、本文に添える情報 */
+  --fs-sm: 12px; /* 補足の文章 */
+  --fs-base: 13px; /* 一覧の項目、ボタン、リード文 */
+  --fs-md: 14px; /* 項目名を強調するとき */
+  --fs-lg: 17px; /* 氏名とモノグラム */
+
+  /* 区切り線つきの行の上下余白。行数が多い一覧は tight を使う */
+  --row-pad: 12px;
+  --row-pad-tight: 7px;
+
   /* --- レイアウト --- */
   --nav-w: 264px;
   --gutter: clamp(24px, 3.4vw, 60px);
