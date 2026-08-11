@@ -24,6 +24,7 @@ npm run check         # 整形チェック → Lint → 型チェック＋ビル
 npm run format        # Prettier で整形
 npm run format:check  # 整形されているかだけ確認
 npm run lint          # Oxlint
+npm run og            # OGP 画像を作り直す（playwright が必要）
 ```
 
 `npm run check` が通れば CI も通る。push 前にこれだけ流せばよい。
@@ -85,6 +86,9 @@ Pull Request を作ると CI が回る。main にマージすれば、そのま�
 | 対象                         | 場所                                                       |
 | ---------------------------- | ---------------------------------------------------------- |
 | ページタイトル / description | `index.html`                                               |
+| OGP の文言 / 公開 URL        | `index.html` の `og:*` と JSON-LD                          |
+| OGP 画像                     | `scripts/og-image.html` を直して `npm run og`              |
+| favicon                      | `public/favicon.svg`（モノグラム）                         |
 | ポートレート写真             | `src/sections/About.tsx` に `<img>` を足し、列を1つ増やす  |
 | 作品のリンク先               | `src/data/portfolio.ts` の `works[].repo` / `works[].demo` |
 | 問い合わせの送信先           | `src/sections/Contact.tsx`（現在は `mailto:` リンクのみ）  |

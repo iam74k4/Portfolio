@@ -1,0 +1,99 @@
+<!doctype html>
+<!--
+  OGP 画像の版下。scripts/build-og.mjs が 1200x630 で撮影して public/og.png を作る。
+  文言や配色を変えたら `npm run og` を実行し直すこと。
+-->
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        width: 1200px;
+        height: 630px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 84px 90px;
+        background: #fbfbfc;
+        color: #16161a;
+        font-family: 'Helvetica Neue', 'Hiragino Sans', 'Noto Sans JP', system-ui, sans-serif;
+        font-feature-settings: 'palt';
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      .monogram {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        background: #5b5bd6;
+        color: #fff;
+        display: grid;
+        place-items: center;
+        font-family: ui-monospace, monospace;
+        font-size: 26px;
+        letter-spacing: 0.04em;
+      }
+      .who {
+        font-size: 26px;
+        font-weight: 600;
+        line-height: 1.35;
+      }
+      .role {
+        font-family: ui-monospace, monospace;
+        font-size: 15px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #4a4a55;
+      }
+      .headline {
+        font-size: 76px;
+        font-weight: 700;
+        line-height: 1.18;
+        letter-spacing: -0.02em;
+      }
+      .headline em {
+        font-style: normal;
+        color: #5b5bd6;
+      }
+      .foot {
+        display: flex;
+        align-items: baseline;
+        gap: 18px;
+        font-family: ui-monospace, monospace;
+        font-size: 17px;
+        letter-spacing: 0.1em;
+        color: #6f6f7a;
+      }
+      .rule {
+        flex: 1;
+        height: 1px;
+        background: #e5e5ea;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="brand">
+      <div class="monogram">TO</div>
+      <div>
+        <div class="who">岡崎 昂功</div>
+        <div class="role">System Engineer</div>
+      </div>
+    </div>
+
+    <div class="headline"><em>つくる速さを、</em><br />仕組みで変える。</div>
+
+    <div class="foot">
+      <span>金融系システム開発 / 生成AIによる開発効率化</span>
+      <span class="rule"></span>
+      <span>github.com/iam74k4</span>
+    </div>
+  </body>
+</html>
