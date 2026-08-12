@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check": "npm run format:check && npm run lint && npm run build",
+    "check:copy": "node --experimental-strip-types scripts/check-copy.mjs",
+    "check": "npm run format:check && npm run lint && npm run check:copy && npm run build",
     "og": "node scripts/build-og.mjs"
   },
   "dependencies": {

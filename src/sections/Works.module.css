@@ -226,8 +226,8 @@
 
 @media (max-width: 900px) {
   .summary {
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
   }
 }
 
@@ -240,5 +240,15 @@
     grid-template-columns: 1fr;
     grid-auto-rows: minmax(150px, auto);
     grid-template-rows: none;
+  }
+
+  /*
+   * 説明文を縮ませない。既定のままだと、カードが下限の 150px に張りついて
+   * 説明だけが押し潰され、3行の指定に対して1行しか出ない。
+   * 実績値を持つカードではその1行も消えて、説明が丸ごと読めなくなる。
+   * ここは縦スクロールを許している画面なので、カードを伸ばすほうを選ぶ。
+   */
+  .summary {
+    flex: none;
   }
 }

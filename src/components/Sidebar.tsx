@@ -16,20 +16,28 @@ export function Sidebar({ current, onNavigate }: Props) {
    * 選択中の項目に合わせて標識を動かす。位置は実測する。
    * 背景色を瞬時に入れ替えると「消えて現れる」に見えるが、
    * 滑らせるとどこからどこへ動いたかが繋がって見える。
+   *
+   * 測り直しは ResizeObserver に任せる。window の resize だけを見ていると、
+   * ウィンドウの大きさが変わらないまま一覧の高さが変わったとき
+   * （字体の読み込み、縦スクロールバーの出入りなど）に標識が取り残される。
    */
   useLayoutEffect(() => {
+    const list = listRef.current
+    if (!list) return
+
     const measure = () => {
-      const list = listRef.current
-      const on = list?.querySelector<HTMLElement>('[aria-current="page"]')
-      if (!list || !on) return
+      const on = list.querySelector<HTMLElement>('[aria-current="page"]')
+      if (!on) return
       // 実測は矩形の差で取る。offsetTop は基準になる祖先が何かに左右されるため
       const box = list.getBoundingClientRect()
       const onBox = on.getBoundingClientRect()
       setMarker({ y: onBox.top - box.top, h: onBox.height })
     }
     measure()
-    window.addEventListener('resize', measure)
-    return () => window.removeEventListener('resize', measure)
+
+    const observer = new ResizeObserver(measure)
+    observer.observe(list)
+    return () => observer.disconnect()
   }, [current])
 
   return (

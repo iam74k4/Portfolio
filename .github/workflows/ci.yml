@@ -26,6 +26,10 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      # 文言の語尾がそろっているか（体言止めとです・ますが混ざるのを防ぐ）
+      - name: Copy
+        run: npm run check:copy
+
       # build が tsc -b も走らせるので、型チェックはここで一緒に見る
       - name: Typecheck & build
         run: npm run build
