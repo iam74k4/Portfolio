@@ -124,6 +124,14 @@ export const works: Work[] = [
     metric: { value: 20, unit: '人日', note: '見込み 40人日 → 実績', ratio: 0.5 },
   },
   {
+    title: '問い合わせ対応エージェント',
+    summary:
+      'Copilot Studio で構築した、ドキュメントを参照して問い合わせに答えるエージェント。参照する資料を整理し、回答を検証して一次対応に充てた。',
+    year: '2026',
+    role: '業務 / 製造業',
+    tags: ['Copilot Studio', 'Power Platform', 'RAG'],
+  },
+  {
     title: 'AppMixer',
     summary:
       'macOS 14.4 の Core Audio Process Tap でアプリ単位の音量と出力先を制御する常駐アプリ。署名と公証を通して配布している。',
@@ -150,16 +158,6 @@ export const works: Work[] = [
     role: '個人開発',
     tags: ['TypeScript', 'discord.js', 'SQLite'],
     repo: 'https://github.com/iam74k4/DiscordBot',
-  },
-  {
-    title: 'EventPlayback',
-    summary:
-      'マウスとキーボードの操作を記録・再生する Windows 向けツール。依存3つ・単一ファイル約800行に収め、exe は Actions で自動ビルドしている。',
-    year: '2025',
-    role: '個人開発',
-    tags: ['Python', 'pynput', 'CustomTkinter'],
-    repo: 'https://github.com/iam74k4/EventPlayback',
-    demo: 'https://github.com/iam74k4/EventPlayback/releases/latest',
   },
   {
     title: 'Portfolio',
