@@ -1,3 +1,4 @@
+import { useLayoutEffect, useRef, useState } from 'react'
 import { profile, sections, socials, type SectionId } from '../data/portfolio'
 import { Icon } from './Icon'
 import styles from './Sidebar.module.css'
@@ -8,6 +9,26 @@ interface Props {
 }
 
 export function Sidebar({ current, onNavigate }: Props) {
+  const listRef = useRef<HTMLUListElement>(null)
+  const [marker, setMarker] = useState<{ y: number; h: number } | null>(null)
+
+  /*
+   * 選択中の項目に合わせて標識を動かす。位置は実測する。
+   * 背景色を瞬時に入れ替えると「消えて現れる」に見えるが、
+   * 滑らせるとどこからどこへ動いたかが繋がって見える。
+   */
+  useLayoutEffect(() => {
+    const measure = () => {
+      const list = listRef.current
+      const on = list?.querySelector<HTMLElement>('[aria-current="page"]')
+      if (!list || !on) return
+      setMarker({ y: on.offsetTop, h: on.offsetHeight })
+    }
+    measure()
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
+  }, [current])
+
   return (
     <nav className={styles.nav} aria-label="セクション">
       <div className={styles.brand}>
@@ -24,7 +45,14 @@ export function Sidebar({ current, onNavigate }: Props) {
         </div>
       </div>
 
-      <ul className={styles.list}>
+      <ul className={styles.list} ref={listRef}>
+        {marker && (
+          <span
+            className={styles.marker}
+            style={{ transform: `translateY(${marker.y}px)`, height: marker.h }}
+            aria-hidden="true"
+          />
+        )}
         {sections.map((section) => (
           <li key={section.id}>
             <button

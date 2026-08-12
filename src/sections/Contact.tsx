@@ -9,7 +9,7 @@ import styles from './Contact.module.css'
  */
 export function Contact() {
   return (
-    <div className={styles.contact}>
+    <div className={`${styles.contact} stagger`}>
       <h3 className={styles.title}>
         {profile.contact.title.map((line, i) => (
           <span key={line}>

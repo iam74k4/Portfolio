@@ -21,6 +21,7 @@
  * 空いた面積を説明とタグに回している。
  */
 .card {
+  position: relative;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -31,15 +32,78 @@
   border-radius: var(--radius);
   background: var(--surface);
   transition:
-    border-color 220ms var(--ease),
-    transform 220ms var(--ease),
-    box-shadow 220ms var(--ease);
+    border-color 300ms var(--ease),
+    background 300ms var(--ease);
 }
 
 .card:hover {
-  border-color: var(--accent);
-  transform: translateY(-3px);
-  box-shadow: var(--shadow);
+  border-color: var(--line-strong);
+  background: var(--surface-hover);
+}
+
+/* 下線が左から伸びる。影で浮かせるより、静かなデザインに馴染む */
+.card::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 340ms var(--ease);
+}
+
+.card:hover::after,
+.card:focus-within::after {
+  transform: scaleX(1);
+}
+
+/* ---------- 実績値 ---------- */
+.metric {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 2px;
+}
+
+.metricNote {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.06em;
+  color: var(--ink-weak);
+}
+
+.metricNote b {
+  font-size: var(--fs-md);
+  font-weight: 700;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.bar {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.bar i {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--accent);
+  transform-origin: left;
+  animation: metric-grow 900ms var(--ease) both;
+}
+
+@keyframes metric-grow {
+  from {
+    transform: scaleX(0);
+  }
 }
 
 /* 立場と時期 */

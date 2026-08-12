@@ -69,6 +69,8 @@
 
 /* 下段: 技術。1行 = 名称 + 経験年数 */
 .skills {
+  /* 上段（Profile / Career）が出たあとに続ける */
+  --stagger-base: 120ms;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--gutter);
