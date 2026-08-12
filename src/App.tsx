@@ -9,7 +9,7 @@ import { Home } from './sections/Home'
 import { Works } from './sections/Works'
 
 export default function App() {
-  const { current, index, total, go } = useSectionRouter()
+  const { current, index, total, direction, go } = useSectionRouter()
 
   return (
     <div className={styles.app}>
@@ -20,14 +20,15 @@ export default function App() {
 
       <Sidebar current={current} onNavigate={go} />
 
-      <main className={styles.stage}>
+      {/* data-way は「どちら側からパネルが入るか」を CSS に伝える */}
+      <main className={styles.stage} data-way={direction}>
         {sections.map((section) => {
           const active = section.id === current
           return (
             <Panel key={section.id} section={section} active={active}>
               {section.id === 'home' && <Home onNavigate={go} />}
               {section.id === 'about' && <About />}
-              {section.id === 'works' && <Works />}
+              {section.id === 'works' && <Works active={active} />}
               {section.id === 'contact' && <Contact />}
             </Panel>
           )

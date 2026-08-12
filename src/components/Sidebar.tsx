@@ -1,3 +1,4 @@
+import { useLayoutEffect, useRef, useState } from 'react'
 import { profile, sections, socials, type SectionId } from '../data/portfolio'
 import { Icon } from './Icon'
 import styles from './Sidebar.module.css'
@@ -8,6 +9,29 @@ interface Props {
 }
 
 export function Sidebar({ current, onNavigate }: Props) {
+  const listRef = useRef<HTMLDivElement>(null)
+  const [marker, setMarker] = useState<{ y: number; h: number } | null>(null)
+
+  /*
+   * 選択中の項目に合わせて標識を動かす。位置は実測する。
+   * 背景色を瞬時に入れ替えると「消えて現れる」に見えるが、
+   * 滑らせるとどこからどこへ動いたかが繋がって見える。
+   */
+  useLayoutEffect(() => {
+    const measure = () => {
+      const list = listRef.current
+      const on = list?.querySelector<HTMLElement>('[aria-current="page"]')
+      if (!list || !on) return
+      // 実測は矩形の差で取る。offsetTop は基準になる祖先が何かに左右されるため
+      const box = list.getBoundingClientRect()
+      const onBox = on.getBoundingClientRect()
+      setMarker({ y: onBox.top - box.top, h: onBox.height })
+    }
+    measure()
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
+  }, [current])
+
   return (
     <nav className={styles.nav} aria-label="セクション">
       <div className={styles.brand}>
@@ -24,21 +48,31 @@ export function Sidebar({ current, onNavigate }: Props) {
         </div>
       </div>
 
-      <ul className={styles.list}>
-        {sections.map((section) => (
-          <li key={section.id}>
-            <button
-              type="button"
-              className={styles.item}
-              aria-current={section.id === current ? 'page' : undefined}
-              onClick={() => onNavigate(section.id)}
-            >
-              <span className={styles.dot} aria-hidden="true" />
-              {section.label}
-            </button>
-          </li>
-        ))}
-      </ul>
+      {/* 標識は ul の外に置く。ul の子に li 以外を混ぜられないため */}
+      <div className={styles.listWrap} ref={listRef}>
+        {marker && (
+          <span
+            className={styles.marker}
+            style={{ transform: `translateY(${marker.y}px)`, height: marker.h }}
+            aria-hidden="true"
+          />
+        )}
+        <ul className={styles.list}>
+          {sections.map((section) => (
+            <li key={section.id}>
+              <button
+                type="button"
+                className={styles.item}
+                aria-current={section.id === current ? 'page' : undefined}
+                onClick={() => onNavigate(section.id)}
+              >
+                <span className={styles.dot} aria-hidden="true" />
+                {section.label}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
 
       <ul className={styles.socials}>
         {socials.map((s) => (

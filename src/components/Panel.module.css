@@ -1,5 +1,9 @@
+/*
+ * すべてのパネルを同じグリッドセルに重ねてクロスフェードさせる。
+ * 入る向きは親（App の stage）の data-way で決まる。進むときは右から、
+ * 戻るときは左から入るので、4画面が横一列に並んでいるように感じられる。
+ */
 .panel {
-  /* すべてのパネルを同じグリッドセルに重ねてクロスフェードさせる */
   grid-area: 1 / 1;
   display: flex;
   flex-direction: column;
@@ -8,11 +12,15 @@
   padding: var(--gutter);
   opacity: 0;
   visibility: hidden;
-  transform: translateY(14px);
+  transform: translateX(28px);
   transition:
     opacity var(--dur) var(--ease),
     transform var(--dur) var(--ease),
     visibility var(--dur) var(--ease);
+}
+
+:global([data-way='back']) .panel {
+  transform: translateX(-28px);
 }
 
 .panel[data-active='true'] {

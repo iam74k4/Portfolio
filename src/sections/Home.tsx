@@ -11,7 +11,7 @@ interface Props {
  */
 export function Home({ onNavigate }: Props) {
   return (
-    <div className={styles.home}>
+    <div className={`${styles.home} stagger`}>
       {/* ページの h1 は App が持っているので、ここは見出し要素にしない */}
       <p className={styles.headline}>
         {profile.headline.map((line, i) => (

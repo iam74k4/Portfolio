@@ -1,7 +1,10 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { sections, type SectionId } from '../data/portfolio'
 
 const ids = sections.map((s) => s.id)
+
+/** 送りの向き。パネルがどちら側から入るかを決める */
+export type Direction = 'fwd' | 'back'
 
 function fromHash(): SectionId {
   const id = window.location.hash.replace(/^#/, '') as SectionId
@@ -25,29 +28,56 @@ function isTypingTarget(el: EventTarget | null): boolean {
  */
 export function useSectionRouter() {
   const [current, setCurrent] = useState<SectionId>(fromHash)
+  const [direction, setDirection] = useState<Direction>('fwd')
+  const indexRef = useRef(ids.indexOf(current))
+
+  const apply = useCallback((id: SectionId, way: Direction) => {
+    setDirection(way)
+    setCurrent(id)
+    indexRef.current = ids.indexOf(id)
+  }, [])
 
   useEffect(() => {
-    const onHashChange = () => setCurrent(fromHash())
+    const onHashChange = () => {
+      const next = fromHash()
+      const to = ids.indexOf(next)
+      /*
+       * go / shift は先に向きを決めてから hash を書き換える。
+       * その書き換えでもここが呼ばれるので、位置が同じなら何もしない。
+       * 上書きしてしまうと、決めたばかりの向きが常に潰れる。
+       */
+      if (to === indexRef.current) return
+      // 戻る/進むで来た場合だけ、位置関係から向きを決める
+      apply(next, to > indexRef.current ? 'fwd' : 'back')
+    }
     window.addEventListener('hashchange', onHashChange)
     return () => window.removeEventListener('hashchange', onHashChange)
-  }, [])
+  }, [apply])
 
-  const go = useCallback((id: SectionId) => {
-    window.location.hash = id
-    setCurrent(id)
-  }, [])
+  const go = useCallback(
+    (id: SectionId) => {
+      const to = ids.indexOf(id)
+      if (to === indexRef.current) return
+      apply(id, to > indexRef.current ? 'fwd' : 'back')
+      window.location.hash = id
+    },
+    [apply],
+  )
 
   const shift = useCallback(
     (delta: number) => {
-      go(ids[(ids.indexOf(current) + delta + ids.length) % ids.length])
+      // 端をまたぐときも「押した向き」を優先する
+      const next = ids[(indexRef.current + delta + ids.length) % ids.length]
+      apply(next, delta > 0 ? 'fwd' : 'back')
+      window.location.hash = next
     },
-    [current, go],
+    [apply],
   )
 
   /*
    * セクション送りは横方向（← →）だけに割り当てる。
-   * 縦方向（↑ ↓ PageUp PageDown）まで奪うと、パネル内に収まりきらなかった
-   * 内容をキーボードでスクロールできなくなる。縦はコンテンツに譲る。
+   * 縦方向まで奪うと、パネル内に収まりきらなかった内容を
+   * キーボードでスクロールできなくなる。
    */
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -65,5 +95,5 @@ export function useSectionRouter() {
   }, [shift])
 
   const index = ids.indexOf(current)
-  return { current, index, total: ids.length, go, shift }
+  return { current, index, total: ids.length, direction, go, shift }
 }

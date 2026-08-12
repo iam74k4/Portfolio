@@ -49,14 +49,43 @@
 }
 
 /* ---------- セクション一覧 ---------- */
+/* 標識を項目に重ねるための基準 */
+.listWrap {
+  position: relative;
+  min-width: 0;
+}
+
 .list {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
+/* 選択中を示す標識。項目の背景ではなくこれが動く */
+.marker {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 0;
+  border-radius: var(--radius-sm);
+  background: var(--accent-soft);
+  transition: transform 320ms var(--ease);
+}
+
+.marker::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
 .item {
   position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -78,7 +107,6 @@
 }
 
 .item[aria-current='page'] {
-  background: var(--accent-soft);
   color: var(--ink);
   font-weight: 600;
 }
@@ -167,6 +195,10 @@
     display: none;
   }
 
+  .listWrap {
+    flex: none;
+  }
+
   .list {
     flex-direction: row;
     gap: 2px;
@@ -175,6 +207,15 @@
   .item {
     padding: 7px 11px;
     white-space: nowrap;
+  }
+
+  /* 横並びでは標識を使わず、従来どおり背景で示す */
+  .marker {
+    display: none;
+  }
+
+  .item[aria-current='page'] {
+    background: var(--accent-soft);
   }
 
   .socials {

@@ -4,7 +4,7 @@ import styles from './About.module.css'
 export function About() {
   return (
     <div className={styles.about}>
-      <div className={styles.top}>
+      <div className={`${styles.top} stagger`}>
         <div className={styles.block}>
           <span className="eyebrow">Profile</span>
           <div className={styles.bio}>
@@ -32,7 +32,7 @@ export function About() {
       </div>
 
       {/* 以前は独立した Skills セクションだったが、経歴と続けて読めるようここへ */}
-      <div className={styles.skills}>
+      <div className={`${styles.skills} stagger`}>
         {skillGroups.map((group) => (
           <div className={styles.block} key={group.category}>
             <span className="eyebrow">{group.category}</span>

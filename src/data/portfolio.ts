@@ -94,6 +94,11 @@ export interface Work {
   repo?: string
   /** 動くもの・配布物。なければ省略 */
   demo?: string
+  /**
+   * 目立たせたい実績値。1画面に1つだけにすること。
+   * 数が増えると安っぽくなるので、業務カードにしか付けていない。
+   */
+  metric?: { value: number; unit: string; note: string; ratio: number }
 }
 
 /**
@@ -108,6 +113,7 @@ export const works: Work[] = [
     year: '2024 —',
     role: '業務 / 金融系基幹システム',
     tags: ['生成AI', 'C#', 'Playwright'],
+    metric: { value: 20, unit: '人日', note: '見込み 40人日 → 実績', ratio: 0.5 },
   },
   {
     title: 'AppMixer',

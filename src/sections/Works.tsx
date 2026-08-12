@@ -1,10 +1,34 @@
 import { Icon } from '../components/Icon'
-import { works } from '../data/portfolio'
+import { works, type Work } from '../data/portfolio'
+import { useCountUp } from '../hooks/useCountUp'
 import styles from './Works.module.css'
 
-export function Works() {
+interface Props {
+  /** 表示中のときだけ数字を数え上げる */
+  active: boolean
+}
+
+/** 実績値。1画面に1つだけ置く前提 */
+function Metric({ metric, active }: { metric: NonNullable<Work['metric']>; active: boolean }) {
+  const n = useCountUp(metric.value, active)
   return (
-    <ul className={styles.grid}>
+    <div className={styles.metric}>
+      <p className={styles.metricNote}>
+        {/* 読み上げには途中の数字ではなく最終値を渡す */}
+        {metric.note} <b aria-hidden="true">{n}</b>
+        <span className="sr-only">{metric.value}</span>
+        {metric.unit}
+      </p>
+      <div className={styles.bar} aria-hidden="true">
+        <span style={{ width: `${metric.ratio * 100}%` }} />
+      </div>
+    </div>
+  )
+}
+
+export function Works({ active }: Props) {
+  return (
+    <ul className={`${styles.grid} stagger`}>
       {works.map((work) => {
         // タイトルは「動くもの」優先、なければソースへ
         const primary = work.demo ?? work.repo
@@ -28,6 +52,8 @@ export function Works() {
               </h3>
 
               <p className={styles.summary}>{work.summary}</p>
+
+              {work.metric && <Metric metric={work.metric} active={active} />}
 
               <div className={styles.foot}>
                 <ul className={styles.tags}>
