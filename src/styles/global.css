@@ -63,16 +63,20 @@ svg {
 
 /*
  * 中身を少しずつ遅らせて出す。
- * パネルが表示状態になった瞬間にルールが効き始めるので、切り替えのたびに再生される。
+ *
+ * animation は「表示中のパネル」にだけ与える。離れると animation ごと外れ、
+ * 戻ってきた時点で新しく始まるので、訪れるたびに再生される。
+ * animation-play-state で止める作りにすると、一度終わったアニメーションは
+ * 再開しても何も起きず、初回しか動かない。
+ *
  * 起点をずらしたいブロックは --stagger-base を指定する。
  */
-.stagger > * {
-  animation: stagger-rise 420ms var(--ease) both;
-  animation-play-state: paused;
-}
-
 [data-active='true'] .stagger > * {
-  animation-play-state: running;
+  /* 一括指定にすると animation-delay まで 0 に戻る。下の遅延指定を潰さないよう個別に書く */
+  animation-name: stagger-rise;
+  animation-duration: 420ms;
+  animation-timing-function: var(--ease);
+  animation-fill-mode: both;
 }
 
 .stagger > *:nth-child(1) {
@@ -129,5 +133,12 @@ svg {
   *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+    /*
+     * 遅延も消すこと。時間だけ 0 にしても、順送りの遅延（最大 320ms）は残るため、
+     * 中身が順番に現れるという動き自体は見えたままになる。
+     */
+    animation-delay: 0ms !important;
+    transition-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
   }
 }

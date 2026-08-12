@@ -91,12 +91,20 @@
   overflow: hidden;
 }
 
-.bar i {
+.bar span {
   display: block;
   height: 100%;
   border-radius: 999px;
   background: var(--accent);
   transform-origin: left;
+}
+
+/*
+ * 数字と一緒に伸ばしたいので、表示中のパネルでだけ animation を与える。
+ * 常時与えると、隠れているあいだに読み込み時点で伸び終わってしまい、
+ * Works を開いたときには数字だけが動いて見える。
+ */
+:global([data-active='true']) .bar span {
   animation: metric-grow 900ms var(--ease) both;
 }
 

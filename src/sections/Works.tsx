@@ -14,11 +14,13 @@ function Metric({ metric, active }: { metric: NonNullable<Work['metric']>; activ
   return (
     <div className={styles.metric}>
       <p className={styles.metricNote}>
-        {metric.note} <b>{n}</b>
+        {/* 読み上げには途中の数字ではなく最終値を渡す */}
+        {metric.note} <b aria-hidden="true">{n}</b>
+        <span className="sr-only">{metric.value}</span>
         {metric.unit}
       </p>
-      <div className={styles.bar}>
-        <i style={{ width: `${metric.ratio * 100}%` }} />
+      <div className={styles.bar} aria-hidden="true">
+        <span style={{ width: `${metric.ratio * 100}%` }} />
       </div>
     </div>
   )

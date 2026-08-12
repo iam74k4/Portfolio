@@ -9,7 +9,7 @@ interface Props {
 }
 
 export function Sidebar({ current, onNavigate }: Props) {
-  const listRef = useRef<HTMLUListElement>(null)
+  const listRef = useRef<HTMLDivElement>(null)
   const [marker, setMarker] = useState<{ y: number; h: number } | null>(null)
 
   /*
@@ -22,7 +22,10 @@ export function Sidebar({ current, onNavigate }: Props) {
       const list = listRef.current
       const on = list?.querySelector<HTMLElement>('[aria-current="page"]')
       if (!list || !on) return
-      setMarker({ y: on.offsetTop, h: on.offsetHeight })
+      // 実測は矩形の差で取る。offsetTop は基準になる祖先が何かに左右されるため
+      const box = list.getBoundingClientRect()
+      const onBox = on.getBoundingClientRect()
+      setMarker({ y: onBox.top - box.top, h: onBox.height })
     }
     measure()
     window.addEventListener('resize', measure)
@@ -45,7 +48,8 @@ export function Sidebar({ current, onNavigate }: Props) {
         </div>
       </div>
 
-      <ul className={styles.list} ref={listRef}>
+      {/* 標識は ul の外に置く。ul の子に li 以外を混ぜられないため */}
+      <div className={styles.listWrap} ref={listRef}>
         {marker && (
           <span
             className={styles.marker}
@@ -53,20 +57,22 @@ export function Sidebar({ current, onNavigate }: Props) {
             aria-hidden="true"
           />
         )}
-        {sections.map((section) => (
-          <li key={section.id}>
-            <button
-              type="button"
-              className={styles.item}
-              aria-current={section.id === current ? 'page' : undefined}
-              onClick={() => onNavigate(section.id)}
-            >
-              <span className={styles.dot} aria-hidden="true" />
-              {section.label}
-            </button>
-          </li>
-        ))}
-      </ul>
+        <ul className={styles.list}>
+          {sections.map((section) => (
+            <li key={section.id}>
+              <button
+                type="button"
+                className={styles.item}
+                aria-current={section.id === current ? 'page' : undefined}
+                onClick={() => onNavigate(section.id)}
+              >
+                <span className={styles.dot} aria-hidden="true" />
+                {section.label}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
 
       <ul className={styles.socials}>
         {socials.map((s) => (

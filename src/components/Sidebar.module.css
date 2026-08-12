@@ -49,8 +49,13 @@
 }
 
 /* ---------- セクション一覧 ---------- */
-.list {
+/* 標識を項目に重ねるための基準 */
+.listWrap {
   position: relative;
+  min-width: 0;
+}
+
+.list {
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -188,6 +193,10 @@
 
   .role {
     display: none;
+  }
+
+  .listWrap {
+    flex: none;
   }
 
   .list {
