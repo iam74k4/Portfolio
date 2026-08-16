@@ -3,6 +3,12 @@
   display: flex;
   flex-direction: column;
   gap: clamp(18px, 3vh, 34px);
+  /*
+   * 内容が少ない画面では上下に振り分ける。上詰めのままだと Home や Contact と
+   * 縦位置が揃わず、セクションを送るたびに内容が上下に飛んで見える。
+   */
+  justify-content: center;
+  justify-content: safe center;
   min-height: 0;
 }
 
@@ -17,16 +23,16 @@
 .block {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--sp-3);
   min-width: 0;
 }
 
 .bio {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--sp-4);
   color: var(--ink-mid);
-  font-size: clamp(var(--fs-sm), 1vw, var(--fs-md));
+  font-size: var(--fs-bio);
 }
 
 .timeline {
@@ -37,7 +43,7 @@
 .row {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--sp-2);
   padding: var(--row-pad) 0;
   border-bottom: 1px solid var(--line);
 }
@@ -86,7 +92,7 @@
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 12px;
+  gap: var(--sp-4);
   padding: var(--row-pad-tight) 0;
   border-bottom: 1px solid var(--line);
 }
@@ -111,7 +117,7 @@
   .top,
   .skills {
     grid-template-columns: 1fr;
-    gap: 18px;
+    gap: var(--sp-5);
   }
 }
 
@@ -121,44 +127,44 @@
  */
 @media (max-height: 820px) {
   .about {
-    gap: 16px;
+    gap: var(--sp-5);
   }
 
   .bio {
     font-size: var(--fs-sm);
     line-height: 1.6;
-    gap: 8px;
+    gap: var(--sp-3);
   }
 
   .row {
-    padding: 8px 0;
+    padding: var(--sp-3) 0;
   }
 
   .item {
-    padding: 4px 0;
+    padding: var(--sp-2) 0;
   }
 }
 
 @media (max-height: 680px) {
   .about {
-    gap: 8px;
+    gap: var(--sp-3);
   }
 
   .bio {
     font-size: var(--fs-sm);
     line-height: 1.5;
-    gap: 6px;
+    gap: var(--sp-2);
   }
 
   .block {
-    gap: 4px;
+    gap: var(--sp-2);
   }
 
   .row {
-    padding: 4px 0;
+    padding: var(--sp-2) 0;
   }
 
   .item {
-    padding: 2px 0;
+    padding: var(--sp-1) 0;
   }
 }

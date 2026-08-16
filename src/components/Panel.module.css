@@ -12,7 +12,7 @@
   padding: var(--gutter);
   opacity: 0;
   visibility: hidden;
-  transform: translateX(28px);
+  transform: translateX(var(--slide));
   transition:
     opacity var(--dur) var(--ease),
     transform var(--dur) var(--ease),
@@ -20,7 +20,7 @@
 }
 
 :global([data-way='back']) .panel {
-  transform: translateX(-28px);
+  transform: translateX(calc(var(--slide) * -1));
 }
 
 .panel[data-active='true'] {
@@ -35,13 +35,13 @@
  */
 .head {
   flex: none;
-  padding-bottom: 12px;
+  padding-bottom: var(--sp-4);
   margin-bottom: clamp(16px, 2.4vh, 28px);
   border-bottom: 1px solid var(--line);
 }
 
 .title {
-  font-size: clamp(15px, 1.3vw, 18px);
+  font-size: var(--fs-panel-title);
   font-weight: 600;
   letter-spacing: 0.03em;
   line-height: 1.3;

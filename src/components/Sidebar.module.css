@@ -7,9 +7,9 @@
    * 上詰めにすると下に大きな空洞が1つできてしまう。
    */
   justify-content: space-between;
-  gap: 32px;
+  gap: var(--sp-7);
   min-height: 0;
-  padding: var(--gutter) 28px;
+  padding: var(--gutter) var(--sp-6);
   border-right: 1px solid var(--line);
   background: var(--surface);
 }
@@ -18,7 +18,7 @@
 .brand {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: var(--sp-4);
 }
 
 .monogram {
@@ -58,7 +58,7 @@
 .list {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--sp-1);
 }
 
 /* 選択中を示す標識。項目の背景ではなくこれが動く */
@@ -69,15 +69,15 @@
   z-index: 0;
   border-radius: var(--radius-sm);
   background: var(--accent-soft);
-  transition: transform 320ms var(--ease);
+  transition: transform var(--dur) var(--ease);
 }
 
 .marker::before {
   content: '';
   position: absolute;
   left: 0;
-  top: 8px;
-  bottom: 8px;
+  top: var(--sp-3);
+  bottom: var(--sp-3);
   width: 2px;
   border-radius: 2px;
   background: var(--accent);
@@ -88,17 +88,17 @@
   z-index: 1;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--sp-4);
   width: 100%;
-  padding: 10px 12px;
+  padding: var(--sp-3) var(--sp-4);
   border-radius: var(--radius-sm);
   color: var(--ink-mid);
   font-size: var(--fs-base);
   letter-spacing: 0.04em;
   text-align: left;
   transition:
-    background 180ms var(--ease),
-    color 180ms var(--ease);
+    background var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease);
 }
 
 .item:hover {
@@ -118,9 +118,9 @@
   border: 1px solid var(--ink-weak);
   border-radius: 50%;
   transition:
-    background 180ms var(--ease),
-    border-color 180ms var(--ease),
-    transform 180ms var(--ease);
+    background var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease),
+    transform var(--dur-fast) var(--ease);
 }
 
 .item[aria-current='page'] .dot {
@@ -133,7 +133,7 @@
 
 .socials {
   display: flex;
-  gap: 8px;
+  gap: var(--sp-3);
 }
 
 .social {
@@ -145,9 +145,9 @@
   border-radius: var(--radius-sm);
   color: var(--ink-mid);
   transition:
-    color 180ms var(--ease),
-    border-color 180ms var(--ease),
-    transform 180ms var(--ease);
+    color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease),
+    transform var(--dur-fast) var(--ease);
 }
 
 .social:hover {
@@ -161,8 +161,8 @@
   .nav {
     flex-direction: row;
     align-items: center;
-    gap: 12px;
-    padding: 10px 16px;
+    gap: var(--sp-4);
+    padding: var(--sp-3) var(--sp-5);
     border-right: 0;
     border-bottom: 1px solid var(--line);
     overflow-x: auto;
@@ -176,7 +176,7 @@
   .brand {
     flex-direction: row;
     align-items: center;
-    gap: 10px;
+    gap: var(--sp-3);
     flex: none;
   }
 
@@ -201,11 +201,11 @@
 
   .list {
     flex-direction: row;
-    gap: 2px;
+    gap: var(--sp-1);
   }
 
   .item {
-    padding: 7px 11px;
+    padding: var(--sp-3) var(--sp-4);
     white-space: nowrap;
   }
 

@@ -3,10 +3,15 @@
   flex: 1;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  /* 高さは中身なり。行を引き伸ばすとカード内に空白ができるため */
   grid-template-rows: repeat(2, minmax(0, max-content));
-  align-content: start;
-  gap: 14px;
+  /*
+   * 行は中身なりの高さにする（引き伸ばすとカード内に空白ができる）。
+   * そのぶん余る縦の空きは、下に溜めずに上下へ分ける。
+   * safe を付けないと、収まらない画面で先頭がスクロール範囲の外へ出る。
+   */
+  align-content: center;
+  align-content: safe center;
+  gap: var(--sp-4);
   min-height: 0;
 }
 
@@ -25,15 +30,15 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--sp-3);
   min-height: 0;
   padding: clamp(14px, 1.4vw, 20px);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
   transition:
-    border-color 300ms var(--ease),
-    background 300ms var(--ease);
+    border-color var(--dur) var(--ease),
+    background var(--dur) var(--ease);
 }
 
 .card:hover {
@@ -53,7 +58,7 @@
   background: var(--accent);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 340ms var(--ease);
+  transition: transform var(--dur) var(--ease);
 }
 
 .card:hover::after,
@@ -61,13 +66,24 @@
   transform: scaleX(1);
 }
 
+/*
+ * 見出しのリンクは文字の高さしかなく、指では狙いにくい（実測 16px）。
+ * 透明な面をカード全体に広げて、どこを押しても主リンクへ飛ぶようにする。
+ * リンクを入れ子にはできないので、擬似要素で重ねる。
+ */
+.title a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
 /* ---------- 実績値 ---------- */
 .metric {
   flex: none;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding-top: 2px;
+  gap: var(--sp-2);
+  padding-top: var(--sp-1);
 }
 
 .metricNote {
@@ -105,7 +121,7 @@
  * Works を開いたときには数字だけが動いて見える。
  */
 :global([data-active='true']) .bar span {
-  animation: metric-grow 900ms var(--ease) both;
+  animation: metric-grow var(--dur-slow) var(--ease) both;
 }
 
 @keyframes metric-grow {
@@ -119,7 +135,7 @@
   flex: none;
   display: flex;
   align-items: baseline;
-  gap: 10px;
+  gap: var(--sp-3);
   font-family: var(--font-mono);
   font-size: var(--fs-label);
   letter-spacing: 0.08em;
@@ -140,13 +156,13 @@
 
 .title {
   flex: none;
-  font-size: clamp(14px, 1.1vw, 16px);
+  font-size: var(--fs-card-title);
   font-weight: 600;
   line-height: 1.35;
 }
 
 .title a {
-  transition: color 180ms var(--ease);
+  transition: color var(--dur-fast) var(--ease);
 }
 
 .title a:hover {
@@ -170,20 +186,20 @@
   flex: none;
   display: flex;
   align-items: flex-end;
-  gap: 10px;
+  gap: var(--sp-3);
   margin-top: auto;
-  padding-top: 4px;
+  padding-top: var(--sp-2);
 }
 
 .tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
+  gap: var(--sp-2);
   min-width: 0;
 }
 
 .tags li {
-  padding: 2px 8px;
+  padding: var(--sp-1) var(--sp-3);
   border: 1px solid var(--line);
   border-radius: 999px;
   font-family: var(--font-mono);
@@ -194,8 +210,11 @@
 }
 
 .links {
+  /* 面より上に置く。でないとカード全体のリンクに覆われて押し分けられない */
+  position: relative;
+  z-index: 1;
   display: flex;
-  gap: 4px;
+  gap: var(--sp-2);
   margin-left: auto;
   flex: none;
 }
@@ -208,8 +227,8 @@
   border-radius: var(--radius-sm);
   color: var(--ink-weak);
   transition:
-    color 180ms var(--ease),
-    background 180ms var(--ease);
+    color var(--dur-fast) var(--ease),
+    background var(--dur-fast) var(--ease);
 }
 
 .linkBtn:hover {
@@ -244,11 +263,17 @@
 
   /*
    * 説明文を縮ませない。既定のままだと、カードが下限の 150px に張りついて
-   * 説明だけが押し潰され、3行の指定に対して1行しか出ない。
+   * 説明だけが押し潰され、4行の指定に対して1行しか出ない。
    * 実績値を持つカードではその1行も消えて、説明が丸ごと読めなくなる。
    * ここは縦スクロールを許している画面なので、カードを伸ばすほうを選ぶ。
    */
   .summary {
     flex: none;
+  }
+
+  /* 指で押す画面では当たり判定を広げる */
+  .linkBtn {
+    width: 32px;
+    height: 32px;
   }
 }

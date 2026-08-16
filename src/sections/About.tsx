@@ -1,24 +1,30 @@
 import { career, profile, skillGroups } from '../data/portfolio'
 import styles from './About.module.css'
 
+/*
+ * 小見出しは見た目こそ小さいが、見出し要素にしておく。
+ * span のままだと、このパネルだけスクリーンリーダーから見て
+ * 構造の無い一枚岩になり、Works（h3 を使っている）とも揃わない。
+ */
 export function About() {
   return (
     <div className={styles.about}>
       <div className={`${styles.top} stagger`}>
         <div className={styles.block}>
-          <span className="eyebrow">Profile</span>
+          <h3 className="eyebrow">Profile</h3>
           <div className={styles.bio}>
-            {profile.bio.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
+            {/* 並び替えの起きない静的な一覧なので、key は位置でよい */}
+            {profile.bio.map((paragraph, i) => (
+              <p key={i}>{paragraph}</p>
             ))}
           </div>
         </div>
 
         <div className={styles.block}>
-          <span className="eyebrow">Career</span>
+          <h3 className="eyebrow">Career</h3>
           <ul className={styles.timeline}>
-            {career.map((entry) => (
-              <li className={styles.row} key={entry.period}>
+            {career.map((entry, i) => (
+              <li className={styles.row} key={i}>
                 <span className={styles.period}>{entry.period}</span>
                 <span>
                   <span className={styles.jobTitle}>{entry.title}</span>
@@ -35,7 +41,7 @@ export function About() {
       <div className={`${styles.skills} stagger`}>
         {skillGroups.map((group) => (
           <div className={styles.block} key={group.category}>
-            <span className="eyebrow">{group.category}</span>
+            <h3 className="eyebrow">{group.category}</h3>
             <ul className={styles.items}>
               {group.items.map((item) => (
                 <li className={styles.item} key={item.name}>

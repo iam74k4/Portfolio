@@ -9,7 +9,11 @@ import { Home } from './sections/Home'
 import { Works } from './sections/Works'
 
 export default function App() {
-  const { current, index, total, direction, go } = useSectionRouter()
+  /*
+   * 画面の切り替えは URL の hash が決める。ナビも Home の行き先も
+   * ただのリンクなので、ここから遷移用の関数を配る必要はない。
+   */
+  const { current, index, total, direction } = useSectionRouter()
 
   return (
     <div className={styles.app}>
@@ -18,7 +22,7 @@ export default function App() {
         {profile.name} — {profile.role}
       </h1>
 
-      <Sidebar current={current} onNavigate={go} />
+      <Sidebar current={current} />
 
       {/* data-way は「どちら側からパネルが入るか」を CSS に伝える */}
       <main className={styles.stage} data-way={direction}>
@@ -26,7 +30,7 @@ export default function App() {
           const active = section.id === current
           return (
             <Panel key={section.id} section={section} active={active}>
-              {section.id === 'home' && <Home onNavigate={go} />}
+              {section.id === 'home' && <Home />}
               {section.id === 'about' && <About />}
               {section.id === 'works' && <Works active={active} />}
               {section.id === 'contact' && <Contact />}

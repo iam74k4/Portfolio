@@ -13,19 +13,31 @@ export function useCountUp(to: number, active: boolean, duration = 900): number 
       setValue(0)
       return
     }
-    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
-      setValue(to)
-      return
-    }
 
-    const start = performance.now()
-    const step = (now: number) => {
-      const p = Math.min(1, (now - start) / duration)
-      setValue(Math.round(to * (1 - Math.pow(1 - p, 3))))
-      if (p < 1) frame.current = requestAnimationFrame(step)
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)')
+
+    const run = () => {
+      cancelAnimationFrame(frame.current)
+      if (reduce?.matches) {
+        setValue(to)
+        return
+      }
+      const start = performance.now()
+      const step = (now: number) => {
+        const p = Math.min(1, (now - start) / duration)
+        setValue(Math.round(to * (1 - Math.pow(1 - p, 3))))
+        if (p < 1) frame.current = requestAnimationFrame(step)
+      }
+      frame.current = requestAnimationFrame(step)
     }
-    frame.current = requestAnimationFrame(step)
-    return () => cancelAnimationFrame(frame.current)
+    run()
+
+    // 表示中に OS 設定が変わることもある。そのときは今の設定で作り直す
+    reduce?.addEventListener('change', run)
+    return () => {
+      cancelAnimationFrame(frame.current)
+      reduce?.removeEventListener('change', run)
+    }
   }, [to, active, duration])
 
   return value

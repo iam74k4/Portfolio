@@ -74,28 +74,29 @@ svg {
 [data-active='true'] .stagger > * {
   /* 一括指定にすると animation-delay まで 0 に戻る。下の遅延指定を潰さないよう個別に書く */
   animation-name: stagger-rise;
-  animation-duration: 420ms;
+  animation-duration: var(--dur-rise);
   animation-timing-function: var(--ease);
   animation-fill-mode: both;
 }
 
+/* 遅らせるのは先頭6つまで。それ以上は待たされている感じになる */
 .stagger > *:nth-child(1) {
   animation-delay: var(--stagger-base, 0ms);
 }
 .stagger > *:nth-child(2) {
-  animation-delay: calc(var(--stagger-base, 0ms) + 40ms);
+  animation-delay: calc(var(--stagger-base, 0ms) + var(--stagger-step));
 }
 .stagger > *:nth-child(3) {
-  animation-delay: calc(var(--stagger-base, 0ms) + 80ms);
+  animation-delay: calc(var(--stagger-base, 0ms) + var(--stagger-step) * 2);
 }
 .stagger > *:nth-child(4) {
-  animation-delay: calc(var(--stagger-base, 0ms) + 120ms);
+  animation-delay: calc(var(--stagger-base, 0ms) + var(--stagger-step) * 3);
 }
 .stagger > *:nth-child(5) {
-  animation-delay: calc(var(--stagger-base, 0ms) + 160ms);
+  animation-delay: calc(var(--stagger-base, 0ms) + var(--stagger-step) * 4);
 }
 .stagger > *:nth-child(6) {
-  animation-delay: calc(var(--stagger-base, 0ms) + 200ms);
+  animation-delay: calc(var(--stagger-base, 0ms) + var(--stagger-step) * 5);
 }
 
 @keyframes stagger-rise {
@@ -118,9 +119,13 @@ svg {
   white-space: nowrap;
 }
 
-/* 小さなラベル（セクション番号、カテゴリ名など）の共通スタイル */
+/*
+ * 小さなラベル（カテゴリ名など）の共通スタイル。
+ * 見出し要素に付けることがあるので、太さも明示して見た目を揃える。
+ */
 .eyebrow {
   font-family: var(--font-mono);
+  font-weight: 400;
   font-size: var(--fs-label);
   letter-spacing: 0.18em;
   text-transform: uppercase;

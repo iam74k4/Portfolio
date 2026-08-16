@@ -5,10 +5,14 @@ import styles from './Sidebar.module.css'
 
 interface Props {
   current: SectionId
-  onNavigate: (id: SectionId) => void
 }
 
-export function Sidebar({ current, onNavigate }: Props) {
+/*
+ * 項目はボタンではなくリンクにしている。やっていることは hash を書き換えることなので、
+ * リンクにすれば新しいタブで開く・URL をコピーする・リンクとして読み上げる、が
+ * そのまま手に入る。表示の切り替えは hashchange 側（useSectionRouter）が受け持つ。
+ */
+export function Sidebar({ current }: Props) {
   const listRef = useRef<HTMLDivElement>(null)
   const [marker, setMarker] = useState<{ y: number; h: number } | null>(null)
 
@@ -68,15 +72,14 @@ export function Sidebar({ current, onNavigate }: Props) {
         <ul className={styles.list}>
           {sections.map((section) => (
             <li key={section.id}>
-              <button
-                type="button"
+              <a
                 className={styles.item}
+                href={`#${section.id}`}
                 aria-current={section.id === current ? 'page' : undefined}
-                onClick={() => onNavigate(section.id)}
               >
                 <span className={styles.dot} aria-hidden="true" />
                 {section.label}
-              </button>
+              </a>
             </li>
           ))}
         </ul>

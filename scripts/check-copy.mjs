@@ -5,6 +5,7 @@
  * 書き足すうちに体言止めとです・ますが混ざる。目で見て気づくのは難しいので、
  * 機械で落とす。npm run check から呼ばれ、CI でも走る。
  */
+import { readFileSync } from 'node:fs'
 import { profile, works, career, skillGroups } from '../src/data/portfolio.ts'
 
 const problems = []
@@ -104,6 +105,29 @@ for (const raw of all) {
   // 日本語の直後に英字（またはその逆）が空白なしで続いていないか
   const m = text.match(/[ぁ-んァ-ヶ一-龠][A-Za-z]|[A-Za-z][ぁ-んァ-ヶ一-龠]/g)
   if (m) ng('英数字の前後', raw, `半角スペースを入れる: ${[...new Set(m)].join(', ')}`)
+}
+
+/*
+ * ---------- index.html との食い違い ----------
+ * OGP と title は静的 HTML 側にあり、portfolio.ts から自動では同期できない。
+ * 片方だけ直して古くなるのを防ぐため、一致していることをここで確かめる。
+ */
+const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8')
+const pick = (re) => html.match(re)?.[1]?.trim()
+const expectTitle = `${profile.name} — ${profile.role}`
+const pairs = [
+  ['<title>', pick(/<title>([\s\S]*?)<\/title>/), expectTitle],
+  ['og:title', pick(/property="og:title"\s+content="([^"]*)"/), expectTitle],
+  ['og:site_name', pick(/property="og:site_name"\s+content="([^"]*)"/), expectTitle],
+  ['og:description', pick(/property="og:description"\s+content="([^"]*)"/), profile.lead],
+]
+for (const [label, actual, expected] of pairs) {
+  if (actual !== expected)
+    ng(
+      `index.html の ${label}`,
+      `${actual}\n    ↔ portfolio.ts: ${expected}`,
+      'portfolio.ts と一致させる',
+    )
 }
 
 if (problems.length) {

@@ -10,7 +10,7 @@
 }
 
 .title {
-  font-size: clamp(24px, 3vw, 38px);
+  font-size: var(--fs-display-sm);
   font-weight: 700;
   letter-spacing: -0.015em;
   line-height: 1.25;
@@ -26,16 +26,16 @@
 .mail {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  padding: 16px 26px;
+  gap: var(--sp-4);
+  padding: var(--sp-5) var(--sp-6);
   border-radius: 999px;
   background: var(--accent);
   color: var(--accent-ink);
-  font-size: clamp(14px, 1.3vw, 17px);
+  font-size: var(--fs-pill);
   letter-spacing: 0.01em;
   transition:
-    filter 180ms var(--ease),
-    transform 180ms var(--ease);
+    filter var(--dur-fast) var(--ease),
+    transform var(--dur-fast) var(--ease);
 }
 
 .mail:hover {
@@ -44,7 +44,7 @@
 }
 
 .arrow {
-  transition: transform 200ms var(--ease);
+  transition: transform var(--dur-fast) var(--ease);
 }
 
 .mail:hover .arrow {
@@ -54,21 +54,21 @@
 .links {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: var(--sp-3);
 }
 
 .link {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 7px 15px;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-5);
   border: 1px solid var(--line);
   border-radius: 999px;
   font-size: var(--fs-base);
   color: var(--ink-mid);
   transition:
-    color 180ms var(--ease),
-    border-color 180ms var(--ease);
+    color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease);
 }
 
 .link:hover {

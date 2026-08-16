@@ -9,13 +9,17 @@
     <title>岡崎 昂功 — System Engineer</title>
     <meta
       name="description"
-      content="岡崎 昂功（System Engineer）のポートフォリオ。金融系システム開発と生成AIによる業務効率化、個人開発の制作物。"
+      content="岡崎 昂功（System Engineer）のポートフォリオ。金融・製造業のシステム開発と生成AIによる業務効率化、個人開発の制作物。"
     />
 
     <!--
       SNS やチャットに貼ったときのカード。画像は scripts/og-image.html が版下で、
       `npm run og` で public/og.png を作り直せる。
       og:url と og:image は絶対 URL が必要なため、公開先のドメインを直接書いている。
+
+      title と og:description は portfolio.ts の内容と一致していなければならない。
+      ここは静的 HTML なので自動で同期できない代わりに、npm run check:copy が
+      食い違いを検出する。文言を変えたら両方直すこと。
     -->
     <meta property="og:type" content="profile" />
     <meta property="og:site_name" content="岡崎 昂功 — System Engineer" />
@@ -51,6 +55,8 @@
           "React",
           "Swift",
           "Python",
+          "Copilot Studio",
+          "Power Platform",
           "生成AIによる開発効率化"
         ]
       }

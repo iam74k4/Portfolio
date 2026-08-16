@@ -25,6 +25,9 @@ function isTypingTarget(el: EventTarget | null): boolean {
 /**
  * 表示中のセクションを URL hash と同期させる。
  * hash を書き換えるので、ブラウザの戻る/進むがそのままセクション送りになる。
+ *
+ * ナビと Home の行き先はただのリンク（href="#works" など）なので、
+ * 遷移用の関数は外へ出していない。キーボード送りだけがここから hash を書き換える。
  */
 export function useSectionRouter() {
   const [current, setCurrent] = useState<SectionId>(fromHash)
@@ -42,27 +45,18 @@ export function useSectionRouter() {
       const next = fromHash()
       const to = ids.indexOf(next)
       /*
-       * go / shift は先に向きを決めてから hash を書き換える。
+       * shift は先に向きを決めてから hash を書き換える。
        * その書き換えでもここが呼ばれるので、位置が同じなら何もしない。
        * 上書きしてしまうと、決めたばかりの向きが常に潰れる。
+       * リンクで現在地を押した場合も、ここで何も起こらない。
        */
       if (to === indexRef.current) return
-      // 戻る/進むで来た場合だけ、位置関係から向きを決める
+      // リンク・戻る/進むで来た場合は、位置関係から向きを決める
       apply(next, to > indexRef.current ? 'fwd' : 'back')
     }
     window.addEventListener('hashchange', onHashChange)
     return () => window.removeEventListener('hashchange', onHashChange)
   }, [apply])
-
-  const go = useCallback(
-    (id: SectionId) => {
-      const to = ids.indexOf(id)
-      if (to === indexRef.current) return
-      apply(id, to > indexRef.current ? 'fwd' : 'back')
-      window.location.hash = id
-    },
-    [apply],
-  )
 
   const shift = useCallback(
     (delta: number) => {
@@ -95,5 +89,5 @@ export function useSectionRouter() {
   }, [shift])
 
   const index = ids.indexOf(current)
-  return { current, index, total: ids.length, direction, go, shift }
+  return { current, index, total: ids.length, direction }
 }
