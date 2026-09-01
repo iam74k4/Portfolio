@@ -1,0 +1,64 @@
+/*
+ * すべてのパネルを同じグリッドセルに重ねてクロスフェードさせる。
+ * 入る向きは親（App の stage）の data-way で決まる。進むときは右から、
+ * 戻るときは左から入るので、4画面が横一列に並んでいるように感じられる。
+ */
+.panel {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  padding: var(--gutter);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(var(--slide));
+  transition:
+    opacity var(--dur) var(--ease),
+    transform var(--dur) var(--ease),
+    visibility var(--dur) var(--ease);
+}
+
+:global([data-way='back']) .panel {
+  transform: translateX(calc(var(--slide) * -1));
+}
+
+.panel[data-active='true'] {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+/*
+ * 見出し。左ナビが現在地を示しているので、ここは大きく主張しない。
+ * ページ送りは左ナビとキーボードが担うため、フッタは置いていない。
+ */
+.head {
+  flex: none;
+  padding-bottom: var(--sp-4);
+  margin-bottom: clamp(16px, 2.4vh, 28px);
+  border-bottom: 1px solid var(--line);
+}
+
+.title {
+  font-size: var(--fs-panel-title);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  line-height: 1.3;
+}
+
+/* ---------- 本体：ここだけが伸縮する ---------- */
+.body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  /*
+   * 安全網。どれだけ余白を詰めても収まらない画面（狭い端末、縦が短いウィンドウ）で、
+   * 本体が見出しに重なるのを防ぐ。収まっている限りスクロールバーは出ないし、
+   * ページ全体は変わらずスクロールしない。
+   */
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}

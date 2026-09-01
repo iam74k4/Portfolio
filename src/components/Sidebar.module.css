@@ -1,0 +1,225 @@
+.nav {
+  grid-area: nav;
+  display: flex;
+  flex-direction: column;
+  /*
+   * ブランド・ナビ・下部を上／中／下に配る。
+   * 上詰めにすると下に大きな空洞が1つできてしまう。
+   */
+  justify-content: space-between;
+  gap: var(--sp-7);
+  min-height: 0;
+  padding: var(--gutter) var(--sp-6);
+  border-right: 1px solid var(--line);
+  background: var(--surface);
+}
+
+/* ---------- ブランド ---------- */
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.monogram {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-family: var(--font-mono);
+  font-size: var(--fs-lg);
+  letter-spacing: 0.04em;
+  user-select: none;
+}
+
+.name {
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
+}
+
+.role {
+  font-size: var(--fs-sm);
+  color: var(--ink-mid);
+  line-height: 1.5;
+}
+
+/* ---------- セクション一覧 ---------- */
+/* 標識を項目に重ねるための基準 */
+.listWrap {
+  position: relative;
+  min-width: 0;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+
+/* 選択中を示す標識。項目の背景ではなくこれが動く */
+.marker {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 0;
+  border-radius: var(--radius-sm);
+  background: var(--accent-soft);
+  transition: transform var(--dur) var(--ease);
+}
+
+.marker::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: var(--sp-3);
+  bottom: var(--sp-3);
+  width: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+.item {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  width: 100%;
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--radius-sm);
+  color: var(--ink-mid);
+  font-size: var(--fs-base);
+  letter-spacing: 0.04em;
+  text-align: left;
+  transition:
+    background var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease);
+}
+
+.item:hover {
+  background: var(--surface-hover);
+  color: var(--ink);
+}
+
+.item[aria-current='page'] {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.dot {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border: 1px solid var(--ink-weak);
+  border-radius: 50%;
+  transition:
+    background var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease),
+    transform var(--dur-fast) var(--ease);
+}
+
+.item[aria-current='page'] .dot {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: scale(1.25);
+}
+
+/* ---------- 下部 ---------- */
+
+.socials {
+  display: flex;
+  gap: var(--sp-3);
+}
+
+.social {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  color: var(--ink-mid);
+  transition:
+    color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease),
+    transform var(--dur-fast) var(--ease);
+}
+
+.social:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+/* ---------- 狭幅：サイドナビ → 上部バー ---------- */
+@media (max-width: 900px) {
+  .nav {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--sp-4);
+    padding: var(--sp-3) var(--sp-5);
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .brand {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--sp-3);
+    flex: none;
+  }
+
+  .monogram {
+    width: 34px;
+    height: 34px;
+    font-size: var(--fs-sm);
+  }
+
+  .name {
+    font-size: var(--fs-md);
+    white-space: nowrap;
+  }
+
+  .role {
+    display: none;
+  }
+
+  .listWrap {
+    flex: none;
+  }
+
+  .list {
+    flex-direction: row;
+    gap: var(--sp-1);
+  }
+
+  .item {
+    padding: var(--sp-3) var(--sp-4);
+    white-space: nowrap;
+  }
+
+  /* 横並びでは標識を使わず、従来どおり背景で示す */
+  .marker {
+    display: none;
+  }
+
+  .item[aria-current='page'] {
+    background: var(--accent-soft);
+  }
+
+  .socials {
+    margin-left: auto;
+    flex: none;
+  }
+}

@@ -1,0 +1,170 @@
+.about {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(18px, 3vh, 34px);
+  /*
+   * 内容が少ない画面では上下に振り分ける。上詰めのままだと Home や Contact と
+   * 縦位置が揃わず、セクションを送るたびに内容が上下に飛んで見える。
+   */
+  justify-content: center;
+  justify-content: safe center;
+  min-height: 0;
+}
+
+/* 上段: Profile と Career */
+.top {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: var(--gutter);
+  align-items: start;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  min-width: 0;
+}
+
+.bio {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  color: var(--ink-mid);
+  font-size: var(--fs-bio);
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  padding: var(--row-pad) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.row:first-child {
+  padding-top: 0;
+}
+
+.row:last-child {
+  border-bottom: 0;
+}
+
+.period {
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  letter-spacing: 0.04em;
+  color: var(--ink-weak);
+}
+
+.jobTitle {
+  font-size: var(--fs-md);
+  font-weight: 600;
+}
+
+.org {
+  font-size: var(--fs-sm);
+  color: var(--ink-mid);
+}
+
+/* 下段: 技術。1行 = 名称 + 経験年数 */
+.skills {
+  /* 上段（Profile / Career）が出たあとに続ける */
+  --stagger-base: 120ms;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gutter);
+  align-items: start;
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding: var(--row-pad-tight) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.item:last-child {
+  border-bottom: 0;
+}
+
+.name {
+  font-size: var(--fs-base);
+  min-width: 0;
+}
+
+.exp {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  color: var(--ink-weak);
+}
+
+@media (max-width: 900px) {
+  .top,
+  .skills {
+    grid-template-columns: 1fr;
+    gap: var(--sp-5);
+  }
+}
+
+/*
+ * 経歴と技術を同じ画面に載せているぶん縦に長い。
+ * 縦の短いノートPCでも収まるよう、2段階で詰める。
+ */
+@media (max-height: 820px) {
+  .about {
+    gap: var(--sp-5);
+  }
+
+  .bio {
+    font-size: var(--fs-sm);
+    line-height: 1.6;
+    gap: var(--sp-3);
+  }
+
+  .row {
+    padding: var(--sp-3) 0;
+  }
+
+  .item {
+    padding: var(--sp-2) 0;
+  }
+}
+
+@media (max-height: 680px) {
+  .about {
+    gap: var(--sp-3);
+  }
+
+  .bio {
+    font-size: var(--fs-sm);
+    line-height: 1.5;
+    gap: var(--sp-2);
+  }
+
+  .block {
+    gap: var(--sp-2);
+  }
+
+  .row {
+    padding: var(--sp-2) 0;
+  }
+
+  .item {
+    padding: var(--sp-1) 0;
+  }
+}

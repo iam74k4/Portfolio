@@ -1,0 +1,108 @@
+/*
+ * デザイントークン。配色・余白・文字サイズ・モーションの決定はここだけで行う。
+ * 各 CSS ファイルに生の値を書かないこと。値が散ると、
+ * 「5px と 6px の違いに意味があるのか」が誰にも分からなくなる。
+ */
+
+:root {
+  /* --- 書体 --- */
+  --font-sans:
+    'Helvetica Neue', 'Hiragino Sans', 'Noto Sans JP', system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', 'SF Mono', Menlo, monospace;
+
+  /*
+   * 本文の段。6段だけ。中間の値を足さないこと。
+   * 差が読み取れず、揃っていない印象になるだけで、情報の序列は増えない。
+   */
+  --fs-label: 10px; /* eyebrow、タグ、単位 */
+  --fs-meta: 11px; /* 日付など、本文に添える情報 */
+  --fs-sm: 12px; /* 補足の文章 */
+  --fs-base: 13px; /* 一覧の項目、ボタン */
+  --fs-md: 14px; /* 項目名を強調するとき */
+  --fs-lg: 17px; /* 氏名とモノグラム */
+
+  /*
+   * 見出しと主導線の段。画面幅に連動させるので clamp で持つ。
+   * 本文の段とは役割が違うので混ぜない。増やすときは必ずここへ足す。
+   */
+  --fs-bio: clamp(var(--fs-sm), 1vw, var(--fs-md)); /* About の本文 */
+  --fs-lead: clamp(13px, 1.05vw, 15px); /* Home のリード文 */
+  --fs-card-title: clamp(14px, 1.1vw, 16px); /* 作品カードの見出し */
+  --fs-pill: clamp(14px, 1.3vw, 17px); /* Contact の主導線 */
+  --fs-panel-title: clamp(15px, 1.3vw, 18px); /* パネルの見出し */
+  --fs-display-sm: clamp(24px, 3vw, 38px); /* Contact の大見出し */
+  --fs-display: clamp(32px, 4.6vw, 60px); /* Home の大見出し */
+
+  /*
+   * 余白の段。固定値の gap / padding / margin はこの7段から選ぶ。
+   * 画面に連動させたい余白（--gutter など）は clamp で別に持つ。段には載せない。
+   */
+  --sp-1: 2px;
+  --sp-2: 4px;
+  --sp-3: 8px;
+  --sp-4: 12px;
+  --sp-5: 16px;
+  --sp-6: 24px;
+  --sp-7: 32px;
+
+  /* 区切り線つきの行の上下余白。行数が多い一覧は tight を使う */
+  --row-pad: var(--sp-4);
+  --row-pad-tight: var(--sp-3);
+
+  /* --- レイアウト --- */
+  --nav-w: 264px;
+  --gutter: clamp(24px, 3.4vw, 60px);
+  --radius: 10px;
+  --radius-sm: 6px;
+
+  /*
+   * モーション。4段だけ。300ms と 320ms のような差は誰にも見分けられないので、
+   * 近い値を足さずにこの段へ寄せること。
+   */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 180ms; /* 色・境界線など、その場で変わるもの */
+  --dur: 320ms; /* 位置が動くもの（パネルの送り、標識、下線） */
+  --dur-rise: 420ms; /* 現れるもの（順送りの表示） */
+  --dur-slow: 900ms; /* 数え上げと実績バー */
+  --stagger-step: 40ms; /* 順送りの1つあたりの遅れ */
+  --slide: 28px; /* パネルが横から入ってくる距離 */
+
+  /* --- 配色（ライト） --- */
+  --bg: #fbfbfc;
+  --surface: #ffffff;
+  --surface-hover: #f4f4f6;
+  --line: #e5e5ea;
+  --line-strong: #d3d3da;
+  --ink: #16161a;
+  --ink-mid: #4a4a55;
+  --ink-weak: #6f6f7a;
+  --accent: #5b5bd6;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(91, 91, 214, 0.09);
+}
+
+/*
+ * 縦が短いウィンドウ（ノートPCで開発者ツールを開いた状態など）では、
+ * 余白を先に削って本文の場所を確保する。
+ */
+@media (max-height: 720px) {
+  :root {
+    --gutter: clamp(16px, 2.6vw, 34px);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0c0c0e;
+    --surface: #141418;
+    --surface-hover: #1c1c22;
+    --line: #26262e;
+    --line-strong: #3a3a45;
+    --ink: #f2f2f4;
+    --ink-mid: #b4b4c2;
+    --ink-weak: #8a8a96;
+    --accent: #8f8ff5;
+    --accent-ink: #12121a;
+    --accent-soft: rgba(143, 143, 245, 0.13);
+  }
+}

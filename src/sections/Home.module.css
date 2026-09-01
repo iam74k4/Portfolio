@@ -1,0 +1,81 @@
+/*
+ * 1カラム。右に何か置きたくなるが、置けるものは
+ * すべて About か Works にあるので、ここは余白のままにしている。
+ */
+.home {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(18px, 3vh, 32px);
+  align-items: flex-start;
+  justify-content: center;
+  justify-content: safe center;
+  max-width: 62ch;
+  min-height: 0;
+}
+
+.headline {
+  font-size: var(--fs-display);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.headline span {
+  display: block;
+}
+
+.headline .accent {
+  color: var(--accent);
+}
+
+.lead {
+  max-width: 46ch;
+  color: var(--ink-mid);
+  font-size: var(--fs-lead);
+  /* 最終行に1〜2文字だけ残るのを避ける */
+  text-wrap: pretty;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  margin-top: var(--sp-2);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  height: 42px;
+  padding: 0 var(--sp-6);
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  font-size: var(--fs-base);
+  letter-spacing: 0.03em;
+  transition:
+    background var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease),
+    transform var(--dur-fast) var(--ease);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+.primary:hover {
+  filter: brightness(1.08);
+}
+
+.ghost:hover {
+  background: var(--surface-hover);
+  border-color: var(--ink-weak);
+}
